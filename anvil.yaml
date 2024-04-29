@@ -1,5 +1,86 @@
 allow_embedding: false
 package_name: Custom_HTML_2
+db_schema:
+  works:
+    client: none
+    server: full
+    columns:
+    - name: work_id
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: author_id
+      admin_ui: {width: 200, order: 1}
+      type: string
+    - name: title
+      admin_ui: {width: 200, order: 2}
+      type: string
+    - name: description
+      admin_ui: {width: 200, order: 3}
+      type: string
+    - name: genre
+      admin_ui: {width: 200, order: 4}
+      type: string
+    - name: subgenre
+      admin_ui: {width: 200, order: 5}
+      type: string
+    - name: keywords
+      admin_ui: {width: 200, order: 6}
+      type: string
+    - name: reads
+      admin_ui: {width: 200, order: 7}
+      type: number
+    - name: likes
+      admin_ui: {width: 200, order: 8}
+      type: number
+    - name: ctime
+      admin_ui: {width: 200, order: 9}
+      type: number
+    - name: ptime
+      admin_ui: {width: 200, order: 10}
+      type: number
+    - name: mtime
+      admin_ui: {width: 200, order: 11}
+      type: number
+    - name: published
+      admin_ui: {width: 200, order: 12}
+      type: bool
+    title: works
+  works_texts:
+    client: none
+    server: full
+    columns:
+    - name: work_id
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: html
+      admin_ui: {width: 200, order: 1}
+      type: string
+    - name: parchment
+      admin_ui: {width: 200, order: 2}
+      type: string
+    title: works_texts
+  works_images:
+    client: none
+    server: full
+    columns:
+    - name: work_id
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: cover
+      admin_ui: {width: 200, order: 1}
+      type: media
+    title: works_images
+secrets:
+  IDHMAC:
+    value: {NGQUW2Q5LEUR66SD: DdXd+9npfwNgD+8y/GApCGS7p56qZxkI2vl46Z0J5OJNJTOwQfv5ccZK0yWkkFY4Gv5zOj/852MxN000sZ+5+nbKmOC9lw0373NH9PX2TvDkLBmQ+ZUYpqzq438AjY6SZBDL}
+    type: secret
 name: Custom HTML 2
+startup_form: Form1
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
-services: []
+services:
+- source: /runtime/services/tables.yml
+  client_config: {enable_v2: true}
+  server_config: {auto_create_missing_columns: false}
+- source: /runtime/services/anvil/secrets.yml
+  client_config: {}
+  server_config: {}
