@@ -5,12 +5,13 @@ services:
 - source: /runtime/services/anvil/secrets.yml
   client_config: {}
   server_config: {}
+startup: {type: form, module: Form2}
 package_name: ______2
 allow_embedding: false
 name: ЧетеМе2
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
 metadata: {title: ЧетеМе, description: ЧетеМе, logo_img: 'asset:chetemecover.webp'}
-startup_form: Form1
+startup_form: null
 native_deps: {head_html: '<div class="ch ch-navigation" id="ch-navigation"></div>
 
 

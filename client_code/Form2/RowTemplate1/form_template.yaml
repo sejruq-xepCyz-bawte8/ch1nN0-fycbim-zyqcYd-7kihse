@@ -1,0 +1,11 @@
+is_package: true
+container: {type: DataRowPanel}
+components:
+- name: label_1
+  properties: {}
+  type: Label
+  layout_properties: {}
+- name: image_1
+  properties: {}
+  type: Image
+  layout_properties: {column: 'null'}

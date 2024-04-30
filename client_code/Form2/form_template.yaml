@@ -1,7 +1,19 @@
+is_package: true
 container:
   type: HtmlTemplate
-  properties: {html: '
-
-      <div anvil-slot="default"></div>'}
-components: []
-is_package: true
+  properties: {html: '@theme:standard-page.html'}
+components:
+- type: ColumnPanel
+  properties: {}
+  name: content_panel
+  layout_properties: {slot: default}
+- name: data_grid_1
+  properties:
+    columns:
+    - {id: JKSDUP, title: Column 1, data_key: column_1}
+  type: DataGrid
+  components:
+  - name: repeating_panel_1
+    properties: {item_template: Form2.RowTemplate1}
+    type: RepeatingPanel
+  layout_properties: {slot: default}
