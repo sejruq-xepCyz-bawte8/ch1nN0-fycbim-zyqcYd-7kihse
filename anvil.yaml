@@ -1,5 +1,16 @@
+services:
+- source: /runtime/services/tables.yml
+  client_config: {enable_v2: true}
+  server_config: {auto_create_missing_columns: false}
+- source: /runtime/services/anvil/secrets.yml
+  client_config: {}
+  server_config: {}
+package_name: ______2
 allow_embedding: false
-package_name: Custom_HTML_2
+name: ЧетеМе2
+runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
+metadata: {title: ЧетеМе, description: ЧетеМе, logo_img: 'asset:chetemecover.webp'}
+startup_form: Form1
 db_schema:
   works:
     client: none
@@ -74,13 +85,3 @@ secrets:
   IDHMAC:
     value: {NGQUW2Q5LEUR66SD: DdXd+9npfwNgD+8y/GApCGS7p56qZxkI2vl46Z0J5OJNJTOwQfv5ccZK0yWkkFY4Gv5zOj/852MxN000sZ+5+nbKmOC9lw0373NH9PX2TvDkLBmQ+ZUYpqzq438AjY6SZBDL}
     type: secret
-name: Custom HTML 2
-startup_form: Form1
-runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
-services:
-- source: /runtime/services/tables.yml
-  client_config: {enable_v2: true}
-  server_config: {auto_create_missing_columns: false}
-- source: /runtime/services/anvil/secrets.yml
-  client_config: {}
-  server_config: {}
