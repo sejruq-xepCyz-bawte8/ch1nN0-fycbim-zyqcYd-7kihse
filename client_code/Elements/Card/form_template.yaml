@@ -1,0 +1,20 @@
+container:
+  type: HtmlTemplate
+  properties: {html: <div class="ch-card" anvil-slot="default"></div>}
+components:
+- name: title
+  properties: {}
+  type: Label
+  layout_properties: {slot: default}
+- name: label_2
+  properties: {}
+  type: Label
+  layout_properties: {slot: default}
+- name: image_1
+  properties: {height: '', spacing_above: none, spacing_below: none, display_mode: zoom_to_fill}
+  type: Image
+  layout_properties: {slot: default}
+is_package: true
+custom_component: true
+properties:
+- {name: work_id, type: string, important: true, default_binding_prop: true, default_value: ''}

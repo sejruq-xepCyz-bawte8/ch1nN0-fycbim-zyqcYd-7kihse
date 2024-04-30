@@ -1,0 +1,14 @@
+container:
+  type: HtmlTemplate
+  properties: {html: <div anvil-slot-repeat="default"></div>}
+components:
+- name: label_1
+  properties: {text: label}
+  type: Label
+  layout_properties: {slot: default}
+- name: image_1
+  properties: {}
+  type: Image
+  layout_properties: {slot: default}
+is_package: true
+custom_component: false

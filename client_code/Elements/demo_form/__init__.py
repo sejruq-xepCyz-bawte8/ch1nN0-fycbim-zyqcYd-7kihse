@@ -1,12 +1,14 @@
-from ._anvil_designer import Form1Template
+from ._anvil_designer import demo_formTemplate
 from anvil import *
-from ..Elements.Card import Card
+import anvil.server
+import anvil.tables as tables
+import anvil.tables.query as q
+from anvil.tables import app_tables
 
-class Form1(Form1Template):
+
+class demo_form(demo_formTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-    card = Card(work_id='testid')
-   
-    self.add_component(card)
+
     # Any code you write here will run before the form opens.
