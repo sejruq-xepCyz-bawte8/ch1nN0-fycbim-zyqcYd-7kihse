@@ -13,7 +13,7 @@ class Form1(Form1Template):
     print(target)
     target.appendChild(icon())
 
-    icon.text = "tesasdasdasdasdt"
+    icon.text = "123"
     
 
 
