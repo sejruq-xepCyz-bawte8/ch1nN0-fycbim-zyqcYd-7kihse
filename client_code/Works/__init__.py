@@ -1,6 +1,6 @@
 from functools import lru_cache
 
-@lru_cache(maxsize=100)
+#@lru_cache(maxsize=100)
 def get_work(work_id='demo'):
   return demo_work
 

@@ -8,7 +8,8 @@ class Card(CardTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-    work = get_work(self.work_id)
+    work_id = self.item
+    work = get_work(work_id)
     self.title.text = work['title']
     self.image_1.source = "_/theme/chetemecover.webp"
     print(self.work_id)
