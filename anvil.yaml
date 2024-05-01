@@ -1,3 +1,7 @@
+dependencies:
+- dep_id: dep_e1dcqmnfcluccf
+  version: {dev: false}
+  resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
 services:
 - source: /runtime/services/tables.yml
   client_config: {enable_v2: true}
@@ -5,7 +9,7 @@ services:
 - source: /runtime/services/anvil/secrets.yml
   client_config: {}
   server_config: {}
-startup: {type: form, module: Today}
+startup: {type: module, module: Memory}
 package_name: ______2
 allow_embedding: false
 name: ЧетеМе2
