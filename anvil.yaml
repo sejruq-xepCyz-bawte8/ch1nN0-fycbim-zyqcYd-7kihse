@@ -16,10 +16,12 @@ name: ЧетеМе2
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
 metadata: {title: ЧетеМе, description: ЧетеМе, logo_img: 'asset:chetemecover.webp'}
 startup_form: null
-native_deps: {head_html: '<div class="ch ch-navigation" id="ch-navigation"></div>
-
-
-    <script src="_/theme/lokijs.js"></script>'}
+native_deps: {head_html: "<div class=\"ch ch-navigation\" id=\"ch-navigation\"></div>\n\
+    \n<script src=\"_/theme/lokijs.js\"></script>\n<script src=\"_/theme/loki-indexed-adapter.js\"\
+    ></script>\n<script>\n  var chDBadapter = new LokiIndexedAdapter('cheteme');\n\
+    \  chDBadapter.deleteDatabase('cheteme.db')\n  var chDB = new loki('cheteme.db',\
+    \ { adapter: chDBadapter });\n\n  chDB.loadDatabase(function(result) {\n  console.log('done');\n\
+    });\n\n  chDBadapter.deleteDatabase('test')\n</script>"}
 db_schema:
   works:
     client: none
