@@ -14,10 +14,13 @@ class Memory:
     self.reads = self.db.addCollection('reads')
     self.genres = self.db.addCollection('genres')
     self.works = self.db.addCollection('works')
-    self.test = self.db.addCollection('test' , {'unique': ['test']})
+    #self.test = self.db.addCollection('test' , {'unique': ['test']})
+    self.test = self.db.addCollection('test')
     
-
   def load_data(self, data: dict = {}, collection: str = 'test'):
+    getattr(self, collection).insert(data)
+
+  def load_data_unique(self, data: dict = {}, collection: str = 'test'):
     for d in data:
       r = getattr(self, collection).findOne({'test': d['test'] })
       print('r', r, d['test'])
@@ -40,11 +43,25 @@ class Memory:
 def res(result):
   print('result', result)
 
+
+
+def mapfun(obj, a, b):
+  print(">>>", obj)
+  return obj
+
+def reducefun(array):
+  print('array', array)
+  grandTotal=0
+  for a in array:
+    grandTotal += a['data']
+  return {'test':'hello', 'sum':grandTotal}
+
 if __name__ == "__main__":
   
   m = Memory()
   
   m.load_data([{'test':"hello", 'data':'1' },{'test':"hello2", 'data':'2' },{'test':"hello", 'data':'3' },{'test':"hello2", 'data':'4' }, ])
   r = m.count_records()
+  grandOrderTotal = m.test.chain().find({'test':'hello2'}).mapReduce(mapfun, reducefun).data({'removeMeta':'false'})
+  print(grandOrderTotal)
 
-  print(r)
