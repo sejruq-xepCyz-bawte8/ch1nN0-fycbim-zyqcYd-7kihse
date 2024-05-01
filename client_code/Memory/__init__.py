@@ -46,15 +46,19 @@ def res(result):
 
 
 def mapfun(obj, a, b):
-  print(">>>", obj)
+  
   return obj
 
 def reducefun(array):
-  print('array', array)
-  grandTotal=0
+  print(array)
+  
+  res = {}
   for a in array:
-    grandTotal += a['data']
-  return {'test':'hello', 'sum':grandTotal}
+    if a['test'] in res:
+      res[a['test']] += int(a['data'])
+    else:
+      res[a['test']] = int(a['data'])
+  return res
 
 if __name__ == "__main__":
   
@@ -62,6 +66,6 @@ if __name__ == "__main__":
   
   m.load_data([{'test':"hello", 'data':'1' },{'test':"hello2", 'data':'2' },{'test':"hello", 'data':'3' },{'test':"hello2", 'data':'4' }, ])
   r = m.count_records()
-  grandOrderTotal = m.test.chain().find({'test':'hello2'}).mapReduce(mapfun, reducefun).data({'removeMeta':'false'})
+  grandOrderTotal = m.test.chain().find().mapReduce(mapfun, reducefun)
   print(grandOrderTotal)
 
