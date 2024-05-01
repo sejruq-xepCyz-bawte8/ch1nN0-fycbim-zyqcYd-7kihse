@@ -5,7 +5,7 @@ services:
 - source: /runtime/services/anvil/secrets.yml
   client_config: {}
   server_config: {}
-startup: {type: form, module: Form1}
+startup: {type: form, module: Today}
 package_name: ______2
 allow_embedding: false
 name: ЧетеМе2
@@ -15,7 +15,7 @@ startup_form: null
 native_deps: {head_html: '<div class="ch ch-navigation" id="ch-navigation"></div>
 
 
-    '}
+    <script src="_/theme/lokijs.js"></script>'}
 db_schema:
   works:
     client: none
