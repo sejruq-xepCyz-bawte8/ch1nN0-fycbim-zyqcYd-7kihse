@@ -9,19 +9,20 @@ services:
 - source: /runtime/services/anvil/secrets.yml
   client_config: {}
   server_config: {}
-startup: {type: module, module: _index}
+startup: {type: form, module: Form1}
 package_name: ______2
 allow_embedding: false
 name: ЧетеМе2
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
 metadata: {title: ЧетеМе, description: ЧетеМе, logo_img: 'asset:chetemecover.webp'}
 startup_form: null
-native_deps: {head_html: "<div class=\"ch ch-navigation\" id=\"ch-navigation\"></div>\n\
-    \n<script src=\"_/theme/lokijs.js\"></script>\n<script src=\"_/theme/loki-indexed-adapter.js\"\
-    ></script>\n<script>\n  var chDBadapter = new LokiIndexedAdapter('cheteme');\n\
-    \  chDBadapter.deleteDatabase('cheteme.db')\n  var chDB = new loki('cheteme.db',\
-    \ { adapter: chDBadapter });\n\n  chDB.loadDatabase(function(result) {\n  console.log('done');\n\
-    });\n\n  chDBadapter.deleteDatabase('test')\n</script>"}
+native_deps: {head_html: "<script>\n  function loadScript(url) {\n    var script =\
+    \ document.createElement('script');\n    script.src = url;\n    document.head.appendChild(script);\n\
+    }\nloadScript(\"_/theme/lokijs.js\")\nloadScript(\"_/theme/loki-indexed-adapter.js\"\
+    )\n</script>\n<div class=\"ch ch-navigation\" id=\"ch-navigation\"></div>\n\n\
+    <script>\n  var chDBadapter = new LokiIndexedAdapter('cheteme');\n  chDBadapter.deleteDatabase('cheteme.db')\n\
+    \  var chDB = new loki('cheteme.db', { adapter: chDBadapter });\n\n  chDB.loadDatabase(function(result)\
+    \ {\n  console.log('done');\n});\n\n  chDBadapter.deleteDatabase('test')\n</script>\n"}
 db_schema:
   works:
     client: none
