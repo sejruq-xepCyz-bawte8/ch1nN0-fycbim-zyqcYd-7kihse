@@ -69,3 +69,4 @@ if __name__ == "__main__":
   grandOrderTotal = m.test.chain().find().mapReduce(mapfun, reducefun)
   print(grandOrderTotal)
 
+
