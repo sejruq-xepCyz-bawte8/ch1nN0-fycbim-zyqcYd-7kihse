@@ -1,5 +1,3 @@
-import anvil.server
-import anvil.users
 from anvil.js.window import document
 
 class HtmlElement:

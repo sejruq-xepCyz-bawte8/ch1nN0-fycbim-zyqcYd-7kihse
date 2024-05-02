@@ -1,5 +1,3 @@
-import anvil.server
-import anvil.users
 from anvil_extras.storage import indexed_db
 from anvil.js.window import chDB, chDBadapter
 from time import sleep
