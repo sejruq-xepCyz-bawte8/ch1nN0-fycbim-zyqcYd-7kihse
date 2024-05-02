@@ -1,0 +1,9 @@
+container:
+  type: HtmlTemplate
+  properties: {html: '@theme:ch_page.html'}
+components:
+- name: label_1
+  properties: {text: test}
+  type: Label
+  layout_properties: {slot: ch-slot}
+is_package: true

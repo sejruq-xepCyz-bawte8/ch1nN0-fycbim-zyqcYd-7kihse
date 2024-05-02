@@ -1,19 +1,17 @@
 from ._anvil_designer import TestTemplate
 from anvil import *
-from ..ElementsHtml.Icon import Icon
-from time import sleep
+from ...About import About
+from anvil_extras import routing
 
+
+@routing.default_template
 class Test(TestTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
+    self.content_panel = ColumnPanel()
+    self.add_component(self.content_panel)
     self.init_components(**properties)
 
-    icon = Icon()
-    target = self.dom_nodes['ch-form']
-    print(target)
-    target.appendChild(icon())
-
-    icon.text = "123"
     
 
 
