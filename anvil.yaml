@@ -9,7 +9,7 @@ services:
 - source: /runtime/services/anvil/secrets.yml
   client_config: {}
   server_config: {}
-startup: {type: form, module: Pages.Test}
+startup: {type: module, module: _index}
 package_name: ______2
 allow_embedding: false
 name: ЧетеМе2
