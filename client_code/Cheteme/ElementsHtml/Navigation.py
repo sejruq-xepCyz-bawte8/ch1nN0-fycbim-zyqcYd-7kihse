@@ -10,7 +10,7 @@ navigation = [
   {'bg':'Отметки', 'group':'Reader', 'form':'Bookmarks'},
   {'bg':'Вход', 'group':'Reader', 'form':'Login'},
   {'bg':'Настройки', 'group':'Reader', 'form':'Settings'},
-  {'bg':'Автор', 'group':'Reader', 'form':'Author'},
+  {'bg':'Автор', 'group':'Author', 'form':'Profile'},
   
   {'bg':'Създай', 'group':'Author', 'form':'New'},
   {'bg':'Творби', 'group':'Author', 'form':'Works'},
