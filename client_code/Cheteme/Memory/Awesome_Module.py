@@ -14,7 +14,9 @@ class Awesome:
   def get_one(self, key, value):
     return self.collection.findOne({ key : value })
 
-icons = [{'name':'home', 'bg':'Днес'},
+icons = [
+        #menus
+        {'name':'home', 'bg':'Днес'},
          {'name':'glasses', 'bg':'Автори'},
          {'name':'books', 'bg':'Творби'},
          {'name':'bookmark', 'bg':'Отметки'},
@@ -43,6 +45,57 @@ icons = [{'name':'home', 'bg':'Днес'},
           {'bg':'Приключенски', 'name':'map-location'},
           {'bg':'Действителни', 'name':'badge-check'},
           {'bg':'Еротика', 'name':'venus-mars'},
+
+  #subgehres
+  #фантастика
+  {'bg':'научна', 'name':'atom'},
+{'bg':'класическа', 'name':'robot'},
+{'bg':'киберпънк', 'name':'space-station-moon-construction'},
+{'bg':'соларпънк', 'name':'trillium'},
+{'bg':'стиймпънк', 'name':'steam-symbol'},
+{'bg':'утопия', 'name':'omega',},
+{'bg':'антиутопия', 'name':'user-bounty-hunter'},
+{'bg':'постапокалипсис', 'name':'house-chimney-crack'},
+{'bg':'биопънк', 'name':'vial-virus'},
+{'bg':'технотрилър', 'name':'raygun'},
+{'bg':'шпионска', 'name':'radar'},
+{'bg':'хумористична', 'name':''},
+{'bg':'супергерои', 'name':'mask'},
+{'bg':'военна', 'name':'jet-fighter-up'},
+#cryme
+{'bg':'Детективски', 'name':'user-secret'},
+{'bg':'Психопати и серийни убийци', 'name':'hockey-mask'},
+{'bg':'Мистерии', 'name':'block-question'},
+#thriller
+#{'bg':'Криминален', 'name':'handcuffs'},
+{'bg':'Техно', 'name':'microchip'},
+#{'bg':'Исторически', 'name':'fort'},
+{'bg':'Психологически', 'name':'brain'},
+#{'bg':'Медицински', 'name':'syringe'},
+{'bg':'Шпионски', 'name':'syringe'},
+{'bg':'Политически', 'name':'scale-unbalanced'},
+{'bg':'Романтичен', 'name':'heart-pulse'},
+#contemporary
+{'bg':'Експериментална','name':'head-sgide-brain'},
+{'bg':'Поток на мисълта','name':'brain-arrow-curved-right'},
+{'bg':'Епистоларна','name':'minimize'},
+{'bg':'Мемоари','name':'book-font'},
+{'bg':'ЛГТБ+','name':'transgender'},
+{'bg':'Пътепис','name':'globe-stand'},
+{'bg':'Гурме','name':'pot-food'},
+{'bg':'ЧикЛит','name':'candy'},
+{'bg':'Феминизъм','name':'venus'},
+#drama
+{'bg':'Историческа','name':'crown'},
+{'bg':'Военна','name':'person-military-to-person'},
+{'bg':'Любовна','name':'heart-crack'},
+{'bg':'Семейна сага','name':'family'},
+{'bg':'Политическа','name':'podium-star'},
+#historical
+{'bg':'По действителни събития','name':'monument'},
+{'bg':'Историческа фикция','name':'angel'},
+#{'bg':'Исторически романс','name':'shield-heart'},
+{'bg':'Исторически трилър','name':'chess'},
         ]
 
 

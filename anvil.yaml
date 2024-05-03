@@ -26,8 +26,8 @@ native_deps: {head_html: "<script src='_/theme/lokijs.js'></script>\n<script src
     //chetemeDBadapter.deleteDatabase('cheteme.db');\nvar chetemeDB = new loki('cheteme.db',\
     \ { adapter: chetemeDBadapter });\nvar awesomeColl = chetemeDB.addCollection(\"\
     Awesome\", {unique: ['bg', 'name']});\nvar genresColl = chetemeDB.addCollection(\"\
-    Genres\", {unique: ['bg', 'gid']});\n//chetemeDB.loadDatabase(function(result)\
-    \ {\n//  console.log('loadDatabase', result);\n//});\n</script>\n<style>\n  .test{\n\
+    Genres\", {unique: ['gid']});\n//chetemeDB.loadDatabase(function(result) {\n//\
+    \  console.log('loadDatabase', result);\n//});\n</script>\n<style>\n  .test{\n\
     \    background: pink;\n  }\n</style>"}
 db_schema:
   users:
