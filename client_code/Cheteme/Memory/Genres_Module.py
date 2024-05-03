@@ -1,38 +1,16 @@
 from .Collection_Module import Collection
 
 
-class Awesome(Collection):
+class Genres(Collection):
   def __init__(self):
     super().__init__()
-    self.collection.insert(icons)
+    self.collection.insert(genres)
 
-  def get_icon_code(self, bg):
+  def get_genre_code(self, bg):
     return self.get_one('bg', bg)
 
-  def get_icon_bg(self, name):
+  def get_genre_bg(self, name):
     return self.get_one('name', name)
-
-
-icons = [{'name':'home', 'bg':'Днес'},
-         {'name':'glasses', 'bg':'Автори'},
-         {'name':'books', 'bg':'Творби'},
-         {'name':'bookmark', 'bg':'Отметки'},
-         {'name':'user', 'bg':'Вход'},
-         {'name':'sliders', 'bg':'Настройки'},
-         {'name':'typewriter', 'bg':'Автор'},
-         {'name':'file-plus', 'bg':'Създай'},
-          {'name':'chart-simple', 'bg':'Стат'},
-         {'name':'address-card', 'bg':'Профил'},
-         {'name':'icons', 'bg':'Тест'},
-
-         #genres
-         {'name':'hat-wizard', 'bg':'Фентъзи'},
-         {'name':'starship', 'bg':'Фантастика'},
-         {'name':'icons', 'bg':'Тест'},
-         {'name':'icons', 'bg':'Тест'},
-        ]
-
-
 
 genres = {
   'fantasy': {'genre':'Фентъзи', 'icon':'hat-wizard', 'code':'fantasy'},

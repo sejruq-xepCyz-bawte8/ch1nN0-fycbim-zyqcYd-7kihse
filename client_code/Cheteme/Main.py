@@ -24,5 +24,3 @@ if __name__ == "__main__":
   jQ('body').append(blanket)
   jQ('document').ready(ready)
   
-  
-  
