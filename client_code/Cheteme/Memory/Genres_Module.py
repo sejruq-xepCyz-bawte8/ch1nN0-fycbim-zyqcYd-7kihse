@@ -18,10 +18,11 @@ class Genres:
     return self.collection.chain().find({ 'level' : level }).data({'removeMeta':True})
 
   def get_all_names(self):
-    return self.collection.chain().find().map(self.get_all_names_map)
+    return self.collection.chain().find().map(self.get_all_names_map, {'removeMeta':True}).data()
 
-  def get_all_names_map(self, obj):
-    return obj['gid']
+  def get_all_names_map(self, *obj):
+    
+    return {obj[0]['bg']}
   
   def get_subgenres(self, genre):
     return self.collection.chain().find({ 'genre' : genre }).data({'removeMeta':True})

@@ -16,6 +16,13 @@ class Genre_Choise(Genre_ChoiseTemplate):
     self.genres_l3 = FlowPanel()
     self.custom = FlowPanel()
     self.custom_input = Autocomplete.Autocomplete()
+    all = genres.get_all_names()
+    sug = []
+    for a in all:
+      a = {*a}
+      sug.append(a)
+    list_of_strings = [next(iter(item)) for item in sug]
+    self.custom_input.suggestions = list_of_strings
     self.custom_input.placeholder = 'допълнителни ключови думи'
     self.custom_input.add_event_handler('pressed_enter', self.custom_add)
     
