@@ -1,7 +1,38 @@
 container:
   type: HtmlTemplate
-  properties: {html: "<center style=\"font-style:italic; color:#888; margin: 3em;\"\
-      >\n  (Insert your custom HTML here)\n</center>\n<div anvil-slot=\"default\"\
-      ></div>"}
+  properties: {html: "\n<!-- Create toolbar container -->\n<div id=\"toolbar\">\n\
+      \  <!-- Add font size dropdown -->\n  <select class=\"ql-header\">\n    <option\
+      \ selected value=false>\xb6</option>\n    <option value=\"1\">\xa7</option>\n\
+      \    <option value=\"2\">\xa7\xa7</option>\n    <option value=\"3\">\xa7\xa7\
+      \xa7</option>\n  </select>\n    <select class=\"ql-font\">\n    <option selected\
+      \ value='sans-serif'>\u0410\u0431\u0432</option>\n    <option value=\"serif\"\
+      >\u0410\u0431\u0432</option>\n    <option value=\"monospace\">\u0410\u0431\u0432\
+      </option>\n  </select>\n  <button class=\"ql-bold\"></button>\n  <button class=\"\
+      ql-italic\"></button>\n  <button class=\"ql-blockquote\"></button>\n  <button\
+      \ class=\"ql-code-block\"></button>\n  <button class=\"ql-align\"></button>\n\
+      \  <button class=\"ql-align\" value=\"center\"></button>\n  <button class=\"\
+      ql-align\" value=\"right\"></button>\n  <div anvil-slot-repeat='default'></div>\n\
+      \  <div id=\"counter\">0</div>\n</div>\n<div anvil-slot=\"tags\"></div>\n<div\
+      \ id=\"editor\">\n  <h1>\u0413\u043b\u0430\u0432\u0430</h1>\n  <h2>\u0421\u0446\
+      \u0435\u043d\u0430</h2>\n    <h3>\u041f\u043e\u0434\u0441\u0446\u0435\u043d\u0430\
+      </h3>\n  <p>\u041f\u0430\u0440\u0430\u0433\u0440\u0430\u0444 ...</p>\n</div>\n\
+      \n<script src=\"https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.js\"></script>\n\
+      <link href=\"https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css\"\
+      \ rel=\"stylesheet\">\n\n\n\n\n<script>\nclass Counter {\n  constructor(quill,\
+      \ options) {\n    this.quill = quill;\n    this.options = options;\n    this.container\
+      \ = document.querySelector(options.container);\n    quill.on(Quill.events.TEXT_CHANGE,\
+      \ this.update.bind(this));\n  }\n\n  calculate() {\n    const text = this.quill.getText();\n\
+      \n    if (this.options.unit === 'word') {\n      const trimmed = text.trim();\n\
+      \      // Splitting empty text returns a non-empty array\n      return trimmed.length\
+      \ > 0 ? trimmed.split(/\\s+/).length : 0;\n    } else {\n      return text.length;\n\
+      \    }\n  }\n\n  update() {\n    const length = this.calculate();\n    let label\
+      \ = this.options.unit;\n    if (length !== 1) {\n      label += 's';\n    }\n\
+      \    this.container.innerText = `${length} ${label}`;\n  }\n}\n\nQuill.register('modules/counter',\
+      \ Counter);\n</script>\n<script>\nif (!document.querySelector('#editor').__quill)\
+      \ {\n    var quill = new Quill('#editor', {\n        theme: 'snow',\n      \
+      \  modules: {\n                        counter: {\n                        \
+      \          container: '#counter',\n                                  unit: 'word'\n\
+      \                                },\n                        toolbar: '#toolbar',\n\
+      \                  }\n    });\n}\n</script>\n\n"}
 components: []
 is_package: true

@@ -6,7 +6,11 @@ class Awesome:
     self.collection.insert(icons)
 
   def get_icon_code(self, bg):
-    return self.get_one('bg', bg)
+    icon = self.get_one('bg', bg)
+    if icon :
+      return icon['name']
+    else:
+      return 'icons'
 
   def get_icon_bg(self, name):
     return self.get_one('name', name)

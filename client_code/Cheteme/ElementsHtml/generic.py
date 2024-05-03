@@ -68,7 +68,7 @@ class HtmlElement:
       return self.el.prop('outerHTML')
 
   def __call__(self) -> object:
-      return self.el
+      return self.el.prop('outerHTML')
 
 
 if __name__ == "__main__":

@@ -14,6 +14,9 @@ class Genres:
   def get_one(self, key, value):
     return self.collection.findOne({ key : value })
 
+  def get_all_in_level(self, level):
+    return self.collection.chain().find({ 'level' : level }).data({'removeMeta':True})
+
 genres = [
 {'bg':'Проза','gid':1, 'level':1,'desc':''},
 {'bg':'Поезия', 'gid':2, 'level':1,'desc':''},
