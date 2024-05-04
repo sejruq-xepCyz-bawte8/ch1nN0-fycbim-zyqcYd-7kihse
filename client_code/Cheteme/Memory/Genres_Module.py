@@ -28,8 +28,20 @@ class Genres:
     return self.collection.chain().find({ 'genre' : genre }).data({'removeMeta':True})
 
 genres = [
-{'bg':'Проза','gid':1, 'level':1,'desc':''},
-{'bg':'Поезия', 'gid':2, 'level':1,'desc':''},
+
+{'bg':'Микро Разказ','gid':11, 'level':1,'desc':''}, #microfiction up to 100 words
+{'bg':'Флашфикшън','gid':12, 'level':1,'desc':''}, #Short Short Stories (100 to 1,000 words) flashfiction
+{'bg':'Разказ','gid':13, 'level':1,'desc':''}, #Short Stories (1,000 to 7,500 words)
+{'bg':'Разказ','gid':14, 'level':1,'desc':''}, #Short Stories (1,000 to 7,500 words)
+
+
+{'bg':'Новела','gid':30, 'level':1,'desc':''}, #Novellas (17,500 to 40,000 words)
+
+{'bg':'Роман','gid':70, 'level':1,'desc':''},
+  
+{'bg':'Стихотворение', 'gid':70, 'level':1,'desc':''},
+{'bg':'Хаику', 'gid':71, 'level':1,'desc':''},
+
 
 {'bg':'Фентъзи','gid':11, 'level':2,'desc':''},
 {'bg':'Фантастика','gid':12, 'level':2,'desc':''},
