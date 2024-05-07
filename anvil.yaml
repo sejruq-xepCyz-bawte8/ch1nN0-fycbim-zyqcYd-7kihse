@@ -22,7 +22,9 @@ metadata: {title: ЧетеМе, description: ЧетеМе, logo_img: 'asset:chet
 startup_form: null
 native_deps: {head_html: "<script src='_/theme/lokijs.js'></script>\n<script src='_/theme/loki-indexed-adapter.js'></script>\n\
     <script src=\"https://kit.fontawesome.com/dcfe5f394f.js\" crossorigin=\"anonymous\"\
-    ></script>\n\n<script>\nvar chetemeDBadapter = new LokiIndexedAdapter('cheteme');\n\
+    ></script>\n<script src=\"https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.js\"\
+    ></script>\n<link href=\"https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css\"\
+    \ rel=\"stylesheet\">\n\n<script>\nvar chetemeDBadapter = new LokiIndexedAdapter('cheteme');\n\
     //chetemeDBadapter.deleteDatabase('cheteme.db');\nvar chetemeDB = new loki('cheteme.db',\
     \ { adapter: chetemeDBadapter });\nvar awesomeColl = chetemeDB.addCollection(\"\
     Awesome\", {unique: ['bg']});\nvar genresColl = chetemeDB.addCollection(\"Genres\"\
