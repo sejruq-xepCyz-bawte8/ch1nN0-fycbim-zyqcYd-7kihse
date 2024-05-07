@@ -32,9 +32,23 @@ icons = [
     {'bg':'стат', 'name':'chart-simple'},
     {'bg':'профил', 'name':'address-card'},
     {'bg':'тест', 'name':'icons'},
+
 #genres
-    {'bg':'поезия', 'name':'music'},
-    {'bg':'проза', 'name':'book'},
+    {'bg':'поезия', 'name':'align-center'},
+    {'bg':'проза', 'name':'align-left'},
+    {'bg':'микро разказ','name':'t'}, #up to 100 words
+    {'bg':'флашфикшън','name':'s'}, #100 to 1,000 words
+    {'bg':'разказ','name':'m'}, #1,000 to 7,500 words
+    {'bg':'повест','name':'l'}, #7,500 то 17,500words
+    {'bg':'новела','name':'x'}, #17,500 to 40,000 words
+    {'bg':'роман','name':'h'}, #40к - 100к
+
+    {'bg':'стих', 'name':'s'},
+    {'bg':'хайку', 'name':'t'},
+    {'bg':'стихотворение', 'name':'m'},
+    {'bg':'епос', 'name':'l'},
+
+  
     {'bg':'фентъзи', 'name':'hat-wizard'},
     {'bg':'фантастика', 'name':'starship'},
     {'bg':'ужаси', 'name':'face-scream'},
@@ -82,7 +96,7 @@ icons = [
     {'bg':'чиклит', 'name':'candy'},
     {'bg':'феминизъм', 'name':'venus'},
     {'bg':'историческа', 'name':'crown'},
-    {'bg':'военна', 'name':'person-military-to-person'},
+    #{'bg':'военна', 'name':'person-military-to-person'},
     {'bg':'любовна', 'name':'heart-crack'},
     {'bg':'семейна сага', 'name':'family'},
     {'bg':'политическа', 'name':'podium-star'},

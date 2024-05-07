@@ -42,17 +42,12 @@ genres = [
     {'bg':'повест','gid':'novelette', 'level':1,'desc':''}, #7,500 то 17,500words
     {'bg':'новела','gid':'novella', 'level':1,'desc':''}, #17,500 to 40,000 words
     {'bg':'роман','gid':'novel', 'level':1,'desc':''}, #40к - 100к
-    {'bg':'епопея','gid':'epic_novel', 'level':1,'desc':''}, #100к
+
 # poetry
-    {'bg':'стих', 'gid':'poetry', 'level':1,'desc':''},
+    {'bg':'стих', 'gid':'short_poem', 'level':1,'desc':''},
     {'bg':'хайку', 'gid':'haiku', 'level':1,'desc':''},
-    {'bg':'епиграма', 'gid':'epigram', 'level':1,'desc':''},
-    {'bg':'сонет', 'gid':'sonnet', 'level':1,'desc':''},
-    {'bg':'балада', 'gid':'balad', 'level':1,'desc':''},
-    {'bg':'елегия', 'gid':'elegy', 'level':1,'desc':''},
-    {'bg':'ода', 'gid':'ode', 'level':1,'desc':''},
-    {'bg':'поема', 'gid':'poem', 'level':1,'desc':''},
-    {'bg':'епос', 'gid':'epic_poetry', 'level':1,'desc':''},
+    {'bg':'стихотворение', 'gid':'poem', 'level':1,'desc':''},
+    {'bg':'епос', 'gid':'epic_poem', 'level':1,'desc':''},
 
 #genres - level2
     {"bg":"еротика","gid":"erotica","level":2,"desc":""},
