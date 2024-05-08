@@ -1,0 +1,106 @@
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css" rel="stylesheet">
+
+<div anvil-slot="tags"></div>
+<div anvil-slot="cover"></div>
+<div anvil-slot="title"></div>
+<!-- Create toolbar container -->
+<div id="toolbar">
+  <!-- Add font size dropdown -->
+  <select class="ql-header">
+    <option selected value=false>¶</option>
+    <option value="1">§</option>
+    <option value="2">§§</option>
+    <option value="3">§§§</option>
+  </select>
+  <button class="ql-bold"></button>
+  <button class="ql-italic"></button>
+  <button class="ql-blockquote"></button>
+  <button class="ql-align"></button>
+  <button class="ql-align" value="center"></button>
+  <button class="ql-align" value="right"></button>
+  <div anvil-slot-repeat='default'></div>
+  <div id="counter" anvil-name="counter">0</div>
+  <button id="post" onclick="anvil.call(this, 'post', this)"><i class="fa-light fa-newspaper"></i></button>
+
+ 
+</div>
+
+<div id="editor" anvil-name="editor">
+  <h1>;460</h1>
+  <h2>%F5=0</h2>
+    <h3>>4EF5=0</h3>
+  <p>4D07D0D ...</p>
+</div>
+
+
+<script>
+class Counter {
+  constructor(quill, options) {
+    this.quill = quill;
+    this.options = options;
+    this.container = document.querySelector(options.container);
+    quill.on(Quill.events.TEXT_CHANGE, this.update.bind(this));
+  }
+
+  calculate() {
+    const text = this.quill.getText();
+
+    if (this.options.unit === 'word') {
+      const trimmed = text.trim();
+      // Splitting empty text returns a non-empty array
+      return trimmed.length > 0 ? trimmed.split(/\s+/).length : 0;
+    } else {
+      return text.length;
+    }
+  }
+
+  update() {
+    const length = this.calculate();
+    //let label = this.options.unit;
+    //if (length !== 1) {
+    //  label += '4';
+    //}
+    //this.container.innerText = `${length} ${label}`;
+    this.container.innerText = `${length}`;
+  }
+}
+
+Quill.register('modules/counter', Counter);
+</script>
+<script>
+if (!document.querySelector('#editor').__quill) {
+    var quill = new Quill('#editor', {
+        theme: 'snow',
+        modules: {
+                        counter: {
+                                  container: '#counter',
+                                  unit: 'word'
+                                },
+                        toolbar: '#toolbar',
+                  }
+    });
+}
+</script>
+
+
+
+
+
+<style>
+  #toolbar{
+    display: flex;
+    justify-content: space-between;
+    border: none;
+  }
+#toolbar svg{
+  height: 2rem !important;
+}
+  .ql-picker{
+    width: 5rem !important;
+  }
+
+  #editor{
+    border: none;
+  }
+</style>

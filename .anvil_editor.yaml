@@ -37,11 +37,14 @@ unique_ids:
     _ExperimentsApi.IdGenCheck: '1714401549899614960990643.9276'
     _ExperimentsApi.WorkClass: '1714399944811850729751539.6813'
   assets:
-    chetemecover.webp: '1714479494193739084299907.0813'
-    load_loki.js: '1714653748396677993731114.6569'
-    loki-indexed-adapter.js: '1714563761236511864562359.80615'
-    lokijs.js: '1714559465754781553759674.2985'
-    navigation.html: '1714655902932926471531545.0709'
-    standard-page.html: KPUFTZL5E4GRYMCVZOZK2W44M2T2ABTQ
+    javascript/lokijs.js: '1714559465754781553759674.2985'
     theme.css: OM4QHS3T52XAMHYZPR3CEKGZTODZKSWD
+    html/author_new.html: '1715166413632712935909092.6045'
+    javascript/load_loki.js: '1714653748396677993731114.6569'
+    javascript/.gitkeep: '1715166528253847833721460.5741'
+    standard-page.html: KPUFTZL5E4GRYMCVZOZK2W44M2T2ABTQ
+    chetemecover.webp: '1714479494193739084299907.0813'
+    navigation.html: '1714655902932926471531545.0709'
+    javascript/loki-indexed-adapter.js: '1714563761236511864562359.80615'
+    html/.gitkeep: '1715166384597191934429518.11136'
   scripts: {}
