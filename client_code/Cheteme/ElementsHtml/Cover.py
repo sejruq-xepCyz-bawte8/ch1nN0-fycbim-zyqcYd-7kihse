@@ -7,8 +7,8 @@ from anvil import *
 
 class CoverClass(HtmlElement):
   def __init__(self, data: dict) -> None:
-    
-    super().__init__(tag = 'div', css='ch-cover', id=dict['id'])
+    print(data)
+    super().__init__(tag = 'div', css='ch-cover', id=data['id'])
     self.data = data
     self.title = HtmlElement(tag='dir', css='ch-cover-title', text=data['title'])
     self.icons = HtmlElement(tag='div', css='ch-cover-icons')

@@ -6,11 +6,11 @@ from ..Memory import awesome
 class Icon(HtmlElement):
   def __init__(self, name: str = None, bg: str = None, style='regular', id: str = None) -> None:
     super().__init__(tag = 'span', css='ch-icon-container', id = id)
-    
+    print(bg)
     if not name :
       name_search = awesome.get_icon_code(bg)
       if name_search:
-        name = name_search.name
+        name = name_search
       else:
         name = 'icons'
     if not bg :

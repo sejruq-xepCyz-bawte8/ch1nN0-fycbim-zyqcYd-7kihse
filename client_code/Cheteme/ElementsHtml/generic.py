@@ -17,6 +17,7 @@ class HtmlElement:
     self._text = text
     self._css = css
     self.id = id
+    print(self.id)
     
     self.el.addClass(css)
     self.el.text(text)
