@@ -1,6 +1,6 @@
 from .Template_Module import TemplateMemory
 
-class Awesome(TemplateMemory):
+class Keywords(TemplateMemory):
   def __init__(self, collection: object, data: list):
     super().__init__(loki_collection=collection)
     if data:
@@ -15,3 +15,7 @@ class Awesome(TemplateMemory):
 
   def get_icon_bg(self, name: str):
     return self.get_one('name', name)
+  
+
+  def get_keyword_names(self):
+    return self.get_column(column='bg')

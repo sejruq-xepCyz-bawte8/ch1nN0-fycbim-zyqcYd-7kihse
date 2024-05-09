@@ -1,7 +1,10 @@
 from anvil.js.window import jQuery as jQ
+import base64
 
 class HtmlElement:
+  
   def __init__(self, data: dict = None, css: str or list = None, tag: str = 'dir', text: str = None, ch: bool = True, id: str = None) -> None:
+
     if data:
       if 'text' in data:
         text = data['text']
@@ -43,6 +46,11 @@ class HtmlElement:
   def visable_toggle(self):
     jQ(self.el).toggle()
 
+  def set_background_image(self, imageData: bytes, ext: str = 'jpeg'):
+     image_base64 = base64.b64encode(imageData).decode('utf-8')
+     image_url = f'data:image/{ext};base64,{image_base64}'
+     jQ(self.el).css('background-image', image_url)
+     
   
   @property
   def text(self):

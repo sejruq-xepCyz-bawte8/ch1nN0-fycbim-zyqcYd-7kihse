@@ -1,48 +1,36 @@
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css" rel="stylesheet">
-
-<div anvil-slot="tags"></div>
-<div anvil-slot="cover"></div>
-<div anvil-slot="title"></div>
-<!-- Create toolbar container -->
-<div id="toolbar">
-  <!-- Add font size dropdown -->
-  <button class="ql-header" value=1>§</button>
-  <button class="ql-header" value=2>§§</button>
-  <button class="ql-bold"></button>
-  <button class="ql-italic"></button>
-  <button class="ql-blockquote"></button>
-  <button class="ql-align" value="center"></button>
-  <button class="ql-align" value="right"></button>
-  <div anvil-slot-repeat='default'></div>
-  <div id="counter" anvil-name="counter">0</div>
-  <button id="post" onclick="anvil.call(this, 'post', this)"><i class="fa-light fa-newspaper"></i></button>
-
- 
-</div>
-
-<div id="editor" anvil-name="editor">
-  <h1>Глава</h1>
-  <h2>Хедър</h2>
-  <p>Paragraf</p>
-</div>
-
-
 <script src="_/theme/javascript/quill_counter.js"></script>
-<script>
-if (!document.querySelector('#editor').__quill) {
-    var quill = new Quill('#editor', {
-        theme: 'snow',
-        modules: {
-                        counter: {
-                                  container: '#counter',
-                                  unit: 'word'
-                                },
-                        toolbar: '#toolbar',
-                  }
-    });
-}
-</script>
+<script src="_/theme/javascript/load_quill.js"></script>
+
+<div anvil-slot="default"></div>
+
+<div id="editor-container" anvil-name="editor-container">
+  <div id="toolbar">
+    <button class="ql-header" value=1>§</button>
+    <button class="ql-align" value="center"></button>
+    <button class="ql-align" value="right"></button>
+    <button class="ql-bold"></button>
+    <button class="ql-italic"></button>
+    <button id="post" onclick="anvil.call(this, 'post', this)"><i class="fa-light fa-newspaper"></i></button>
+  </div>
+  <div id = "title-container">
+    <div id="title" anvil-name="title">Заглавие asd 3-&</div>
+    <div id="counter-container"><span id="counter" anvil-name="counter">0</span><span>д</span></div>
+  </div>
+  <div id="editor" anvil-name="editor">
+    <h1>Глава</h1>
+    <h2>Хедър</h2>
+    <p>Paragraf</p>
+  </div>
+</div>
+
+
+
+
+
+
+
 
 
 
@@ -50,18 +38,20 @@ if (!document.querySelector('#editor').__quill) {
 
 <style>
   #toolbar{
-    display: flex;
-    justify-content: space-between;
-    border: none;
-  }
-#toolbar svg{
-  height: 2rem !important;
-}
-  .ql-picker{
-    width: 5rem !important;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
   }
 
+
   #editor{
-    border: none;
+    flex: 1;
+    overflow-y: auto; /* Enable vertical scrolling */
   }
+
+#title-container{
+display: flex;
+justify-content: space-between;
+}
+
 </style>
