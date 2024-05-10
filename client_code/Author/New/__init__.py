@@ -138,7 +138,9 @@ class New(NewTemplate):
   
 
   def update_result(self):
+    self.cover = self.dom_nodes['cover']
     cover = cover_factory(self.data)
+    jQ(self.cover).append(cover())
     print(cover)
     pass
 

@@ -19,7 +19,7 @@ class TemplateMemory:
       obj_list = self.collection.chain().find({ key : value }).data({'removeMeta':True})
       list_items = [next(iter(proxy)) for proxy in obj_list]
       return list_items
-      #return [x for x in obj_list]
+      #return [x for x in obj_list].
 
   def get_column(self, column: str, key: str = None, value = None):
       if key:
