@@ -4,7 +4,7 @@ from ..Memory import awesome
 
 
 class Icon(HtmlElement):
-  def __init__(self, name: str = None, bg: str = None, style='regular', id: str = None) -> None:
+  def __init__(self, name: str = None, bg: str = None, style='light', id: str = None) -> None:
     super().__init__(tag = 'span', css='ch-icon-container', id = id)
     print(bg)
     if not name :

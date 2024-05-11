@@ -27,7 +27,7 @@ class CoverClass(HtmlElement):
     
     
     if 'keywords' in data:
-      i = 0
+      i = 1
       for k in data['keywords']:
          if i <= 3:
                self.icons.appendChild(Icon(bg=k))
@@ -43,12 +43,20 @@ class CoverClass(HtmlElement):
        self.title.el.css('font-family', data['font'])
     if 'cover_mask' in data:
        mask = int(data['cover_mask']) / 100
-       mask_color = f'linear-gradient(to top, rgba(0,0,0,{mask}) 0%, rgba(0,0,0,0) 100%)'
+       hex_shadow = data['shadow'].lstrip('#')
+       rgb = tuple(int(hex_shadow[i:i+2], 16) for i in (0, 2, 4))
+       #mask_color = f'fill 0 linear-gradient(to top, rgba({rgb[0]},{rgb[1]},{rgb[2]},{mask}) 0%, rgba({rgb[0]},{rgb[1]},{rgb[2]},0) 100%)'
+       
+       mask_color = f'linear-gradient(to top, rgba({rgb[0]},{rgb[1]},{rgb[2]},{mask}) 0%, rgba({rgb[0]},{rgb[1]},{rgb[2]}, 0) 100%)'
        self.cover_mask.el.css('background-image', mask_color)
+
+       #self.el.css('border-image', mask_color)
 
 
     self.cover_mask.appendChild(self.title)
     self.cover_mask.appendChild(self.icons)
+    #self.appendChild(self.title)
+    #self.appendChild(self.icons)
     self.appendChild(self.cover_mask)
 
 

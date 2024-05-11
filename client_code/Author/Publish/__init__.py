@@ -6,6 +6,7 @@ from ...Cheteme.Author.DetectType import parse_type
 from ...Cheteme.Author.ParseUri import parse_uri
 from anvil.js.window import jQuery as jQ
 from ...Cheteme.ElementsHtml import cover_non_cached
+from ...Cheteme.Contrast import adjust_color_for_contrast
 import anvil.image
 import base64
 
@@ -56,7 +57,7 @@ class Publish(PublishTemplate):
 
     self.font = DropDown(placeholder = 'шрифт', include_placeholder=True)
     self.font.id = 'font'
-    self.font.items = ['serif', 'monospace']
+    self.font.items = ['serif', 'monospace', 'Great Vibes', 'Alumni Sans', 'Noto Sans Display']
     self.font.add_event_handler('change', self.design_change)
     self.add_component(self.font, slot = 'design')
 
@@ -117,15 +118,32 @@ class Publish(PublishTemplate):
 
 
   def design_change(self, sender, **event):
+    contrast = 11
+    color = jQ('#color').val()
+    background = jQ('#background').val()
+
     if sender.id == 'font':
       self.data[sender.id] = sender.selected_value
-    else:
-      self.data[sender.id] = jQ(sender).val()
-    if sender.id == 'background':
+
+    elif sender.id == 'color':
+      background = adjust_color_for_contrast(color, background, contrast)
+    elif sender.id == 'background':
       self.cover_file.clear()
       self.cover_file.text = 'корица'
       self.data['cover'] = None
+
+      color = adjust_color_for_contrast(background, color, contrast)
+    else:
+      self.data[sender.id] = jQ(sender).val()
     
+    self.data['shadow'] = adjust_color_for_contrast(color, '000000', 100)
+    print('shadow', self.data['shadow'])
+    self.data['color'] = color
+    self.data['background'] = background
+    print(color, background)
+    jQ('#color').val(color)
+    jQ('#background').val(background)
+
     self.update_cover()
 
   def new_cover(self, file, **event):
@@ -162,3 +180,5 @@ demo = {
       'html': '<p>hello</p>',
 
 }
+
+
