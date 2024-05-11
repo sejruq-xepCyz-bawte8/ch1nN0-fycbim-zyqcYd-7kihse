@@ -2,6 +2,11 @@ from functools import lru_cache
 from .Cover import CoverClass
 
 #@lru_cache(maxsize=None)
+
+def cover_non_cached(data: dict) -> object:
+  return CoverClass(data)
+
+
 def cover_factory(data: dict) -> object:
   data['keywords'] = ','.join(data['keywords'])
   data = tuple(data.items())

@@ -1,0 +1,51 @@
+<div anvil-slot="default"></div>
+<div class="ch-publish-design">
+  <div anvil-name="cover"></div>
+  <div class="ch-publish-colors">
+    <label for="color"><input type="color" id="color" name="colors" value="#000000" onchange="anvil.call(this, 'design_change', this)"/>Текст</label>    
+    <label for="background"><input type="color" id="background" name="colors" value="#FFFFFF" onchange="anvil.call(this, 'design_change', this)"/>Фон</label>
+    <input type="range" min="0" max="100" value="0" class="slider" id="cover_mask" onchange="anvil.call(this, 'design_change', this)">
+    <div anvil-slot="design"></div>
+    
+  </div>
+</div>
+
+
+
+<style>
+.ch-publish-design{
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+}
+.ch-publish-colors{
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+.ch-publish-colors *{
+  font-weight: unset;
+}
+/* cover */
+.ch-cover{
+    height: 20rem;
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-size: cover;
+    border: 1px solid gray;
+    border-radius: 8px;
+    font-size: 2rem;
+}
+.ch-cover-mask{
+  padding-top: 10rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.ch-cover .ch-icon-text{
+    display: none;
+}
+</style>

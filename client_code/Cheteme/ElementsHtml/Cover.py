@@ -7,28 +7,50 @@ from anvil import *
 
 class CoverClass(HtmlElement):
   def __init__(self, data: dict) -> None:
-    print(data)
+
     super().__init__(tag = 'div', css='ch-cover', id=data['id'])
     self.data = data
+
+    if self.data['cover']:
+       print('has cover')
+       self.set_background_image(self.data['cover'])
     self.title = HtmlElement(tag='dir', css='ch-cover-title', text=data['title'])
     self.icons = HtmlElement(tag='div', css='ch-cover-icons')
+    self.cover_mask = HtmlElement(tag='div', css='ch-cover-mask')
     
-    self.icons.appendChild(Icon(bg=data['genre']))
-    self.icons.appendChild(Icon(bg=data['subgenre']))
-    i = 0
+    if 'genre' in data:
+      if data['genre']:
+         self.icons.appendChild(Icon(bg=data['genre']))
+         if 'subgenre' in data:
+            if data['subgenre']:
+               self.icons.appendChild(Icon(bg=data['subgenre']))
     
-    keywords = data['keywords'].split(",")
     
-    for k in keywords:
-        if i <= 3:
-            self.icons.appendChild(Icon(bg=k))
-        i += 1
+    if 'keywords' in data:
+      i = 0
+      for k in data['keywords']:
+         if i <= 3:
+               self.icons.appendChild(Icon(bg=k))
+         i += 1
   
-    if data['cover']:
+    if 'cover' in data:
        self.set_background_image(data['cover'])
-    
-    self.appendChild(self.title)
-    self.appendChild(self.icons)
+    if 'color' in data:
+       self.el.css('color', data['color'])
+    if 'background' in data:
+       self.el.css('background-color', data['background'])
+    if 'font' in data:
+       self.title.el.css('font-family', data['font'])
+    if 'cover_mask' in data:
+       mask = int(data['cover_mask']) / 100
+       mask_color = f'linear-gradient(to top, rgba(0,0,0,{mask}) 0%, rgba(0,0,0,0) 100%)'
+       self.cover_mask.el.css('background-image', mask_color)
+
+
+    self.cover_mask.appendChild(self.title)
+    self.cover_mask.appendChild(self.icons)
+    self.appendChild(self.cover_mask)
+
 
   def click(self, event):
     print(event)

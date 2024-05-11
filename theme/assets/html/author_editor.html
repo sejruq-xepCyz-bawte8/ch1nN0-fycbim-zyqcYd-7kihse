@@ -4,19 +4,6 @@
 <script src="_/theme/javascript/load_quill.js"></script>
 
 
-
-
-<div anvil-slot="default"></div>
-<div anvil-name="cover"></div>
-<div>
-  <input type="color" id="head" name="head" value="#FFFFFF" />
-  <label for="head">Заглавие</label>
-  <input type="color" id="head" name="head" value="#FFFFFF" />
-  <label for="head">Икони</label>
-  <input type="color" id="head" name="head" value="#FFF2D5" />
-  <label for="head">Фон</label>
-</div>
-
 <div id="editor-container" anvil-name="editor-container">
   <div id="toolbar">
     <button class="ql-header" value=1>§</button>
@@ -25,21 +12,15 @@
     <button class="ql-bold"></button>
     <button class="ql-italic"></button>
     <button id="post" onclick="anvil.call(this, 'post', this)"><i class="fa-light fa-newspaper"></i></button>
-  </div>
-  <div id = "title-container">
-    <div id="title" anvil-name="title">Заглавие asd 3-&</div>
     <div id="counter-container"><span id="counter" anvil-name="counter">0</span><span>д</span></div>
   </div>
+
   <div id="editor" anvil-name="editor">
     <h1>Глава</h1>
     <h2>Хедър</h2>
     <p>Paragraf</p>
   </div>
 </div>
-
-
-
-
 
 
 <style>
@@ -55,9 +36,5 @@
     overflow-y: auto; /* Enable vertical scrolling */
   }
 
-#title-container{
-display: flex;
-justify-content: space-between;
-}
 
 </style>

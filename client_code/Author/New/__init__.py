@@ -7,6 +7,8 @@ from ...Cheteme.ElementsHtml.Icon import Icon
 from ...Cheteme.ElementsHtml import cover_factory
 from anvil_extras import Autocomplete
 from anvil.js.window import jQuery as jQ
+import anvil.image
+import base64
 
 
 class New(NewTemplate):
@@ -21,6 +23,7 @@ class New(NewTemplate):
       'subgenre': "поджанр",
       'keywords': [],
       'words': 0,
+      'cover': None
     }
     #self.publish_container.visible = False
 
@@ -67,10 +70,7 @@ class New(NewTemplate):
     self.actions.add_component(self.back_edit)
 
     # RESULTS
-    self.cover = Image(width = "5rem", height = "5rem")
     self.uri = Label()
-
-    self.result_container.add_component(self.cover)
     self.result_container.add_component(self.uri)
 
 
@@ -86,7 +86,13 @@ class New(NewTemplate):
      self.data['type'] = self.type.selected_value
 
   def new_cover(self, file, **event):
-     self.cover.source = file
+     cover = anvil.image.generate_thumbnail(file, 450)
+     content_type = file.content_type
+     cover_bytes = cover.get_bytes()
+     image_base64 = base64.b64encode(cover_bytes).decode('utf-8')
+     image_url = f'data:{content_type};base64,{image_base64}'
+     self.data['cover'] = f'url("{image_url}")'
+     self.update_result()
 
   def genre_change(self, **event):
     self.data['genre'] = self.genre.selected_value
@@ -115,6 +121,7 @@ class New(NewTemplate):
     if not self.quill :
       from anvil.js.window import quill
       self.quill = quill
+
     self.words = int(self.dom_nodes['counter'].innerText)
     self.data['words'] = self.words
     #self.text = self.quill.getText()
@@ -139,10 +146,10 @@ class New(NewTemplate):
 
   def update_result(self):
     self.cover = self.dom_nodes['cover']
+    jQ(self.cover).empty()
     cover = cover_factory(self.data)
     jQ(self.cover).append(cover())
-    print(cover)
-    pass
+   
 
 
 

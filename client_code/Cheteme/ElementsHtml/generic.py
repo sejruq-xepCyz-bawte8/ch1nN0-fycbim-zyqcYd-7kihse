@@ -4,7 +4,7 @@ import base64
 class HtmlElement:
   
   def __init__(self, data: dict = None, css: str or list = None, tag: str = 'dir', text: str = None, ch: bool = True, id: str = None) -> None:
-
+    
     if data:
       if 'text' in data:
         text = data['text']
@@ -12,12 +12,15 @@ class HtmlElement:
         css = data['css']
       if 'ch' in data:
         ch = data['ch']
-      
+
+
+
+
     self.el = jQ(f'<{tag}>')
     self._text = text
     self._css = css
     self.id = id
-    print(self.id)
+    
     
     self.el.addClass(css)
     self.el.text(text)
@@ -47,12 +50,13 @@ class HtmlElement:
   def visable_toggle(self):
     jQ(self.el).toggle()
 
-  def set_background_image(self, imageData: bytes, ext: str = 'jpeg'):
-     image_base64 = base64.b64encode(imageData).decode('utf-8')
-     image_url = f'data:image/{ext};base64,{image_base64}'
+  def set_background_image(self, image_url: str):
      jQ(self.el).css('background-image', image_url)
      
   
+  def remove(self):
+     jQ(self.el).remove()
+
   @property
   def text(self):
       return self._text

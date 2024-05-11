@@ -1,0 +1,5 @@
+container:
+  type: HtmlTemplate
+  properties: {html: '@theme:html/author_publish.html'}
+components: []
+is_package: true

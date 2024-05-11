@@ -1,0 +1,5 @@
+container:
+  type: HtmlTemplate
+  properties: {html: '@theme:html/author_editor.html'}
+components: []
+is_package: true

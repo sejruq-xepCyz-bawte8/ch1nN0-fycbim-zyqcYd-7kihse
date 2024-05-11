@@ -13,7 +13,7 @@ services:
   client_config: {allow_signup: false, enable_automatically: false, use_email: true,
     confirm_email: false}
   server_config: {user_table: users}
-startup: {type: form, module: Author.New}
+startup: {type: form, module: Author.Publish}
 package_name: ______2
 allow_embedding: false
 name: ЧетеМе2

@@ -20,7 +20,7 @@ document.addEventListener('touchstart', function(event) {
     var target = event.target;
     if (!target.closest('#editable-content') && target.isContentEditable === false) {
         // Prevent default touch behavior (zooming)
-        event.preventDefault();
+        //event.preventDefault();
     }
 }, { passive: false });
 
