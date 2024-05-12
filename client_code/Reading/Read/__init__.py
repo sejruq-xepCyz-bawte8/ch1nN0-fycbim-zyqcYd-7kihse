@@ -22,8 +22,7 @@ class Read(ReadTemplate):
         self.goStart.add_event_handler('click', self.scrollTo)
         self.goEnd = Link(icon = "fa:chevron-right")
         self.goEnd.add_event_handler('click', self.scrollTo)
-        
-        self.pagesLabel = Label(text=0)
+        self.pagesLabel = Label(text=0, font_size=12, foreground="lightgray")
         self.add_component(self.goStart, slot = 'reading_bar')
         self.add_component(self.pagesLabel, slot = 'reading_bar')
         self.add_component(self.goEnd, slot = 'reading_bar')
