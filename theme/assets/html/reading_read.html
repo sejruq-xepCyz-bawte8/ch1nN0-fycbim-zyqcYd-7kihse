@@ -12,6 +12,13 @@ body{
   margin: 0px;
   overflow: hidden;
 }
+#top{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 3px;
+    background: rgb(255, 255, 255);
+}
 #cheteme_reader{
   width: 100%;
   height: 100%;
@@ -96,6 +103,6 @@ white-space: nowrap; /* Prevents breaking into a new line */
         }
     }
 </script>
-
+<div id="top"></div>
 <div id="cheteme_reader" anvil-name="cheteme_reader" onscroll="handleScroll(event)"></div>
 <div id="reading_bar" anvil-name="reading_bar" anvil-slot="reading_bar"></div>
