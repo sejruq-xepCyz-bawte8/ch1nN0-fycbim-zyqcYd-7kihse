@@ -1,0 +1,5 @@
+container:
+  type: HtmlTemplate
+  properties: {html: '@theme:html/reading_read.html'}
+components: []
+is_package: true

@@ -13,14 +13,14 @@ services:
   client_config: {allow_signup: false, enable_automatically: false, use_email: true,
     confirm_email: false}
   server_config: {user_table: users}
-startup: {type: form, module: Author.Publish}
+startup: {type: form, module: Reading.Read}
 package_name: ______2
 allow_embedding: false
 name: ЧетеМе2
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
 metadata: {title: ЧетеМе, description: ЧетеМе, logo_img: 'asset:chetemecover.webp'}
 startup_form: null
-native_deps: {head_html: 'ir<script src=''_/theme/javascript/init.js''></script>
+native_deps: {head_html: '<script src=''_/theme/javascript/init.js''></script>
 
     <script src=''_/theme/javascript/lokijs.js''></script>
 
