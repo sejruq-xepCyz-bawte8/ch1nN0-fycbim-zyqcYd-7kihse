@@ -51,20 +51,42 @@ white-space: nowrap; /* Prevents breaking into a new line */
 #reading_bar{
     display: flex;
     flex-direction: row !important;
+    justify-content: space-around;
 }
 
 </style>
 <script>
     let scrollTimeout;
+    const scrollContainer = document.getElementById('cheteme_reader');
     function handleScroll(event) {
         
         if (scrollTimeout) {
             clearTimeout(scrollTimeout);
         }
         scrollTimeout = setTimeout(function() {
-            
-            anvil.call(event.target, 'scroll_reader', event.target);
-        }, 150);
+            checkTopPage();
+        }, 100);
+    }
+    function checkTopPage() {
+        const pages = document.querySelectorAll('.page');
+        let mostVisiblePage = null;
+        let maxVisibleHeight = 0;
+
+        pages.forEach(page => {
+            const rect = page.getBoundingClientRect();
+            const visibleHeight = Math.max(0, Math.min(rect.bottom, scrollContainer.clientHeight) - Math.max(rect.top, 0));
+
+            if (visibleHeight > maxVisibleHeight) {
+                maxVisibleHeight = visibleHeight;
+                mostVisiblePage = page;
+            }
+        });
+
+        if (mostVisiblePage) {
+            const currentPageElement = document.getElementById('page');
+            const newPageId = mostVisiblePage.id;
+            anvil.call(scrollContainer, 'scroll_reader', newPageId);
+        }
     }
 </script>
 

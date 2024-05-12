@@ -9,15 +9,25 @@ from time import time
 class Read(ReadTemplate):
     def __init__(self, **properties):
         self.add_event_handler('show', self.form_show)
-        self.goStart = Button(icon = "fa:chevron-left")
+        
+        self.menu = Link(icon = "fa: fa-light fa-ellipsis-vertical")
+        self.bookmark = Link(icon = "fa: fa-light fa-bookmark")
+        self.like = Link(icon = "fa: fa-light fa-heart")
+        self.add_component(self.bookmark, slot = 'reading_bar')
+        self.add_component(self.like, slot = 'reading_bar')
+        
+
+        self.goStart = Link(icon = "fa:chevron-left")
         self.goStart.page = "1"
         self.goStart.add_event_handler('click', self.scrollTo)
-        self.goEnd = Button(icon = "fa:chevron-right")
+        self.goEnd = Link(icon = "fa:chevron-right")
         self.goEnd.add_event_handler('click', self.scrollTo)
+        
         self.pagesLabel = Label(text=0)
         self.add_component(self.goStart, slot = 'reading_bar')
         self.add_component(self.pagesLabel, slot = 'reading_bar')
         self.add_component(self.goEnd, slot = 'reading_bar')
+        self.add_component(self.menu, slot = 'reading_bar')
         self.init_components(**properties)
     def scrollTo(self, **event):
         element = document.getElementById(event['sender'].page)
@@ -88,16 +98,17 @@ class Read(ReadTemplate):
                         self.createNewPage()
                         self.currentPage.appendChild(clone)
                 
-    def scroll_reader(self, *event):
-        self.mostVisible = 0
-        for element in self.pages:
-            self.mostVisible += 1
-            rect = element.getBoundingClientRect()
-            if rect.top >= 0 and rect.top <=100:
-                break
-                
-                
+    def scroll_reader(self, page, *event):
+        self.mostVisible = page
         self.pagesLabel.text = f"{self.mostVisible}/{self.pageNumber}"
+
+
+
+        
+
+     
+                
+        
             
            
 
