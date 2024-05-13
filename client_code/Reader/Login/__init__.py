@@ -2,7 +2,7 @@ from ._anvil_designer import LoginTemplate
 from anvil import *
 import anvil.server
 import anvil.users
-from ...Cheteme.Main import navigation_click, user
+from ...Cheteme.Main import navigation_click, update_user_navigation, user, navigation
 
 choise = {
   True: "Регистрация",
@@ -53,6 +53,9 @@ class Login(LoginTemplate):
       global user
       try:
         user = anvil.users.login_with_email(self.email.text, self.password.text)
+        update_user_navigation(user, navigation)
+        navigation_click(id='Reader.Settings')
+        
       except anvil.users.TooManyPasswordFailures as e:
           # Do something in response to the exception
           self.info.text = "Твърде много опити"

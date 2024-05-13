@@ -9,8 +9,7 @@ from .ElementsHtml.Blanket import Blanket
 
 import anvil.users
 
-user = None
-navigation = None
+
 
 navigation_list = [
   {'bg':'Днес', 'group':'Reader', 'form':'Today'},
@@ -30,13 +29,14 @@ navigation_groups = (x['group'] for x in navigation_list)
 navigation_forms = (x['form'] for x in navigation_list)
 navigation_keys = list(navigation_groups) + list(navigation_forms)
 
-
+user = anvil.users.get_user()
+navigation = NavigationClass(navigation_list=navigation_list)
 
 def ready(event):
-  global navigation
   print("Ready")
-  navigation = NavigationClass(navigation_list=navigation_list)
-  update_user()
+  #navigation = NavigationClass(navigation_list=navigation_list)
+  jQ('body').append(navigation())
+  update_user_navigation(user, navigation)
   
   today = document.getElementById("Reader.Today")
   
@@ -47,8 +47,15 @@ def ready(event):
   #blanket.toggle()
   
   
-def navigation_click(proxyobject): #will work on every form
-  classes_click = proxyobject.id.split('.')
+def navigation_click(proxyobject=None, id=None): #will work on every form
+  if id:
+    proxyobject = document.getElementById(id)
+    classes_click = id.split('.')
+  else:
+    classes_click = proxyobject.id.split('.')
+  if not proxyobject and not id:
+    open_form('Reader.Today')
+  print(proxyobject)
   proxyobject.parentNode.classList.remove(*navigation_keys)
   proxyobject.parentNode.classList.add(*classes_click)
   jQ('.ch-icon-container').removeClass('clicked')
@@ -59,19 +66,17 @@ def navigation_click(proxyobject): #will work on every form
         open_form('Reader.Today')
 
  
-def update_user():
-    user = anvil.users.get_user()
+def update_user_navigation(user, navigation):
     if user:
         navigation.css_remove_class('not_user')
         navigation.css_remove_class('is_author')
         navigation.css_add_class("is_user")
-        if user.is_author:
+        if user['is_author']:
             navigation.css_add_class("is_author")
     else:
         navigation.css_remove_class('is_user')
         navigation.css_remove_class('is_author')
         navigation.css_add_class('not_user')
-    
         
 
 

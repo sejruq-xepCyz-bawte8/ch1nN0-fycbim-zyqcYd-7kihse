@@ -12,7 +12,7 @@ class NavigationClass(HtmlElement):
     self.clicked = None
     self.current = None
     self.icons = {}
-    jQ('body').append(self.el)
+    #jQ('body').append(self.el)
     
     for i in navigation_list:
       id = f"{i['group']}.{i['form']}"

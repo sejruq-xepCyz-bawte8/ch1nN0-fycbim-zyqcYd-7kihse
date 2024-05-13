@@ -27,7 +27,7 @@ def sign_up(email, password, code):
     
     if user:
       code_row['used'] += 1
-      return {'user':user, 'reason':'Успешна регистрация', 'is_author': code_row['is_author']}
+      return {'user':user, 'reason':'Успешна регистрация, активирайте акаунта с изпратения линк в ел. поща', 'is_author': code_row['is_author']}
     else:
       return {'user':user, 'reason':'Неуспешна регистрация'}
       
