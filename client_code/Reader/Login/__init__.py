@@ -43,12 +43,10 @@ class Login(LoginTemplate):
       
 
   def sign_up_user(self):
-      try:
-        user = anvil.server.call('sign_up', self.email.text, self.password.text, self.code.text)
-        #user = anvil.users.signup_with_email(self.email.text, self.password.text)
-    
-      except:
-         print('error')
+      global user
+      result = anvil.server.call('sign_up', self.email.text, self.password.text, self.code.text)
+      self.info.text = result['reason']
+      user = result['user']
 
 
   def login_user(self):
