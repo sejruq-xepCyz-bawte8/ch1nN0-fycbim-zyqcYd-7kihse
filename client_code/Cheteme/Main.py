@@ -12,7 +12,7 @@ def ready(event):
   open_form('Reader.Today')
   jQ('body').append(navigation)
   sleep(0.5)
-  blanket.toggle()
+  #blanket.toggle()
   
   
   
@@ -21,6 +21,6 @@ def ready(event):
 
 if __name__ == "__main__":
   blanket = Blanket()()
-  jQ('body').append(blanket)
+  #jQ('body').append(blanket)
   jQ('document').ready(ready)
   
