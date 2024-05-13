@@ -3,18 +3,17 @@ from anvil import *
 import anvil.server
 import anvil.js
 from anvil.js.window import document
-from time import time
+from time import time, sleep
 
 
 class Read(ReadTemplate):
     def __init__(self, **properties):
         self.add_event_handler('show', self.form_show)
-        
+        self.navigation = FlowPanel()
         self.menu = Link(icon = "fa: fa-light fa-ellipsis-vertical")
         self.bookmark = Link(icon = "fa: fa-light fa-bookmark")
         self.like = Link(icon = "fa: fa-light fa-heart")
-        self.add_component(self.bookmark, slot = 'reading_bar')
-        self.add_component(self.like, slot = 'reading_bar')
+
         
 
         self.goStart = Link(icon = "fa:chevron-left")
@@ -23,15 +22,35 @@ class Read(ReadTemplate):
         self.goEnd = Link(icon = "fa:chevron-right")
         self.goEnd.add_event_handler('click', self.scrollTo)
         self.pagesLabel = Label(text=0, font_size=12, foreground="lightgray")
-        self.add_component(self.goStart, slot = 'reading_bar')
-        self.add_component(self.pagesLabel, slot = 'reading_bar')
-        self.add_component(self.goEnd, slot = 'reading_bar')
-        self.add_component(self.menu, slot = 'reading_bar')
+
+        self.navigation.add_component(self.bookmark)
+        self.navigation.add_component(self.like)
+        self.navigation.add_component(self.goStart)
+        self.navigation.add_component(self.pagesLabel)
+        self.navigation.add_component(self.goEnd)
+        self.navigation.add_component(self.menu)
+        self.add_component(self.navigation, slot = 'reading_bar')
+
         self.init_components(**properties)
     def scrollTo(self, **event):
         element = document.getElementById(event['sender'].page)
         if element:
             element.scrollIntoView({'behavior': 'smooth', 'block': 'start'})
+    def double_click(self, **event):
+        self.navigation.visible = not self.navigation.visible
+        sleep(0.2)
+        old_page = f'{self.mostVisible}'
+        self.distribute()
+        
+        for t in range(60):
+            sleep(0.3)
+            print('change', old_page)
+            element = document.getElementById(f'{old_page}')
+            if element:
+                element.scrollIntoView()
+                break
+           
+
 
     def form_show(self, **event):
         # Set Form properties and Data Bindings.
@@ -44,7 +63,6 @@ class Read(ReadTemplate):
         self.targetHeigth = self.reader.offsetHeight
         
         self.source.innerHTML = html
-        self.reader.innerHTML = "hello"
         
         self.currentPage = None
         self.currentParagraph = None
@@ -74,6 +92,22 @@ class Read(ReadTemplate):
         self.currentPage.appendChild(self.currentParagraph)
     
     def distribute(self):
+        self.reader.innerHTML = ''
+        self.last_scroll = time()
+        
+        self.pages = []
+        self.reader =  document.getElementById("cheteme_reader")
+        self.source = document.createElement("div")
+        self.targetHeigth = self.reader.offsetHeight
+        
+        self.source.innerHTML = html
+        
+        self.currentPage = None
+        self.currentParagraph = None
+        self.pageNumber = 0
+        #self.add_event_handler('show', self.createNewPage)
+
+
         self.createNewPage()
         for element in self.source.childNodes:
             if 'tagName' in element:

@@ -62,15 +62,26 @@ white-space: nowrap; /* Prevents breaking into a new line */
 }
 
 #reading_bar{
+    width: 100%;
     display: flex;
-    flex-direction: row !important;
+    flex-direction: row;
     justify-content: space-around;
     font-size: 2rem;
+ 
+    background-color: rgba(255, 255, 255, 0.842);
+  backdrop-filter: blur(10px);
 }
 
 .fa{
     color: lightgrey;
     padding: 2px;
+}
+
+*{
+    user-select: none; /* Standard syntax */
+  -webkit-user-select: none; /* Safari and Chrome, Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 </style>
@@ -108,6 +119,36 @@ white-space: nowrap; /* Prevents breaking into a new line */
         }
     }
 </script>
+<script>
+    let lastTapTime = 0;
+    const DOUBLE_TAP_THRESHOLD = 150; // Time in milliseconds
+  
+    function handleTouchStart(event) {
+      const currentTime = new Date().getTime();
+      const tapDelay = currentTime - lastTapTime;
+      if (tapDelay < DOUBLE_TAP_THRESHOLD && tapDelay > 0) {
+        anvil.call(scrollContainer, 'double_click');
+        event.stopPropagation();
+      }
+      lastTapTime = currentTime;
+    }
+  
+    scrollContainer.addEventListener('touchstart', handleTouchStart);
+  </script>
+  <script>
+    // Function to handle double-click
+    function handleDoubleClick(event) {
+      console.log("Element was double-clicked!");
+      // Add any action here
+      anvil.call(scrollContainer, 'double_click');
+      event.stopPropagation();
+    }
+  
+    // Add event listener for double-click
+    scrollContainer.addEventListener('dblclick', handleDoubleClick);
+  </script>
+  
+  
 <div id="top"></div>
 <div id="cheteme_reader" anvil-name="cheteme_reader" onscroll="handleScroll(event)"></div>
 <div id="reading_bar" anvil-name="reading_bar" anvil-slot="reading_bar"></div>
