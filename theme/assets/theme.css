@@ -45,6 +45,14 @@ body,
 .ch-navigation > span{
     display: none;
 }
+
+.clicked{
+    background:  pink;
+}
+
 .Reader .Reader{
     display: unset;
+}
+.not_user .Settings{
+    display: none;
 }
