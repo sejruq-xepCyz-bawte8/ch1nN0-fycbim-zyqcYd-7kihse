@@ -24,7 +24,7 @@ navigation_groups = (x['group'] for x in navigation_list)
 navigation_forms = (x['form'] for x in navigation_list)
 navigation_keys = list(navigation_groups) + list(navigation_forms)
 
-
+user = None
 
 def ready(event):
   print("Ready")
@@ -34,8 +34,8 @@ def ready(event):
   today = document.getElementById("Reader.Today")
   
   navigation_click(today)
+
   
-  user = anvil.users.get_user()
   #sleep(0.5)
   #blanket.toggle()
   

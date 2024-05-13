@@ -1,7 +1,8 @@
 from ._anvil_designer import TodayTemplate
 from anvil import *
+import anvil.users
 
-
+user = anvil.users.get_user()
 
 
 class Today(TodayTemplate):
