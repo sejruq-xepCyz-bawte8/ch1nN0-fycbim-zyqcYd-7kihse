@@ -1,3 +1,4 @@
+import anvil.server
 import re
 def parse_type(html: str) -> dict:
     print(html)

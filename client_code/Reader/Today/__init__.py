@@ -1,5 +1,6 @@
 from ._anvil_designer import TodayTemplate
 from anvil import *
+import anvil.server
 import anvil.users
 
 user = anvil.users.get_user()

@@ -1,3 +1,4 @@
+import anvil.server
 from anvil.js.window import jQuery as jQ
 import base64
 

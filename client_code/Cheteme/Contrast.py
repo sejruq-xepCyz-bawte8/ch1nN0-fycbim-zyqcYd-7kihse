@@ -1,3 +1,4 @@
+import anvil.server
 import math
 
 def hex_to_rgb(hex_color):

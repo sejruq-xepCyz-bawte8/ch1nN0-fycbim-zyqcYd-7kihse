@@ -1,3 +1,4 @@
+import anvil.server
 from .Template_Module import TemplateMemory
 
 class Awesome(TemplateMemory):

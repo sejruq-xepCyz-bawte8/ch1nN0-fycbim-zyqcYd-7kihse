@@ -2,6 +2,7 @@ from anvil.js.window import jQuery as jQ
 from .generic import HtmlElement
 from .Icon import Icon
 from anvil import *
+import anvil.server
 
 
 

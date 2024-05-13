@@ -61,7 +61,31 @@ db_schema:
     - name: remembered_logins
       admin_ui: {order: 7, width: 200}
       type: simpleObject
+    - name: code
+      admin_ui: {width: 200, order: 8}
+      type: link_single
+      target: signupcodes
+    - name: is_author
+      admin_ui: {width: 200, order: 9}
+      type: bool
     title: Users
+  signupcodes:
+    client: none
+    server: full
+    columns:
+    - name: code
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: volume
+      admin_ui: {width: 200, order: 1}
+      type: number
+    - name: used
+      admin_ui: {width: 200, order: 2}
+      type: number
+    - name: is_author
+      admin_ui: {width: 200, order: 3}
+      type: bool
+    title: SignUpCodes
 secrets:
   IDHMAC:
     value: {NGQUW2Q5LEUR66SD: DdXd+9npfwNgD+8y/GApCGS7p56qZxkI2vl46Z0J5OJNJTOwQfv5ccZK0yWkkFY4Gv5zOj/852MxN000sZ+5+nbKmOC9lw0373NH9PX2TvDkLBmQ+ZUYpqzq438AjY6SZBDL}

@@ -1,3 +1,4 @@
+import anvil.server
 keywords = [
 #menus
     {'bg':'днес', 'name':'home'},

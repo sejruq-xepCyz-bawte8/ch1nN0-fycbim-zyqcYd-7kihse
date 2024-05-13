@@ -1,3 +1,4 @@
+import anvil.server
 class TemplateMemory:
   def __init__(self, loki_collection: object):
     self.collection = loki_collection

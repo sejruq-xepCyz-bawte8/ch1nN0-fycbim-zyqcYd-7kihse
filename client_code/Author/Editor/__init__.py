@@ -1,5 +1,6 @@
 from ._anvil_designer import EditorTemplate
 from anvil import *
+import anvil.server
 
 
 class Editor(EditorTemplate):

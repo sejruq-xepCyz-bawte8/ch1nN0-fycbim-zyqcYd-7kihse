@@ -1,6 +1,7 @@
 from anvil.js.window import jQuery as jQ
 from anvil.js.window import document
 from anvil import *
+import anvil.server
 from time import sleep, time
 
 from .ElementsHtml.Navigation import NavigationClass

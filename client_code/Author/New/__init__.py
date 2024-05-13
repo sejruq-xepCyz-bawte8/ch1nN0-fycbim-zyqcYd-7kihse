@@ -1,5 +1,6 @@
 from ._anvil_designer import NewTemplate
 from anvil import *
+import anvil.server
 from ...Cheteme.Memory import genres, keywords, awesome
 from ...Cheteme.Author.ParseUri import parse_uri
 from ...Cheteme.Author.DetectType import parse_type

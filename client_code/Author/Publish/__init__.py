@@ -1,5 +1,6 @@
 from ._anvil_designer import PublishTemplate
 from anvil import *
+import anvil.server
 from anvil_extras import Autocomplete, Slider
 from ...Cheteme.Memory import genres, keywords, awesome
 from ...Cheteme.Author.DetectType import parse_type

@@ -1,3 +1,4 @@
+import anvil.server
 from anvil.js.window import awesomeColl, genresColl, keywordsColl
 import _icons, _genres, _keywords
 

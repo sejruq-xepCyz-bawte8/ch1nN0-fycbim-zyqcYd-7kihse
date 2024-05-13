@@ -1,5 +1,6 @@
 from ._anvil_designer import Genre_ChoiseTemplate
 from anvil import *
+import anvil.server
 from anvil_extras import ChipsInput
 from anvil_extras import Autocomplete
 from ...Cheteme.Memory import genres
