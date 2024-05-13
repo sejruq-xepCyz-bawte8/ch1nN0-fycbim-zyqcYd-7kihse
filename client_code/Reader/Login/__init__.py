@@ -56,5 +56,7 @@ class Login(LoginTemplate):
       except anvil.users.TooManyPasswordFailures as e:
           # Do something in response to the exception
           self.info.text = "Твърде много опити"
+      except anvil.users.EmailNotConfirmed as e:
+          self.info.text = "🙀 Непотвърдена ел. поща"
       except anvil.users.AuthenticationFailed as e:
           self.info.text = "🙀 Некоректна парола или ел. поща"

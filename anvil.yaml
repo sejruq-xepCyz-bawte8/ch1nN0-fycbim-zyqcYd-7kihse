@@ -13,7 +13,28 @@ services:
   client_config: {allow_signup: true, enable_automatically: true, use_email: true,
     confirm_email: true, require_secure_passwords: true, allow_remember_me: true,
     remember_me_days: 30}
-  server_config: {user_table: users}
+  server_config:
+    user_table: users
+    email_content:
+      confirm_address: {subject: ЧетеМе - активиране на акаунт, html: '<p>Активирайте
+          акаунта кликвайки линка за потвърждение:</p>
+
+
+          <p>{{confirm_link}}</p>
+
+
+          <p>ЧетеМе</p>'}
+      reset_password: {subject: ЧетеМе - смяна на парола, html: '<p>Hi there,</p>
+
+
+          <p>Поискахте да смените паролата на {{email}}. За да го направите кликнете
+          линка (валиден 10 минути):</p>
+
+
+          <p>{{reset_link}}</p>
+
+
+          <p>ЧетеМе</p>'}
 startup: {type: module, module: Cheteme.Main}
 package_name: ______2
 allow_embedding: false
