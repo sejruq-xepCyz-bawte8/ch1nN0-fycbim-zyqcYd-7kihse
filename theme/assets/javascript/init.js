@@ -13,3 +13,14 @@ if (viewportMetaTag) {
     // Append the new viewport meta tag to the head of the document
     document.head.appendChild(viewportMetaTag);
 }
+
+function navClick(element, event) {
+    // Prevent default link behavior event.preventDefault();
+    // Stop any other event handlers from firing event.stopImmediatePropagation();
+
+   // Your code here
+   console.log("Event fired once" , element);
+
+   // Correcting the reference to the clicked element
+   anvil.call($("#appGoesHere > div"), 'navigation_click', element);
+}

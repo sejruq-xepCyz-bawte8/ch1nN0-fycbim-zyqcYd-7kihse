@@ -1,4 +1,4 @@
-#from anvil.js.window import jQuery as jQ
+from anvil.js.window import jQuery as jQ
 from .generic import HtmlElement
 from ..Memory import awesome
 
@@ -6,9 +6,9 @@ from ..Memory import awesome
 class Icon(HtmlElement):
   def __init__(self, name: str = None, bg: str = None, style='light', id: str = None) -> None:
     super().__init__(tag = 'span', css='ch-icon-container', id = id)
-    print(bg)
+  
     if not name :
-      name_search = awesome.get_icon_code(bg)
+      name_search = awesome.get_icon_code(bg.lower())
       if name_search:
         name = name_search
       else:
@@ -30,6 +30,8 @@ class Icon(HtmlElement):
     self.span = HtmlElement(tag='span', css='ch-icon-text')
     self.span.text = bg
     
+
+
     self.appendChild(self.icon)
     self.appendChild(self.span)
 

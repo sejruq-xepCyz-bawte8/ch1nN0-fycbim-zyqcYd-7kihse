@@ -4,6 +4,8 @@ from anvil import *
 
 class Editor(EditorTemplate):
   def __init__(self, **properties):
+    from ...Cheteme.Main import navigation_click
+    self.navigation_click = navigation_click
     self.init_components(**properties)
     #self.add_event_handler('show', self.form_show)
 

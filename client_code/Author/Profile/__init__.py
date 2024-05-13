@@ -9,6 +9,8 @@ from anvil.tables import app_tables
 
 class Profile(ProfileTemplate):
   def __init__(self, **properties):
+    from ...Cheteme.Main import navigation_click
+    self.navigation_click = navigation_click
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 

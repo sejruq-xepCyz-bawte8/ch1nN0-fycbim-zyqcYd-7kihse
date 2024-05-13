@@ -10,6 +10,8 @@ from anvil.tables import app_tables
 class Settings(SettingsTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
+    from ...Cheteme.Main import navigation_click
+    self.navigation_click = navigation_click
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.

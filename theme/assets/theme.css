@@ -41,3 +41,10 @@ body,
     scrollbar-width: none; /* Firefox */
 }
 
+/*NAVIGATION*/
+.ch-navigation > span{
+    display: none;
+}
+.Reader .Reader{
+    display: unset;
+}

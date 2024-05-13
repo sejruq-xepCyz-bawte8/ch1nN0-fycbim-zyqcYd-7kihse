@@ -13,6 +13,8 @@ import base64
 
 class New(NewTemplate):
   def __init__(self, **properties):
+    from ...Cheteme.Main import navigation_click
+    self.navigation_click = navigation_click
     self.init_components(**properties)
     self.quill = None
     self.data = {

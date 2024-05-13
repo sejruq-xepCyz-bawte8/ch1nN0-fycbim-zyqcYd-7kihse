@@ -8,6 +8,9 @@ from time import time, sleep
 
 class Read(ReadTemplate):
     def __init__(self, **properties):
+        from ...Cheteme.Main import navigation_click
+        self.navigation_click = navigation_click
+        
         self.add_event_handler('show', self.form_show)
         self.navigation = FlowPanel()
         self.menu = Link(icon = "fa: fa-light fa-ellipsis-vertical")

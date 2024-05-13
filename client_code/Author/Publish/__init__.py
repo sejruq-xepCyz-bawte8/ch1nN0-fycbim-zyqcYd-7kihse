@@ -12,6 +12,8 @@ import base64
 
 class Publish(PublishTemplate):
   def __init__(self, data: dict = None, **properties):
+    from ...Cheteme.Main import navigation_click
+    self.navigation_click = navigation_click
     self.data = self.check_data(data)
     self.cover = self.dom_nodes['cover']
     self.update_cover()
