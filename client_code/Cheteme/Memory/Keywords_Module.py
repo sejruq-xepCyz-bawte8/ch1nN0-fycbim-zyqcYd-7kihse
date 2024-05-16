@@ -1,4 +1,4 @@
-import anvil.server
+
 from .Template_Module import TemplateMemory
 
 class Keywords(TemplateMemory):
@@ -20,3 +20,6 @@ class Keywords(TemplateMemory):
 
   def get_keyword_names(self):
     return self.get_column(column='bg')
+  
+
+ 

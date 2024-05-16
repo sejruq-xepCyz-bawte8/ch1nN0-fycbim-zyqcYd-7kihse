@@ -1,4 +1,4 @@
-import anvil.server
+
 icons = [
 #menus
     {'bg':'днес', 'name':'home'},

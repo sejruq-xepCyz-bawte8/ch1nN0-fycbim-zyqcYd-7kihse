@@ -8,11 +8,11 @@ import anvil.server
 
 class NavigationClass(HtmlElement):
   def __init__(self, icons: list = None, navigation_list: list = None) -> None:
-    super().__init__(tag = 'div', css='ch-navigation')
+    super().__init__(tag = 'div', css='ch-navigation', id="navigation")
     self.clicked = None
     self.current = None
     self.icons = {}
-    #jQ('body').append(self.el)
+    
     
     for i in navigation_list:
       id = f"{i['group']}.{i['form']}"

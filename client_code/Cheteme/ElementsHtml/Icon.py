@@ -1,4 +1,3 @@
-import anvil.server
 from anvil.js.window import jQuery as jQ
 from .generic import HtmlElement
 from ..Memory import awesome

@@ -1,4 +1,4 @@
-import anvil.server
+
 genres = [
 # to be used if collection of works in one file
 {'bg':'проза','gid':'prose', 'level':0,'desc':''},

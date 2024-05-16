@@ -1,6 +1,5 @@
 container:
   type: HtmlTemplate
-  properties: {html: "<center style=\"font-style:italic; color:#888; margin: 3em;\"\
-      >\n  (Today2)\n</center>\n<div anvil-slot=\"default\"></div>"}
+  properties: {html: '@theme:html/reader_today.html'}
 components: []
 is_package: true

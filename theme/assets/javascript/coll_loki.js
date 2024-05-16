@@ -5,9 +5,13 @@ var chetemeDB = new loki('cheteme.db', { adapter: chetemeDBadapter });
 var TemplateColl = chetemeDB.addCollection("Template");
 
 var awesomeColl = chetemeDB.addCollection("Awesome", {unique: ['bg']});
-var keywordsColl = chetemeDB.addCollection("Keywords", {unique: ['bg']});
-
 var genresColl = chetemeDB.addCollection("Genres", {unique: ['gid']});
+var keywordsColl = chetemeDB.addCollection("Keywords", {unique: ['bg']});
+var worksColl = chetemeDB.addCollection("Works", {unique: ['wid']});
+var contentColl = chetemeDB.addCollection("Content", {unique: ['wid']});
+var readerCall = chetemeDB.addCollection("Reader", {unique: ['wid']});
+
+
 
 
 

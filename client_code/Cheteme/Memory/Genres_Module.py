@@ -1,4 +1,4 @@
-import anvil.server
+
 from .Template_Module import TemplateMemory
 from functools import lru_cache
 
@@ -9,25 +9,27 @@ class Genres(TemplateMemory):
       self.collection.insert(data)
 
 
-  @lru_cache(maxsize=None)
+ 
   def genre_names_in_level(self, level):
     return self.get_column('bg', 'level', value=level)
 
 
-  @lru_cache(maxsize=None)
+
   def genres_list_in_level(self, level):
     return self.get_list('level', value=level)
   
-  @lru_cache(maxsize=None)
+
   def genre_subgenre_names(self, genre):
     gid = self.get_one(key='bg', value=genre)['gid']
     return self.get_column(column='bg', key='genre', value=gid)
 
-  @lru_cache(maxsize=None)
+
+
+
   def genre_subgenres(self, genre):
     return self.get_list(key='genre', value=genre)
   
-  @lru_cache(maxsize=None)
+  
   def prose_by_words(self, words: int = 0) -> list:
     return self.get_column_between_keys(column='bg', value = words, key_min='wmin', key_max='wmax')
 
