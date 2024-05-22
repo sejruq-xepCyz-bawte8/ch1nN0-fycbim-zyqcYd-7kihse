@@ -5,7 +5,7 @@ dependencies:
 services:
 - source: /runtime/services/tables.yml
   client_config: {enable_v2: true}
-  server_config: {auto_create_missing_columns: false}
+  server_config: {auto_create_missing_columns: true}
 - source: /runtime/services/anvil/secrets.yml
   client_config: {}
   server_config: {}
@@ -89,6 +89,9 @@ db_schema:
     - name: is_author
       admin_ui: {width: 200, order: 9}
       type: bool
+    - name: email_confirmation_key
+      admin_ui: {width: 200}
+      type: string
     title: Users
   signupcodes:
     client: none
@@ -107,6 +110,48 @@ db_schema:
       admin_ui: {width: 200, order: 3}
       type: bool
     title: SignUpCodes
+  works:
+    title: Works
+    client: none
+    server: full
+    columns:
+    - name: wid
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: user
+      admin_ui: {width: 200, order: 1}
+      type: link_single
+      target: users
+    - name: uid
+      admin_ui: {width: 200, order: 2}
+      type: string
+    - name: words
+      admin_ui: {width: 200, order: 3}
+      type: number
+    - name: html
+      admin_ui: {width: 200, order: 4}
+      type: string
+    - name: title
+      admin_ui: {width: 200, order: 5}
+      type: string
+    - name: uri
+      admin_ui: {width: 200, order: 6}
+      type: string
+    - name: type
+      admin_ui: {width: 200, order: 7}
+      type: string
+    - name: keywords
+      admin_ui: {width: 200, order: 8}
+      type: simpleObject
+    - name: has_cover
+      admin_ui: {width: 200, order: 9}
+      type: bool
+    - name: cover_base64
+      admin_ui: {width: 200, order: 10}
+      type: string
+    - name: cover_mime
+      admin_ui: {width: 200, order: 11}
+      type: string
 secrets:
   IDHMAC:
     value: {NGQUW2Q5LEUR66SD: DdXd+9npfwNgD+8y/GApCGS7p56qZxkI2vl46Z0J5OJNJTOwQfv5ccZK0yWkkFY4Gv5zOj/852MxN000sZ+5+nbKmOC9lw0373NH9PX2TvDkLBmQ+ZUYpqzq438AjY6SZBDL}

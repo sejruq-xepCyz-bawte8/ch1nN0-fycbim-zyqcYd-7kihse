@@ -82,6 +82,8 @@ class Publish(PublishTemplate):
   def publish_click(self, **event):
     if self.data['cover']: self.data['cover'] = True
     print(self.data)
+    work_id = anvil.server.call('work_publish', self.data)
+    print(work_id)
     
 
 

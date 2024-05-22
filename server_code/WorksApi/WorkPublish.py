@@ -4,7 +4,23 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.server
+import hashlib
+from time import time
+
+def sha1_hash(data):
+    string = data['title'] + str(time())
+    sha1 = hashlib.sha1()
+    sha1.update(string.encode('utf-8'))
+    return sha1.hexdigest()
 
 @anvil.server.callable
 def work_publish(data):
-    pass
+    if data['wid']:
+      wid = data['wid']
+    else:
+      wid = sha1_hash(data)
+    app_tables.works.add_row(wid=wid,
+                            type=data['type'],
+                            title=data['title'],
+                            user=data['user'])
+      
