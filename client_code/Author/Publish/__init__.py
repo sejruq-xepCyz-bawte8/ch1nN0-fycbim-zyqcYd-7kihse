@@ -75,8 +75,19 @@ class Publish(PublishTemplate):
     self.add_component(self.input)
     self.add_component(self.results)
 
+    self.publush = Button(text = 'Публикувай')
+    self.publush.add_event_handler('click', self.publish_click)
+    self.add_component(self.publush, slot='publish-action')
+
+  def publish_click(self, **event):
+    if self.data['cover']: self.data['cover'] = True
+    print(self.data)
+    
+
+
   def input_change(self, **event):
     #sender = event['sender']
+    self.data['type'] = self.type.selected_value
     self.data['title'] = self.title.text
     self.data['uri'] = parse_uri(self.title.text)
     self.uri.text = self.data['uri']
@@ -157,7 +168,9 @@ class Publish(PublishTemplate):
      image_base64 = base64.b64encode(cover_bytes).decode('utf-8')
      image_url = f'data:{content_type};base64,{image_base64}'
      self.data['cover'] = f'url("{image_url}")'
-     print(self.data)
+     self.data['cover_base64'] = image_base64
+     self.data['cover_mime'] = content_type
+     
      self.update_cover()
 
   def update_cover(self, **event):
@@ -166,7 +179,8 @@ class Publish(PublishTemplate):
     jQ(self.cover).append(cover())
 
   def check_data(self, data, *event):
-    if not data: data = demo
+    if not data:
+      data = demo
     for key, value in demo.items():
       if key not in data:
           data[key] = value
