@@ -7,7 +7,8 @@ var TemplateColl = chetemeDB.addCollection("Template");
 var awesomeColl = chetemeDB.addCollection("Awesome", {unique: ['bg']});
 var genresColl = chetemeDB.addCollection("Genres", {unique: ['gid']});
 var keywordsColl = chetemeDB.addCollection("Keywords", {unique: ['bg']});
-var worksColl = chetemeDB.addCollection("Works", {unique: ['wid']});
+var worksColl = chetemeDB.addCollection("Works", {unique: ['w']});
+var authorsColl = chetemeDB.addCollection("Authors", {unique: ['a']});
 var contentColl = chetemeDB.addCollection("Content", {unique: ['wid']});
 var readerCall = chetemeDB.addCollection("Reader", {unique: ['wid']});
 

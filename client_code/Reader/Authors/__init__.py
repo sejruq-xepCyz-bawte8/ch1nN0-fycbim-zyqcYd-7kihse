@@ -1,17 +1,44 @@
 from ._anvil_designer import AuthorsTemplate
 from anvil import *
-import anvil.server
-import anvil.users
-import anvil.tables as tables
-import anvil.tables.query as q
-from anvil.tables import app_tables
+from ...Cheteme.ElementsHtml.panels_works import create_panel, create_icon_panel_genres_en, create_icon_panel_bg_filter_list
+from anvil.js.window import jQuery as jQ
+from ...Cheteme.Memory import authors
+from ...Cheteme.Main import navigation_click
+from ...Cheteme.ElementsHtml.VisitCard import VisitCardClass
 
 
 class Authors(AuthorsTemplate):
   def __init__(self, **properties):
-    # Set Form properties and Data Bindings.
-    from ...Cheteme.Main import navigation_click
+    
     self.navigation_click = navigation_click
     self.init_components(**properties)
+    self.add_event_handler('show', self.show_form)
 
-    # Any code you write here will run before the form opens.
+  def show_form(self, **event):
+   all = authors.get_all()
+   data = {}
+   target_id = "#authors"
+   genres_authors = []
+   for a in all:
+      data['g'] = []
+      if 'g' in a:
+         data['g'] = a['g']
+         for item in a['g']:
+            if item not in genres_authors:
+               genres_authors.append(item)
+
+      if 'sg' in a:
+         data['g'] = a['sg']
+      if 't' in a:
+         data['g'] += a['t']
+      if 'k' in a:
+         data['g'] += a['k']
+     
+      data['title'] = a['title']
+      vc = VisitCardClass(a)
+      jQ(target_id).append(vc())
+
+  
+       
+   def form_click(self):
+      pass

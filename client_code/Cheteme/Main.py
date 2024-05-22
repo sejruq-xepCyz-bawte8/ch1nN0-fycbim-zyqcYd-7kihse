@@ -9,7 +9,9 @@ from .Memory.storage import get_last_open, save_last_open
 
 import anvil.users
 
+from ..APIGate.test_api import test
 
+test()
 
 navigation_list = [
   {'bg':'Днес', 'group':'Reader', 'form':'Today'},
