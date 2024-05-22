@@ -1,10 +1,4 @@
-function loadScript(url) {
-    var script = document.createElement('script');
-    script.src = url;
-    document.head.appendChild(script);
-}
-loadScript("_/theme/lokijs.js")
-loadScript("_/theme/loki-indexed-adapter.js")
+
 
 var db = new loki('cheteme');
 //var chetemeDBadapter = new LokiIndexedAdapter('cheteme');

@@ -30,4 +30,5 @@ class Counter {
     }
   }
   
-  Quill.register('modules/counter', Counter);
+
+Quill.register('modules/counter', Counter);

@@ -14,6 +14,21 @@ if (viewportMetaTag) {
     document.head.appendChild(viewportMetaTag);
 }
 
+
+function loadScript(url) {
+    var script = document.createElement('script');
+    script.src = url;
+    document.head.appendChild(script);
+}
+loadScript("_/theme/lokijs.js")
+loadScript("_/theme/loki-indexed-adapter.js")
+loadScript("https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.js")
+loadScript("_/theme/javascript/quill_counter.js")
+
+
+
+
+
 function navClick(element, event) {
 
    anvil.call($("#appGoesHere > div"), 'navigation_click', element);

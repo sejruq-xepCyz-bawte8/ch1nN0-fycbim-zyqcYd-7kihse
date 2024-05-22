@@ -22,7 +22,7 @@ navigation_list = [
   {'bg':'Настройки', 'group':'Reader', 'form':'Settings'},
   {'bg':'Автор', 'group':'Author', 'form':'Profile'},
   
-  {'bg':'Създай', 'group':'Author', 'form':'New'},
+  {'bg':'Създай', 'group':'Author', 'form':'Editor'},
   {'bg':'Творби', 'group':'Author', 'form':'Works'},
   {'bg':'Стат', 'group':'Author', 'form':'Stat'},
   {'bg':'Профил', 'group':'Author', 'form':'Profile'},

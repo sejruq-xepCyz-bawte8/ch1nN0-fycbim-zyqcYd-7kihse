@@ -61,7 +61,7 @@ body,
   font-size: 10px;
 }
 .ch-icon-container {
-  display: none;
+  /* display: none; */
 }
 #appGoesHere .ch-icon-container {
   display: flex;

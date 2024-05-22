@@ -1,5 +1,3 @@
-
-
 if (!document.querySelector('#editor').__quill) {
     var quill = new Quill('#editor', {
         theme: 'snow',

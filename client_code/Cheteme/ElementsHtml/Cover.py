@@ -9,6 +9,7 @@ class CoverClass(HtmlElement):
   def __init__(self, data: dict) -> None:
     if not 'id' in data: data['id'] = 'testid'
     if not 'cover' in data: data['cover'] = None
+    if not 'header' in data: data['header'] = None
     super().__init__(tag = 'div', css='ch-cover', id=data['id'])
     self.data = data
     self.el.attr('onclick', "workClick(this, event)")
