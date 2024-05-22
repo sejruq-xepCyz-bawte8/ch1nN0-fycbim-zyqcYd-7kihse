@@ -15,12 +15,8 @@ def sha1_hash(data):
 
 @anvil.server.callable
 def work_publish(data):
-    if data['wid']:
-      wid = data['wid']
-    else:
-      wid = sha1_hash(data)
-    app_tables.works.add_row(wid=wid,
-                            type=data['type'],
-                            title=data['title'],
-                            user=data['user'])
+    if data['wid'] == None:
+      data['wid'] = sha1_hash(data)
+    print(data)
+    #app_tables.works.add_row()
       

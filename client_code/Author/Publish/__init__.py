@@ -16,8 +16,10 @@ class Publish(PublishTemplate):
     from ...Cheteme.Main import navigation_click
     self.navigation_click = navigation_click
     self.data = self.check_data(data)
+    
     self.cover = self.dom_nodes['cover']
     self.update_cover()
+    
     self.init_components(**properties)
 
     #inputs
@@ -78,12 +80,14 @@ class Publish(PublishTemplate):
     self.publush = Button(text = 'Публикувай')
     self.publush.add_event_handler('click', self.publish_click)
     self.add_component(self.publush, slot='publish-action')
+    
 
   def publish_click(self, **event):
     if self.data['cover']: self.data['cover'] = True
-    print(self.data)
+    if 'types' in self.data : del self.data['types']
+    if 'header' in self.data : del self.data['header']
+    print('PublishCl',self.data)
     work_id = anvil.server.call('work_publish', self.data)
-    print(work_id)
     
 
 
@@ -156,10 +160,9 @@ class Publish(PublishTemplate):
     print('shadow', self.data['shadow'])
     self.data['color'] = color
     self.data['background'] = background
-    print(color, background)
     jQ('#color').val(color)
     jQ('#background').val(background)
-
+    
     self.update_cover()
 
   def new_cover(self, file, **event):
@@ -176,9 +179,13 @@ class Publish(PublishTemplate):
      self.update_cover()
 
   def update_cover(self, **event):
+    
     jQ(self.cover).empty()
+    print('bef',self.data)
     cover = cover_non_cached(self.data)
+    print('af',self.data)
     jQ(self.cover).append(cover())
+    
 
   def check_data(self, data, *event):
     if not data:
@@ -186,18 +193,18 @@ class Publish(PublishTemplate):
     for key, value in demo.items():
       if key not in data:
           data[key] = value
+    
     return data
 
 demo = {
-      'id': 'test_id',
+      'wid': None,
       'title': "Заглавие",
       'uri': "uri",
-      'type': "тип",
+      'type': "",
       'keywords': [],
       'words': 0,
       'cover': False,
-      'html': '<p>hello</p>',
-
+      'html': '',
 }
 
 

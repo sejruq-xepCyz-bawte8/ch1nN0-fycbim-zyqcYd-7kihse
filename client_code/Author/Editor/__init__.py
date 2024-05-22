@@ -25,7 +25,6 @@ class Editor(EditorTemplate):
 
     data = {
       'wid': work_id,
-      'user': user,
       'words': words,
       'html': html_content
     }
