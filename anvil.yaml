@@ -35,7 +35,7 @@ services:
 
 
           <p>ЧетеМе</p>'}
-startup: {type: module, module: Index}
+startup: {type: module, module: Cheteme.Index}
 package_name: Cheteme
 allow_embedding: false
 name: ЧетеМе2
