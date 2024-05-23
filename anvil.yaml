@@ -35,24 +35,14 @@ services:
 
 
           <p>ЧетеМе</p>'}
-startup: {type: module, module: Cheteme.Main}
-package_name: ______2
+startup: {type: module, module: Index}
+package_name: Cheteme
 allow_embedding: false
 name: ЧетеМе2
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
 metadata: {title: ЧетеМе, description: ЧетеМе, logo_img: 'asset:chetemecover.webp'}
 startup_form: null
-native_deps: {head_html: '<script src=''_/theme/javascript/init.js''></script>
-
-    <script src=''_/theme/javascript/lokijs.js''></script>
-
-    <script src=''_/theme/javascript/loki-indexed-adapter.js''></script>
-
-    <script src="https://kit.fontawesome.com/dcfe5f394f.js" crossorigin="anonymous"></script>
-
-
-
-    <script src=''_/theme/javascript/coll_loki.js''></script>'}
+native_deps: {head_html: ''}
 db_schema:
   users:
     client: none
