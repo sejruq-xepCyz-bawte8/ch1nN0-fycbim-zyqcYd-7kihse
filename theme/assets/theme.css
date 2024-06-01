@@ -1,9 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans");
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Display:wdth@62.5&display=swap");
-:root {
-  --unit-1: 3rem;
-}
+
 * {
   margin: 0;
   padding: 0;
@@ -19,6 +14,10 @@ html {
   display: flex;
 }
 
+body{
+  background-color: var(--color-bg);
+}
+
 body,
 .anvil-root-container,
 #appGoesHere {
@@ -32,11 +31,6 @@ body,
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-#navigation {
-  display: flex;
-  justify-content: space-evenly;
-  background: lime;
-}
 
 /*-hiding-All-scroolbars-*/
 *::-webkit-scrollbar {
@@ -45,40 +39,7 @@ body,
   scrollbar-width: none; /* Firefox */
 }
 
-/*NAVIGATION*/
 
-.ch-icon-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2px;
-}
-.ch-icon-container i {
-  font-size: 2rem;
-  padding: 2px;
-}
-.ch-icon-container span {
-  font-size: 10px;
-}
-.ch-icon-container {
-  /* display: none; */
-}
-#appGoesHere .ch-icon-container {
-  display: flex;
-  flex-direction: row;
-}
-
-.clicked {
-  background: pink;
-}
-
-.Reader > .Reader {
-  display: flex;
-}
-.not_user .Settings,
-.not_user .Bookmarks {
-  display: none;
-}
 
 #loadingSpinner {
 
@@ -102,7 +63,8 @@ height: 70%;
   height: 150px;
   width: 150px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+  justify-content: space-between;
   background-size: cover;
   border-radius: 8px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
@@ -114,7 +76,7 @@ height: 70%;
   gap: 4px;
   padding: 4px;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 .ch-cover .ch-cover-title {
   font-size: 2.2rem;
@@ -131,4 +93,29 @@ height: 70%;
 
 .ch-cover-chartid {
   font-size: 2rem;
+}
+
+
+/*NAVIGATION*/
+#navigation, .ch-nav-group, .ch-nav-link{
+  display: flex;
+}
+.ch-nav-group{
+  width: 100%;
+  justify-content: space-evenly;
+}
+.ch-nav-link{
+flex-direction: column;
+align-items: center;
+}
+.ch-nav-icon{
+  font-size: 4rem;
+}
+.nav-clicked{
+  background-color: pink;
+}
+#navl-Reader-Work_Viewer-Work-open_form{
+  position: absolute;
+  top:0;
+  right: 0;
 }

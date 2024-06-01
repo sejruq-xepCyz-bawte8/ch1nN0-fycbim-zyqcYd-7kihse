@@ -1,9 +1,0 @@
-native_deps: {head_html: '
-
-<script src="_/theme/javascript/init.js"></script>
-<script src="_/theme/javascript/lokijs.js"></script>
-<script src="_/theme/javascript/loki-indexed-adapter.js"></script>
-<script src="https://kit.fontawesome.com/dcfe5f394f.js" crossorigin="anonymous"></script>
-<script src="_/theme/javascript/coll_loki.js"></script>'
-    
-    }
