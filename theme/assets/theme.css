@@ -10,17 +10,16 @@
 }
 html {
   height: 100%;
+  width: 100%;
   min-height: 100%;
   display: flex;
 }
 
-body{
-  background-color: var(--color-bg);
-}
 
 body,
 .anvil-root-container,
 #appGoesHere {
+  width: 100%;
   display: flex;
   flex: 1;
   flex-direction: column;
@@ -28,6 +27,7 @@ body,
 
 #appGoesHere > .html-templated-panel {
   flex: 1;
+  width: 100%;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -41,9 +41,6 @@ body,
 
 
 
-#loadingSpinner {
-
-}
 
 /*cover collection*/
 .ch-collection {
@@ -97,9 +94,14 @@ height: 70%;
 
 
 /*NAVIGATION*/
+
 #navigation, .ch-nav-group, .ch-nav-link{
   display: flex;
 }
+#navigation{
+  width: 100%;
+}
+
 .ch-nav-group{
   width: 100%;
   justify-content: space-evenly;
@@ -109,7 +111,10 @@ flex-direction: column;
 align-items: center;
 }
 .ch-nav-icon{
-  font-size: 4rem;
+  font-size: 3rem;
+}
+.ch-nav-text{
+  font-size: 10px;
 }
 .nav-clicked{
   background-color: pink;
