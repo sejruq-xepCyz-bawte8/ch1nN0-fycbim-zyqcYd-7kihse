@@ -97,6 +97,7 @@ class NavigationClass:
         self.is_device:bool = bool(App.DEVICE_ID)
         self.is_user:bool = bool(App.USER_ID)
         self.is_author:bool = bool(App.AUTHOR_ID)
+        self.current_link = None
         self.build()
 
     def build(self):
@@ -123,10 +124,14 @@ class NavigationClass:
 
                 onclick_func:str = link['onclick'] if 'onclick' in link else container['onclick']
 
-                link_id = f'navl-{group_name}-{link["form"]}-{formgroup}-{onclick_func}'
+                link_id = f'navl-{group_name}-{link["form"]}'
                 link_el.addClass('ch ch-nav-link')
                 link_el.attr('id', link_id)
                 link_el.attr('onclick', f'anvil.call($("#appGoesHere > div"), "navClick", $(this))')
+                link_el.attr('data-form', link['form'])
+                link_el.attr('data-current_group', container['group'])
+                link_el.attr('data-form_group', formgroup)
+                link_el.attr('data-onclick', onclick_func)
 
                 icon_el = jQ(f'<span>')
                 awesome_css:str = App.AW.get_css(bg=link['text'], style=aw_style)
@@ -149,12 +154,16 @@ class NavigationClass:
         self.is_user:bool = bool(App.USER_ID)
         self.is_author:bool = bool(App.AUTHOR_ID)
 
-    def click(self, link, group_name:str, form_name:str, form_group:str, function_name:str):
-        jQ('#navigation *').removeClass('nav-clicked')
-        jQ(f'#navl-{form_group}-{form_name}-{form_group}-{function_name}').addClass('nav-clicked')
-        if group_name is not form_group:
-            jQ(f'#navg-{group_name}').hide()
-            jQ(f'#navg-{form_group}').show()
+    def click(self, link):
+        if link.attr('data-onclick') == 'open_form':
+            if self.current_link : self.current_link.removeClass('nav-clicked')
+            new_link = jQ(f"#navl-{link.attr('data-form_group')}-{link.attr('data-form')}")
+            new_link.addClass('nav-clicked')
+            self.current_link = new_link
+
+        if link.attr('data-current_group') is not link.attr('data-form_group'):
+            jQ(f"#navg-{link.attr('data-current_group')}").hide()
+            jQ(f"#navg-{link.attr('data-form_group')}").show()
 
  
         
