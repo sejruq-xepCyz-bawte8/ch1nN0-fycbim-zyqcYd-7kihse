@@ -1,12 +1,11 @@
 from ...Index.App import init_user
-#import anvil.server
 import anvil.users
 
 def login_user(email, password):
       try:
         user = anvil.users.login_with_email(email=email, password=password)
         if user:
-            init = init_user(user)
+            init = init_user()
         if init:
             result = {'success':True, 'message':f'Успешен вход: {user["email"]}'}
         else:

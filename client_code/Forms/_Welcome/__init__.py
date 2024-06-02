@@ -12,7 +12,7 @@ class _Welcome(_FormTemplate):
   def show_form(self, **event):
     self.add_div(text=self.form_name)
     self.add_div(text="---")
-    self.add_div(text="ЧетеМе 0.4")
+    self.add_div(text="ЧетеМе 0.5")
     self.add_div(text="---")
     self.add_div(text="---")
     self.add_div(text="---")

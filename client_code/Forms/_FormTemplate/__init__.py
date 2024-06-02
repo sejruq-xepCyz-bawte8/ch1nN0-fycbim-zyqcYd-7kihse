@@ -2,7 +2,7 @@ from ._anvil_designer import _FormTemplateTemplate
 from anvil import *
 from anvil.js.window import jQuery as jQ
 
-from ...Index.App import NAVIGATION, DEVICE_ID, USER_ID, AUTHOR_ID, USER
+from ...Index import App
 
 
 class _FormTemplate(_FormTemplateTemplate):
@@ -12,13 +12,13 @@ class _FormTemplate(_FormTemplateTemplate):
     self.module_name = self.__class__.__module__.split(".")[1]
     self.package_name = __package__
     self.el = None
-    self.is_user = bool(USER_ID)
-    self.is_author = bool(AUTHOR_ID)
-    self.is_device = bool(DEVICE_ID)
-    self.user = USER_ID
-    self.user_email = USER['email'] if USER else None
-    self.author = AUTHOR_ID
-    self.device = DEVICE_ID
+    self.is_user = App.IS_USER
+    self.is_author = App.IS_AUTHOR
+    self.is_device = App.IS_DEVICE
+    self.user_id = App.USER_ID
+    self.user_email = App.USER_EMAIL
+    self.author_id = App.AUTHOR_ID
+    self.device_id = App.DEVICE_ID
     self.init_components(**properties)
     
   def init_form_element(self):
@@ -46,7 +46,7 @@ class _FormTemplate(_FormTemplateTemplate):
 
 
   def navClick(self, link, **event):
-      NAVIGATION.click(link) #send back for visuals
+      App.NAVIGATION.click(link) #send back for visuals
 
       onclick = link.attr('data-onclick')
       if onclick == 'open_form':

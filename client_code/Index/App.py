@@ -27,6 +27,23 @@ def init_app()->bool:
     global AW
     DEVICE_ID = device_store['device_id']
     IS_DEVICE = bool(DEVICE_ID)
+
+    global USER
+    global USER_ID
+    global USER_EMAIL
+    global IS_USER
+    global AUTHOR_ID
+    global IS_AUTHOR
+    global ADULT
+  
+    USER = anvil.users.get_user()
+    USER_ID = USER['user_id'] if USER else None
+    USER_EMAIL = USER['email'] if USER else None
+    IS_USER = bool(USER)
+    AUTHOR_ID = USER['author_id'] if USER and 'author_id' in USER else None
+    ADULT = USER['adult'] if USER and 'adult' in USER else None
+    IS_AUTHOR = USER['is_author'] if USER and 'is_author' in USER else None
+
     AW = AwesomeClass() # beff others
     NAVIGATION = NavigationClass()
     return True
@@ -36,7 +53,7 @@ def load_js_script(src:str) -> None:
     script.src = src
     document.head.appendChild(script)
 
-def init_user(user)->bool:
+def init_user()->bool:
     global USER
     global USER_ID
     global USER_EMAIL

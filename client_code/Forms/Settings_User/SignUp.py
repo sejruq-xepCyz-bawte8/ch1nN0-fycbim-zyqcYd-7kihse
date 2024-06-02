@@ -10,7 +10,7 @@ def sign_up_new_user(email:str, password:str, code:str, adult:bool):
         else:
           user = result['user'] if 'user' in result else None
         if user:
-            init = init_user(user)
+            init = init_user()
         if init:
             result = {'success':True, 'message':f'Успешена регистрация: {user["email"]}, активирайте акаунта с изпратения линк.'}
         else:
