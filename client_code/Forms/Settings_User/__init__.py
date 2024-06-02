@@ -105,4 +105,4 @@ class Settings_User(_FormTemplate):
 
 
 
-login_signup_welcome = """# Четеме ..."""
+login_signup_welcome = """#### Четеме EULA"""
