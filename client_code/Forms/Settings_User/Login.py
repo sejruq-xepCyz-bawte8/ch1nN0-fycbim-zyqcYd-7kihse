@@ -1,15 +1,14 @@
 from ...Index.App import init_user
-import anvil.server
+#import anvil.server
 import anvil.users
 
-def login_user(self):
-      print("will try to login now")
+def login_user(email, password):
       try:
-        user = anvil.users.login_with_email(self.email.text, self.password.text)
+        user = anvil.users.login_with_email(email=email, password=password)
         if user:
             init = init_user(user)
         if init:
-            result = {'success':True}
+            result = {'success':True, 'message':f'Успешен вход: {user["email"]}'}
         else:
             result = {'success':False}
       except anvil.users.TooManyPasswordFailures as e:

@@ -1,6 +1,8 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
 from .ZodParse import code_zod, email_zod, password_zod
+from .Login import login_user
+from .SignUp import sign_up_new_user
 
 class Settings_User(_FormTemplate):
   def __init__(self, **properties):
@@ -12,7 +14,10 @@ class Settings_User(_FormTemplate):
   def show_form(self, **event):
     self.add_label(text=self.form_name)
     self.add_div(text="Настройки Потребител")
-    if not self.is_user: self.login_signup_form()
+    if not self.is_user:
+      self.login_signup_form()
+    else:
+      self.email = self.add_label(text=self.user_email)
    
     
   def user_settings(self):
@@ -24,7 +29,7 @@ class Settings_User(_FormTemplate):
     
   #just login panel
     self.login_panel = self.add_colpanel()
-    self.login_info = self.add_label(parent=self.login_panel)
+    self.info = self.add_label(parent=self.login_panel)
     self.email = self.add_textbox(parent=self.login_panel, placeholder='Ел. Поща', change=email_zod)
     self.password = self.add_textbox(parent=self.login_panel, placeholder='Парола', hide_text=True, change=password_zod)
     
@@ -65,14 +70,16 @@ class Settings_User(_FormTemplate):
     valid = None
     if not self.login_choise.selected:
       #validation register
-      if self.password2.valid and self.email.valid:
-        valid = True
+      #if self.password2.valid and self.email.valid:
+        result = sign_up_new_user(self.email.text, self.password.text, self.code.text, self.age.checked)
+        self.info.text = result['message']
     else:
       #login
-      if self.email.valid and self.password.valid:
+      #if self.email.valid and self.password.valid:
         valid = True
-        self.login_user()
-    print("VALID", valid)
+        result = login_user(self.email.text, self.password.text)
+        self.info.text = result['message']
+        
 
 
 

@@ -17,7 +17,7 @@ NAV_TREE = [
         {'text':'Автори', 'form':'Reader_Authors'},
         {'text':'Отметки', 'form':'Reader_Bookmarks'},
         {'text':'Настр.', 'form':'Settings_Info'},
-        {'text':'Писател', 'form':'Author_Works', 'is_author':False,},
+        {'text':'Писател', 'form':'Author_Works', 'is_author':True,},
         {'text':'Творба', 'form':'Work_Viewer','style':'thin'},
         ],
     },
@@ -94,17 +94,15 @@ class NavigationClass:
         self.el.attr('id', 'navigation')
         self.el.addClass('ch ch-nav')
         self.tree:list = NAV_TREE
-        self.is_device:bool = bool(App.DEVICE_ID)
-        self.is_user:bool = bool(App.USER_ID)
-        self.is_author:bool = bool(App.AUTHOR_ID)
         self.current_link = None
         self.build()
 
     def build(self):
+        
         for container in self.tree:
-            if not self.is_device and container['is_device'] : continue
-            if not self.is_user and container['is_user'] : continue
-            if not self.is_author and container['is_author'] : continue
+            if not App.IS_DEVICE and container['is_device'] : continue
+            if not App.IS_USER and container['is_user'] : continue
+            if not App.IS_AUTHOR and container['is_author'] : continue
             group_name:str = container['group']
             group_el = jQ(f'<dir>')
             group_el.addClass('ch ch-nav-group')
@@ -114,9 +112,9 @@ class NavigationClass:
 
             aw_style:str = container['style'] if 'style' in container else None
             for link in container['links']:
-                if not self.is_device and 'is_device' in link and link['is_device'] : continue
-                if not self.is_user and 'is_user' in link and link['is_user'] : continue
-                if not self.is_author and 'is_author' in link and link['is_author'] : continue
+                if not App.IS_DEVICE and 'is_device' in link and link['is_device'] : continue
+                if not App.IS_USER and 'is_user' in link and link['is_user'] : continue
+                if not App.IS_AUTHOR and 'is_author' in link and link['is_author'] : continue
                 if 'style' in link : aw_style = link['style'] 
                 link_el = jQ(f'<dir>')
                 
@@ -149,10 +147,8 @@ class NavigationClass:
         jQ('body').append(self.el)
 
     def reset(self):
-        self.el.clear()
-        self.is_device:bool = bool(App.DEVICE_ID)
-        self.is_user:bool = bool(App.USER_ID)
-        self.is_author:bool = bool(App.AUTHOR_ID)
+        self.el.empty()
+        self.build()
 
     def click(self, link):
         if link.attr('data-onclick') == 'open_form':

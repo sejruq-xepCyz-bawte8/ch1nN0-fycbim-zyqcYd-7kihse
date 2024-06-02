@@ -2,7 +2,7 @@ from ._anvil_designer import _FormTemplateTemplate
 from anvil import *
 from anvil.js.window import jQuery as jQ
 
-from ...Index.App import NAVIGATION, DEVICE_ID, USER_ID, AUTHOR_ID
+from ...Index.App import NAVIGATION, DEVICE_ID, USER_ID, AUTHOR_ID, USER
 
 
 class _FormTemplate(_FormTemplateTemplate):
@@ -16,6 +16,7 @@ class _FormTemplate(_FormTemplateTemplate):
     self.is_author = bool(AUTHOR_ID)
     self.is_device = bool(DEVICE_ID)
     self.user = USER_ID
+    self.user_email = USER['email'] if USER else None
     self.author = AUTHOR_ID
     self.device = DEVICE_ID
     self.init_components(**properties)
@@ -39,7 +40,6 @@ class _FormTemplate(_FormTemplateTemplate):
      if not self.el: self.init_form_element()
      if not parent : parent = self.el
      element = self.new_div(text=text, css_class=css_class)
-     print('parent', parent)
      parent.append(element)
      return element
 
