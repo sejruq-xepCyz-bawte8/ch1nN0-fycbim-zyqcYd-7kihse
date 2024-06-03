@@ -124,3 +124,37 @@ align-items: center;
   top:0;
   right: 0;
 }
+
+
+.anvil-role-ch-top-right{
+  position: absolute;
+  font-size: 12px;
+  padding: 4px;
+  color: gray;
+  top:0;
+  right: 0;
+}
+
+/*EDITOR*/
+.ql-container{
+  border: unset!important;
+}
+.ql-toolbar{
+  border: unset!important;
+  border-bottom: 1px solid gray !important;
+}
+.ql-formats{
+  display: flex !important;
+  justify-content: flex-start;
+  gap: 8px;
+  
+}
+.ql-toolbar svg{
+  transform: scale(1.4);
+
+}
+.ql-editor{
+  overflow-y: auto !important;
+  height: 80vh !important;
+}
+

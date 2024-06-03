@@ -1,9 +1,15 @@
-from anvil.js.window import document
+from anvil.js.window import document, location
 import anvil.users
 from anvil_extras.storage import indexed_db
 device_store = indexed_db.create_store('device')
 from ..Navigation.NavigationBar import NavigationClass
 from ..Database.AwesomeDB import AwesomeClass
+from ..Database.GenresDB import GenresClass
+
+from .DevMode import dev_mode_init
+
+DEVMODE = True if location.hostname is '192.168.0.101' else False
+PRODMODE = True if location.hostname is 'chete.me' else False
 
 ADULT = None
 USER = None
@@ -17,16 +23,20 @@ IS_AUTHOR:bool = None
 
 
 NAVIGATION:NavigationClass = None
-AW:AwesomeClass = None
+AW:AwesomeClass = AwesomeClass()
+GENRES:GenresClass = GenresClass()
 
 def init_app()->bool:
+    load_js_script('/_/theme/javascript/init_viewport.js')
     load_js_script('https://kit.fontawesome.com/dcfe5f394f.js')
+
     global NAVIGATION
     global DEVICE_ID
     global IS_DEVICE
     global AW
     DEVICE_ID = device_store['device_id']
     IS_DEVICE = bool(DEVICE_ID)
+    
 
     global USER
     global USER_ID
@@ -44,7 +54,10 @@ def init_app()->bool:
     ADULT = USER['adult'] if USER and 'adult' in USER else None
     IS_AUTHOR = USER['is_author'] if USER and 'is_author' in USER else None
 
-    AW = AwesomeClass() # beff others
+    #AW = AwesomeClass() # beff others
+    
+
+    if DEVMODE:dev_mode_init()
     NAVIGATION = NavigationClass()
     return True
 

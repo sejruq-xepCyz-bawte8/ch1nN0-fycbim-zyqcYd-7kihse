@@ -145,6 +145,7 @@ AWESOME_DATA = {
     'творба':'scroll',
     'назад':'chevrons-left',
     'жанр':'tags',
+    'редактор':'file-code',
 
 
 

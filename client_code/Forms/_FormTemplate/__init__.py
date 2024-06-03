@@ -114,3 +114,23 @@ class _FormTemplate(_FormTemplateTemplate):
                   ) -> ColumnPanel:
    element = ColumnPanel(role=role, visible=visible)
    return self.prep_anvil_element(parent=parent, element=element, name=name)
+
+  def add_flowpanel(self, name:str = None, parent:object = None,role:str = 'ch',
+                     visible = True
+                     ) -> FlowPanel:
+      element = FlowPanel(role=role, visible=visible)
+      return self.prep_anvil_element(parent=parent, element=element, name=name)
+
+  def add_image(self, name:str = None, parent:object = None,role:str = 'ch',
+                source=None,
+                  visible = True
+                     ) -> Image:
+      element = Image(role=role, visible=visible)
+      return self.prep_anvil_element(parent=parent, element=element, name=name)
+  
+  def add_uploader(self, name:str = None, parent:object = None,role:str = 'ch',
+                text:str=None, visible = True
+                     ) -> FileLoader:
+      if not text : text = "Зареди"
+      element = FileLoader(role=role, visible=visible)
+      return self.prep_anvil_element(parent=parent, element=element, name=name)

@@ -63,7 +63,7 @@ NAV_TREE = [
         'init_hidden':True,
         'links':[
         {'text':'Днес', 'form':'Reader_Today'},
-        {'text':'Нова', 'form':'Editor_NewWork'},
+        {'text':'Редактор', 'form':'Editor_Work'},
         {'text':'Творби', 'form':'Author_Works'},
         {'text':'Профил', 'form':'Author_Profile'},
         {'text':'Статс', 'form':'Author_Stats'},
@@ -79,8 +79,9 @@ NAV_TREE = [
         'init_hidden':True,
         'links':[
         {'text':'Назад', 'form':'Author_Works'},
-        {'text':'Текст', 'form':'Editor_NewWork'},
-        {'text':'Жанр', 'form':'Editor_Cover'},
+        {'text':'Нова', 'form':'Editor_NewWork'},
+        {'text':'Текст', 'form':'Editor_Work'},
+        {'text':'Жанр', 'form':'Editor_Tags'},
         {'text':'Корица', 'form':'Editor_Cover'},
         {'text':'Публикувай', 'form':'Editor_Publish'},
         ],
