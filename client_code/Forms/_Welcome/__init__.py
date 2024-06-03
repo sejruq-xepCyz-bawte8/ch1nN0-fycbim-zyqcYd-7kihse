@@ -12,11 +12,11 @@ class _Welcome(_FormTemplate):
   def show_form(self, **event):
     self.add_div(text=self.form_name)
     self.add_div(text="---")
-    self.add_div(text="ЧетеМе 0.5")
+    self.add_div(text="ЧетеМе 0.5.1")
     self.add_div(text="---")
     self.add_div(text="---")
     self.add_div(text="---")
-    self.add_div(text="Тази версия е само за тестване на LOGIN (нищо др.)и има елементи в интерфейса, които после няма да ги има или да излизат :) като Творбата тук горе вдясно и Писателя долу (активен само за регистрирани като писател после)")
+    self.add_div(text="Тази версия е само за тестване")
 
     
     
