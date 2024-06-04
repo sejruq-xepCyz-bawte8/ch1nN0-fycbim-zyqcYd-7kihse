@@ -134,3 +134,11 @@ class _FormTemplate(_FormTemplateTemplate):
       if not text : text = "Зареди"
       element = FileLoader(role=role, visible=visible)
       return self.prep_anvil_element(parent=parent, element=element, name=name)
+  
+  def add_dropdown(self, name:str = None, parent:object = None,role:str = 'ch',
+                selected_value:str=None, items:list = None, visible = True,
+                include_placeholder:bool=False, placeholder:str=None
+                     ) -> DropDown:
+      
+      element = DropDown(role=role, visible=visible, selected_value=selected_value, items=items, include_placeholder=include_placeholder, placeholder=placeholder)
+      return self.prep_anvil_element(parent=parent, element=element, name=name)

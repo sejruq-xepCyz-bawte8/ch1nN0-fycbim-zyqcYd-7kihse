@@ -44,6 +44,7 @@ class Editor_Work(_FormTemplate):
     words = len(text.split())
     self.words_count.text = words
     self.editor_store['words'] = words
+    self.editor_store['text'] = sender.get_text()
     
   def show_form(self, **event):
     if not 'html' in self.editor_store : open_form('Forms.Editor_NewWork')

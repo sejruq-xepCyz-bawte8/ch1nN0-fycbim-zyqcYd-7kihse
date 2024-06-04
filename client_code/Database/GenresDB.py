@@ -25,7 +25,7 @@ class GenresClass:
         return parents
 
     @lru_cache(maxsize=100)
-    def get_genre_children(self, genre_name:str)->list[dict]:
+    def get_genre_children_names(self, genre_name:str)->list[str]:
         genre = self.find_genre(genre_name)
         if not genre : return None
         level = genre[genre_name]['level']
@@ -34,8 +34,19 @@ class GenresClass:
             if key == genre_name : continue
             parents = value['parents']
             if genre_name in parents or level in parents:
-                children.append({key:value})
+                children.append(key)
         return children
+
+    @lru_cache(maxsize=100)
+    def get_genre_names_by_level(self, level:int)->list[str]:
+            genres = []
+            for key, value in self.data.items():
+                if value['level'] is level:
+                    genres.append(key)
+
+            return genres
+
+
 
 GENRES_DATA_ = {
     'проза':{'level':0, 'parents':[]},
@@ -55,18 +66,19 @@ GENRES_DATA = {
 
 # level 1
 #prose
-    'микро разказ':{'level':1,'desc':'', 'wmin':0, 'wmax': 100,'parents':['проза']}, #up to 100 words
-    'флашфикшън':{'level':1,'desc':'', 'wmin':101, 'wmax': 1000,'parents':['проза']}, #100 to 1,000 words
-    'разказ':{'level':1,'desc':'', 'wmin':1001, 'wmax': 7500,'parents':['проза']}, #1,000 to 7,500 words
-    'повест':{'level':1,'desc':'', 'wmin':7501, 'wmax': 17000,'parents':['проза']}, #7,500 то 17,500words
-    'новела':{'level':1,'desc':'', 'wmin':17001, 'wmax': 40000,'parents':['проза']}, #17,500 to 40,000 words
-    'роман':{'level':1,'desc':'', 'wmin':40001, 'wmax': 999999,'parents':['проза']}, #40к - 100к
+    'микро разказ':{'level':1,'desc':'','parents':['проза']}, #up to 100 words
+    'флашфикшън':{'level':1,'desc':'','parents':['проза']}, #100 to 1,000 words
+    'разказ':{'level':1,'desc':'','parents':['проза']}, #1,000 to 7,500 words
+    'приказка':{'level':1,'desc':'','parents':['проза']}, #1,000 to 7,500 words
+    'повест':{'level':1,'desc':'','parents':['проза']}, #7,500 то 17,500words
+    'новела':{'level':1,'desc':'','parents':['проза']}, #17,500 to 40,000 words
+    'роман':{'level':1,'desc':'','parents':['проза']}, #40к - 100к
 
 # poetry
-    'стих':{'level':1,'desc':'', 'pmin':0, 'pmax': 5,'parents':['поезия']},
-    'хайку':{'level':1,'desc':'', 'pmin':3, 'pmax': 4,'parents':['поезия']},
-    'стихотворение':{'level':1,'desc':'', 'pmin':6, 'pmax': 50,'parents':['поезия']},
-    'епос':{'level':1,'desc':'', 'pmin':50, 'pmax': 999999,'parents':['поезия']},
+    'стих':{'level':1,'desc':'','parents':['поезия']},
+    'хайку':{'level':1,'desc':'','parents':['поезия']},
+    'стихотворение':{'level':1,'desc':'','parents':['поезия']},
+    'епос':{'level':1,'desc':'','parents':['поезия']},
 
 #genres - level2
     'еротика':{'level':2,'desc':'', 'parents':[1]},
@@ -140,4 +152,4 @@ if __name__ == '__main__':
     test = GenresClass()
     #test.get_name.cache_clear()
     #print(test)
-    print(test.get_genre_parents('разказ'))
+    print(test.get_genre_names_by_level(1))

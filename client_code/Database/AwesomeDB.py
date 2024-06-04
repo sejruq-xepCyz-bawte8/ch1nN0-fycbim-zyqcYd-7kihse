@@ -13,7 +13,10 @@ class AwesomeClass:
          else:
             return 'icons'
 
-   #@lru_cache(maxsize=100)
+   def get_all_names(self):
+      return self.data.keys()
+
+   @lru_cache(maxsize=100)
    def get_css(self, bg:str, name:str=None, style:str=None)->str:
       if not style: style = 'light'
       if not name:
