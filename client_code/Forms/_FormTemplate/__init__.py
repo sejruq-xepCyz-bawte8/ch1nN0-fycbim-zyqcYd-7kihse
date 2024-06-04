@@ -22,28 +22,32 @@ class _FormTemplate(_FormTemplateTemplate):
     self.init_components(**properties)
     
   def init_form_element(self):
-
     self.el = jQ('#appGoesHere > .html-templated-panel')
     self.el.attr('id', f'form-{self.form_name}')
     self.el.addClass(f'form-{self.form_name}')
      
 
-  def new_div(self, text:str=None, css_class:str=None)->object:
+  def new_div(self, text:str=None, css_class:str=None, id:str=None)->object:
      if not self.el: self.init_form_element()
      if not css_class: css_class = ""
      element = jQ(f'<dir>')
      element.text(text)
      element.addClass(f'ch {css_class}')
+     if id : element.attr('id', id)
      return element
 
-  def add_div(self, text:str=None, css_class:str=None, parent:object=None)->object:
+  def add_div(self, text:str=None, css_class:str=None, parent:object=None, id:str=None)->object:
      if not self.el: self.init_form_element()
      if not parent : parent = self.el
-     element = self.new_div(text=text, css_class=css_class)
+     element = self.new_div(text=text, css_class=css_class, id=id)
      parent.append(element)
      return element
 
-
+  def append_jq_el(self, element:object, parent:object=None)->None:
+     if not self.el: self.init_form_element()
+     if not parent : parent = self.el
+     parent.append(element)
+     
 
   def navClick(self, link, **event):
       App.NAVIGATION.click(link) #send back for visuals
@@ -129,16 +133,17 @@ class _FormTemplate(_FormTemplateTemplate):
       return self.prep_anvil_element(parent=parent, element=element, name=name)
   
   def add_uploader(self, name:str = None, parent:object = None,role:str = 'ch',
-                text:str=None, visible = True
+                text:str=None, visible = True, change=None
                      ) -> FileLoader:
       if not text : text = "Зареди"
       element = FileLoader(role=role, visible=visible)
-      return self.prep_anvil_element(parent=parent, element=element, name=name)
+      return self.prep_anvil_element(parent=parent, element=element, name=name, change=change)
   
   def add_dropdown(self, name:str = None, parent:object = None,role:str = 'ch',
                 selected_value:str=None, items:list = None, visible = True,
-                include_placeholder:bool=False, placeholder:str=None
+                include_placeholder:bool=False, placeholder:str=None,
+                change=None
                      ) -> DropDown:
       
       element = DropDown(role=role, visible=visible, selected_value=selected_value, items=items, include_placeholder=include_placeholder, placeholder=placeholder)
-      return self.prep_anvil_element(parent=parent, element=element, name=name)
+      return self.prep_anvil_element(parent=parent, element=element, name=name, change=change)

@@ -4,7 +4,17 @@ class AwesomeClass:
    def __init__(self) -> None:
 
       self.data:dict = AWESOME_DATA
-   
+
+
+   @lru_cache(maxsize=100)
+   def has_name(self, bg:str)->bool:
+         bg = bg.lower()
+         if bg in self.data:
+            return True
+         else:
+            return False
+
+
    @lru_cache(maxsize=100)
    def get_name(self, bg:str):
          bg = bg.lower()
