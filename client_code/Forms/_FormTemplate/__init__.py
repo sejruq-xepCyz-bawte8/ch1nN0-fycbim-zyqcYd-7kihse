@@ -71,7 +71,9 @@ class _FormTemplate(_FormTemplateTemplate):
   def prep_anvil_element(self, parent, element, name, change=None, click=None):
       if change: element.add_event_handler('change', change)
       if click: element.add_event_handler('click', click)
-      if name: setattr(self, name, element)
+      if name:
+         setattr(self, name, element)
+         element.name = name
       self.add_component(element) if not parent else parent.add_component(element)
       return element
 
@@ -106,6 +108,11 @@ class _FormTemplate(_FormTemplateTemplate):
       element = RichText(content=text, role=role, visible=visible)
       return self.prep_anvil_element(parent=parent, element=element, name=name)
 
+  def add_rich_html(self,name:str = None,text:str = None,parent:object = None,
+                        role:str = 'ch',visible = True
+                        ) -> RichText:
+      element = RichText(content=text, role=role, visible=visible, format='restricted_html')
+      return self.prep_anvil_element(parent=parent, element=element, name=name)
 
   def add_textbox(self, name:str = None, text:str = None, change = None, placeholder:str = None,
           parent:object = None, role:str = 'ch', hide_text = None, visible = True,
@@ -136,14 +143,16 @@ class _FormTemplate(_FormTemplateTemplate):
                 text:str=None, visible = True, change=None
                      ) -> FileLoader:
       if not text : text = "Зареди"
-      element = FileLoader(role=role, visible=visible)
+      element = FileLoader(role=role, visible=visible, text=text)
       return self.prep_anvil_element(parent=parent, element=element, name=name, change=change)
   
   def add_dropdown(self, name:str = None, parent:object = None,role:str = 'ch',
                 selected_value:str=None, items:list = None, visible = True,
-                include_placeholder:bool=False, placeholder:str=None,
+                placeholder:str=None,
                 change=None
                      ) -> DropDown:
-      
+      if not items: items = []
+      include_placeholder = False
+      if placeholder: include_placeholder = True
       element = DropDown(role=role, visible=visible, selected_value=selected_value, items=items, include_placeholder=include_placeholder, placeholder=placeholder)
       return self.prep_anvil_element(parent=parent, element=element, name=name, change=change)

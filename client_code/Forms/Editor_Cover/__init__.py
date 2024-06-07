@@ -5,31 +5,12 @@ from .Contrast import adjust_color_for_contrast
 from .ImageCover import parse_cover_image
 from .Fonts import fonts
 from anvil.js.window import jQuery as jQ
-
+from anvil_extras.storage import indexed_db
+from time import time
+from URI_parser import encode_uri, uri_zod
 contrast = 11
-cover_data = {
-  'title':'ЗАГЛАВИЕ на произведението',
-  'genres':['проза', 'разказ', 'фантастика', 'научна'],
-  'keywords':['днес', 'начало'],
-  'background-image':None,
-  'font':'serif',
-  'background-color':'#FFFFFF',
-  'color':'#000000',
-  'cover_mask':30,
-  'mask_color':'#DDDDDD'
-}
 
-no_data = {
-  'title':'ЗАГЛАВИЕ на произведението',
-  'genres':['проза', 'разказ', 'фантастика', 'научна'],
-  'keywords':['днес', 'начало'],
-  'background-image':None,
-  'font':'serif',
-  'background-color':'#FFFFFF',
-  'color':'#000000',
-  'cover_mask':30,
-  'mask_color':'#DDDDDD'
-}
+META_STORE = indexed_db.create_store('editor_meta')
 
 
 
@@ -47,15 +28,20 @@ class Editor_Cover(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
     
+    self.work_id = META_STORE['CURRENT']
     self.init_components(**properties)
-    self.data = cover_data
+    self.data = META_STORE[self.work_id]
 
 
 
   def show_form(self, **event):
 
     self.title = self.add_textbox(text=self.data['title'], placeholder='Заглавие', change=self.design_change)
-    self.uri = self.add_textbox(placeholder='URI')
+    
+    self.uri = self.add_textbox(placeholder='URI', change=self.design_change)
+    self.uri.text = self.data['work_uri']
+    uri_zod(self.uri)
+
     self.permalink = self.add_label(text='https://chete.me...')
 
     self.cover_container = self.add_div(id='cover-container')
@@ -74,11 +60,13 @@ class Editor_Cover(_FormTemplate):
 
     self.append_jq_el(self.colors_el)
     self.cover_upload = self.add_uploader(text='Ъплоад Корица', change=self.design_change)
-    
+    self.cover_delete = self.add_button(text='Изчисти Корица', click=self.design_change)
 
   def design_change(self, sender, **event):
     self.data['title'] = self.title.text
-    self.data['uri'] = self.uri.text
+    self.data['work_uri'] = self.uri.text
+    uri_zod(self.uri)
+
     self.data['font'] = self.font.selected_value
     if sender is 'color':
       self.data['color'] = jQ('#color').val()
@@ -95,7 +83,10 @@ class Editor_Cover(_FormTemplate):
     if sender is self.cover_upload:
       self.data['background-image'] = parse_cover_image(sender.file)
       sender.file.text = sender.file.name
-    
+    if sender is self.cover_delete:
+      self.data['background-image'] = None
+      self.cover_upload.text='Ъплоад Корица'
+
     self.data['mask_color'] = adjust_color_for_contrast(self.data['color'], '000000', 100)
 
 
@@ -103,3 +94,9 @@ class Editor_Cover(_FormTemplate):
     self.cover = CoverClass(data=self.data)
     self.append_jq_el(element=self.cover.el, parent=self.cover_container)
 
+    self.update_meta()
+
+
+  def update_meta(self):
+     self.data['mtime'] = time()
+     META_STORE[self.work_id] = self.data

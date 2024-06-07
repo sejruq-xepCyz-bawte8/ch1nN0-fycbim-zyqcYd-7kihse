@@ -3,24 +3,17 @@ from ...Index.App import GENRES, AW
 from .Fonts import fonts
 
 
-no_data = {
-  'title':'Няма заглавие',
-  'genres':['проза', 'разказ', 'фантастика', 'научна'],
-  'keywords':['днес', 'начало'],
-  'background-image':None,
-  'font':'Courier',
-  'background-color':'pink',
-  'color':'blue',
-  'cover_mask':30,
-  'mask_color':'#DDDDDD'
-}
-
 class CoverClass:
-    def __init__(self, data:dict=None) -> object:
-        self.data:dict = {}
+    def __init__(self, data:dict) -> object:
+        self.data = data
         self.icons_bg = []
 
-        self.parse_data(data)
+        for g in data['genres'][1:]:
+            if g : self.icons_bg.append(g)
+        for i in data['icons']:
+            if AW.has_name(bg=i):
+                self.icons_bg.append(i)
+
 
         #COVER CONTAINER
         self.el = jQ(f'<dir>')
@@ -81,24 +74,6 @@ class CoverClass:
 
 
         self.assemle_cover()
-
-    def parse_data(self, data:dict=None)->None:
-        if not data: data = no_data
-        for key, value in no_data.items():
-            if not key in data: data[key] = value
-        for g in data['genres']:
-            self.icons_bg.append(g)
-        keywords_max = 7 - len(data['genres'])
-        for k in data['keywords']:
-            print(k)
-            if AW.has_name(bg=k):self.icons_bg.append(k)
-            keywords_max -= 1
-            if keywords_max == 0 : break
-        self.data = data
-                
-
-
-
 
 
 

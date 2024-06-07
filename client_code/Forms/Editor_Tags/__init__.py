@@ -1,157 +1,211 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
 from anvil_extras.storage import indexed_db
-import re
+
 from ...Index.App import GENRES, AW
 from anvil_extras.Autocomplete import Autocomplete
-from anvil_extras.ChipsInput import ChipsInput
+
 from anvil_extras.Chip import Chip
 
-"""
-    'микро разказ':{'level':1,'desc':'', 'wmin':0, 'wmax': 100,'parents':['проза']}, #up to 100 words
-    'флашфикшън':{'level':1,'desc':'', 'wmin':101, 'wmax': 1000,'parents':['проза']}, #100 to 1,000 words
-    'разказ':{'level':1,'desc':'', 'wmin':1001, 'wmax': 7500,'parents':['проза']}, #1,000 to 7,500 words
-    'повест':{'level':1,'desc':'', 'wmin':7501, 'wmax': 17000,'parents':['проза']}, #7,500 то 17,500words
-    'новела':{'level':1,'desc':'', 'wmin':17001, 'wmax': 40000,'parents':['проза']}, #17,500 to 40,000 words
-    'роман':{'level':1,'desc':'', 'wmin':40001, 'wmax': 999999,'parents':['проза']}, #40к - 100к
+from .GuessGenres import guess_genres
+from time import time
 
-# poetry
-    'стих':{'level':1,'desc':'', 'pmin':0, 'pmax': 5,'parents':['поезия']},
-    'хайку':{'level':1,'desc':'', 'pmin':3, 'pmax': 4,'parents':['поезия']},
-    'стихотворение':{'level':1,'desc':'', 'pmin':6, 'pmax': 50,'parents':['поезия']},
-    'епос':{'level':1,'desc':'', 'pmin':50, 'pmax': 999999,'parents':['поезия']},
-"""
+META_STORE = indexed_db.create_store('editor_meta')
+HTML_STORE = indexed_db.create_store('editor_html')
 
+CHIP_BG = {
+    0:['LightSalmon', 'LightGreen'],
+   1:['LightSalmon', 'LightGreen'],
+   2:['LightSalmon', 'LightGreen'],
+   3:['LightGray', 'LightGreen'],
+   4:['LightBlue', 'LightGreen'],
+}
 
 class Editor_Tags(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
-    
     self.init_components(**properties)
-    self.editor_store = indexed_db.create_store('editor')
-    self.words = self.editor_store['words']
-    self.html_work = self.editor_store['html']
-    self.icon_keywords = []
-    self.genres = []
-    
+    self.work_id = META_STORE['CURRENT']
+    self.data = META_STORE[self.work_id]
+    self.html_work = HTML_STORE[self.work_id]
+   
+    self.chip_panels = {}
+    self.title_info = self.add_label(text=self.data['title'])
+    for p in range(5):
+        self.chip_panels[p] = self.add_flowpanel()
+
+    self.keywords = Autocomplete(suggestions=AW.get_all_names(), placeholder="Ключови думи (клик/ентер)")
+    self.keywords.add_event_handler('pressed_enter', self.new_keyword)
+    self.keywords.add_event_handler('suggestion_clicked', self.new_keyword)
+    self.add_component(self.keywords)
+
   def show_form(self, **event):
-    
-    words = self.editor_store['words']
-    p_all = self.count_par(self.html_work)
-    p_sent = self.count_par_end_sentences(self.html_work)
-    p_cent = self.count_par_centered(self.html_work)
-    
-    if words < 100 : genres = ['микро разказ', 'хайку', 'стих']
-    elif words < 1000 : genres = ['флашфикшън', 'стихотворение']
-    elif words < 7500 : genres = ['разказ', 'приказка', 'епос']
-    elif words < 17000 : genres = ['повест']
-    elif words < 40000 : genres = ['новела']
-    else : genres = ['роман']
-    
-    prob_genre = genres[0] if p_sent > p_all / 2 or p_cent < p_all / 2 else genres[-1]
+    self.level1()
+    self.level2()
+    self.level3()
+    self.level4()
  
 
-    self.add_div('Възможните типове на творбата се определят на базата брой думи, затова жанровете най-добре да се уточнят когато е завършен текста :). Ключовите думи са важни и за бъдещата търсачка, максимума им е 10')
 
-    self.level1 = self.add_dropdown(items=genres, selected_value=prob_genre)
-    self.level1.add_event_handler('change', self.level1_change)
+  def level0(self):
+      level = 0
+      genre = self.data['genres'][level]
+      parent_genre = self.data['genres'][level+1]
+      if parent_genre:
+        parents = GENRES.get_genre_parent_names(bg=parent_genre)
+        genre = parents[0]
+        self.data['genres'][level] = genre
+      else:
+        self.data['genres'][level] = None
+      self.update_meta()
 
-    self.level2 = self.add_dropdown(items=GENRES.get_genre_names_by_level(level=2), include_placeholder=True, placeholder="Основен Жанр")
-    self.level2.add_event_handler('change', self.level2_change)
+  def level1(self):
+    level = 1
+    genre = self.data['genres'][level]
+    genres = guess_genres(words=self.data['words'])
+    if genre and genre not in genres:
+      genre_list_guess += [genre]
+    for g in genres:
+        chip = self.add_chip(bg=g, level=level)
+        chip.selected = True if g is genre else False
+        if genre and g is genre:
+            chip.visible = True
+        elif genre and g is not genre:
+            chip.visible = False
+        else:
+            chip.visible = True
+        chip.background = CHIP_BG[level][1] if g is genre else CHIP_BG[level][0]
+    if not self.data['genres'][level]:
+       self.data['genres'][level] = genre
+       self.update_meta()
+    
+    self.level0()
+   
+  def level2(self):
+    level = 2
+    genre = self.data['genres'][level]
+    genres = GENRES.get_genre_names_by_level(level=level)
+    for g in genres:
+        chip = self.add_chip(bg=g, level=level)
+        chip.selected = True if genre and genre == g else False
+        if genre and genre == g:
+            chip.visible = True
+        elif genre and genre is not g:
+            chip.visible = False
+        else:
+            chip.visible = True
 
-    self.level3 = self.add_dropdown(items=[], include_placeholder=True, placeholder="Под Жанр", visible=False)
-    self.level3.add_event_handler('change', self.level3_change)
+        chip.background = CHIP_BG[level][1] if genre and genre == g else CHIP_BG[level][0]
 
-    self.icon_keywords_choser = Autocomplete(suggestions=AW.get_all_names(), placeholder="Ключови думи (клик/ентер)")
-    self.icon_keywords_choser.add_event_handler('pressed_enter', self.suggestion_clicked_enter)
-    self.icon_keywords_choser.add_event_handler('suggestion_clicked', self.suggestion_clicked_enter)
-    self.add_component(self.icon_keywords_choser)
+  def level3(self):
+    level = 3
+    genre = self.data['genres'][level]
+    parent_genre = self.data['genres'][level-1]
+    genres = GENRES.get_genre_children_names(genre_name=parent_genre)
+    for g in genres:
+        chip = self.add_chip(bg=g, level=level)
+        chip.selected = True if genre and genre == g else False
+        chip.visible = True if genre and genre == g else False
+        chip.background = CHIP_BG[level][1] if genre and genre == g else CHIP_BG[level][0]
 
+  def level4(self):
+    level = 4
+    keywords = self.data['keywords']
+    icons = self.data['icons']
+    for k in keywords:
+        chip = self.add_chip(bg=k, level=level)
+        chip.selected = True if k in icons else False
+        chip.background = CHIP_BG[level][1] if k in icons else CHIP_BG[level][0]
 
-    self.icon_chips = self.add_flowpanel()
-
-
-  def icon_bar_build(self, sender=None, **event):
-    icons = []
-    if self.level1.selected_value: icons.append(self.level1.selected_value)
-    if self.level2.selected_value: icons.append(self.level2.selected_value)
-    if self.level3.selected_value: icons.append(self.level3.selected_value)
-    self.icon_chips.clear()
-    print(icons)
-    for i in icons:
-      if not i : continue
-      aw = f'fa:{AW.get_name(bg=i)}'
-      chip = Chip(text=i, icon=aw)
+  def add_chip(self, bg:str, level:int, selected=False):
+      aw = f'fa:{AW.get_name(bg=bg)}'
+      chip = Chip(text=bg, icon=aw)
       chip.close_icon = False
-      chip.background = "LightGreen"
-      self.icon_chips.add_component(chip)
-    c = 0
-    for i in self.icon_keywords:
-      aw = AW.get_name(bg=i)
-      chip = Chip(text=i, icon=f'fa:{aw}')
-      if aw != 'icons':
-        c+=1
-        chip.background = "LightBlue" if c <=3 else "LightGray"
-      
-      chip.add_event_handler('close_click', self.delete_keyword)
-      self.icon_chips.add_component(chip)
+      chip.selected = selected
+      chip.level = level
+      if level == 4:
+          chip.close_icon = True
+          chip.add_event_handler('close_click', self.delete_keyword)
+      chip.add_event_handler('click', self.chip_click)
+      chip.background = CHIP_BG[level][0]
+      self.chip_panels[level].add_component(chip)
+      return chip
+  
+
+  def new_keyword(self, sender, **event):
+    level = 4
+    keyword = sender.text
+    parent = self.chip_panels[level]
+    neighbours = parent.get_components()
+    if len(neighbours) > 10: neighbours[-1].remove_from_parent()
+    self.add_chip(bg=keyword, level=level)
+    neighbours = parent.get_components()
+    self.data['keywords'] = [k.text for k in neighbours]
+    self.update_meta()
 
   def delete_keyword(self, sender, **event):
+    level = 4
+    parent = self.chip_panels[level]
     sender.remove_from_parent()
-    keyword = sender.text
-    self.icon_keywords.remove(keyword)
-    self.icon_bar_build()
-
-  def suggestion_clicked_enter(self, sender, **event):
-    if len(self.icon_keywords) <= 10 and sender.text not in self.icon_keywords and sender.text is not "":
-      self.icon_keywords.append(sender.text)
-      sender.text = ''
-      self.icon_bar_build()
+    neighbours = parent.get_components()
+    self.data['keywords'] = [k.text for k in neighbours]
+    self.data['icons'] = [i.text for i in neighbours if i.selected]
+    self.update_meta()
 
 
-  def level1_change(self, sender, **event):
-    self.icon_bar_build()
+  def chip_click(self, sender, **event):
+    level = sender.level
+    genre = sender.text
+    is_selected = sender.selected
 
-  def level3_change(self, sender, **event):
-    self.icon_bar_build()
+    if level == 4 :
+       return self.keyword_click(sender=sender)
+    if level == 2 :
+       sub_genres_parent = self.chip_panels[level+1]
+       sub_genres_parent.clear()
+       self.data['genres'][level+1] = None
+       if not is_selected:
+          new_subgenres_names = GENRES.get_genre_children_names(genre_name=genre)
+          for ns in new_subgenres_names:
+              self.add_chip(bg=ns, level=level+1)
+    
+    parent = sender.parent
+    neighbours = parent.get_components()
+    
+
+    for n in neighbours:
+       n.selected = False
+       n.background = CHIP_BG[level][0]
+       n.visible = is_selected
+
+    sender.selected = not is_selected
+    sender.visible = True
+    sender.background = CHIP_BG[level][1] if sender.selected else CHIP_BG[level][0]
+
+
+    
+    self.data['genres'][level] = sender.text if not is_selected else None
+    META_STORE[self.work_id] = self.data
+
+    if level == 1: self.level0()
 
 
 
-  def level2_change(self, sender, **event):
-    genres_level3 = GENRES.get_genre_children_names(genre_name=sender.selected_value)
-    if len(genres_level3) > 0:
-      self.level3.items = genres_level3
-      self.level3.visible = True
-    else:
-      self.level3.items = []
-      self.level3.visible = False
-    self.icon_bar_build(self)
 
-  @staticmethod
-  def count_par_empty(html):
-    pattern = r'<p[^>]*>\s*</p>'
-    matches = re.findall(pattern, html)
-    count = len(matches)
-    return count  
+  def keyword_click(self, sender):
+    level = sender.level
+    is_selected = sender.selected
+    parent = self.chip_panels[level]
+    neighbours = parent.get_components()
+    icons = [i for i in neighbours if i.selected]
 
-  @staticmethod
-  def count_par_end_sentences(html):
-    pattern = r'[.!?]</p>'
-    matches = re.findall(pattern, html)
-    count = len(matches)
-    return count
-
-  @staticmethod
-  def count_par_centered(html):
-    pattern = r'ql-align-center'
-    matches = re.findall(pattern, html)
-    count = len(matches)
-    return count
-
-  @staticmethod
-  def count_par(html):
-    pattern = r'<p>'
-    matches = re.findall(pattern, html)
-    count = len(matches)
-    return count
-
+    if len(icons) < 3 or is_selected:
+      sender.selected = not is_selected
+      sender.background = CHIP_BG[level][1] if sender.selected else CHIP_BG[level][0]
+      self.data['icons'] = [i.text for i in neighbours if i.selected]
+      self.update_meta()
+   
+       
+  def update_meta(self):
+     self.data['mtime'] = time()
+     META_STORE[self.work_id] = self.data

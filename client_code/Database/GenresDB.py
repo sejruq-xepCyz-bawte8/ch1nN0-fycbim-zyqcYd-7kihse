@@ -1,4 +1,5 @@
 from functools import lru_cache
+from .GenresData import GENRES_DATA
 
 class GenresClass:
     def __init__(self) -> None:
@@ -6,7 +7,8 @@ class GenresClass:
         self.data:dict = GENRES_DATA
    
     @lru_cache(maxsize=100)
-    def find_genre(self, bg:str)->dict:
+    def find_genre(self, bg:str=None)->dict:
+        if not bg : return None
         bg = bg.lower()
         return {bg:self.data[bg]} if bg in self.data else None
 
@@ -25,9 +27,15 @@ class GenresClass:
         return parents
 
     @lru_cache(maxsize=100)
+    def get_genre_parent_names(self, bg:str)->list[str]:
+        genre = self.find_genre(bg)
+        return genre[bg]['parents']
+
+
+    @lru_cache(maxsize=100)
     def get_genre_children_names(self, genre_name:str)->list[str]:
         genre = self.find_genre(genre_name)
-        if not genre : return None
+        if not genre : return []
         level = genre[genre_name]['level']
         children = []
         for key, value in self.data.items():
@@ -46,107 +54,12 @@ class GenresClass:
 
             return genres
 
+    @lru_cache(maxsize=100)
+    def get_genre_level(self, bg:str)->int:
+            genre = self.find_genre(bg=bg)
+            level = genre[bg]['level']
+            return level
 
-
-GENRES_DATA_ = {
-    'проза':{'level':0, 'parents':[]},
-    'разказ':{'level':1, 'parents':['проза']},
-    'фантастика':{'level':2, 'parents':[0]},
-    'фентъзи':{'level':2, 'parents':[0]},
-    'научна фантастика':{'level':3, 'parents':[], 'parents':['фантастика']},
-    'романс':{'level':3, 'parents':[], 'parents':[2]},
-}
-
-
-GENRES_DATA = {
-    'проза':{'level':0, 'parents':[],'desc':''},
-    'поезия':{'level':0, 'parents':[],'desc':''},
-    'сборник проза':{'level':0, 'parents':[],'desc':''},
-    'сборник поезия':{'level':0, 'parents':[],'desc':''}, 
-
-# level 1
-#prose
-    'микро разказ':{'level':1,'desc':'','parents':['проза']}, #up to 100 words
-    'флашфикшън':{'level':1,'desc':'','parents':['проза']}, #100 to 1,000 words
-    'разказ':{'level':1,'desc':'','parents':['проза']}, #1,000 to 7,500 words
-    'приказка':{'level':1,'desc':'','parents':['проза']}, #1,000 to 7,500 words
-    'повест':{'level':1,'desc':'','parents':['проза']}, #7,500 то 17,500words
-    'новела':{'level':1,'desc':'','parents':['проза']}, #17,500 to 40,000 words
-    'роман':{'level':1,'desc':'','parents':['проза']}, #40к - 100к
-
-# poetry
-    'стих':{'level':1,'desc':'','parents':['поезия']},
-    'хайку':{'level':1,'desc':'','parents':['поезия']},
-    'стихотворение':{'level':1,'desc':'','parents':['поезия']},
-    'епос':{'level':1,'desc':'','parents':['поезия']},
-
-#genres - level2
-    'еротика':{'level':2,'desc':'', 'parents':[1]},
-    'фентъзи':{'level':2,'desc':'', 'parents':[1]},
-    'фантастика':{'level':2,'desc':'', 'parents':[1]},
-    'ужаси':{'level':2,'desc':'', 'parents':[1]},
-    'драма':{'level':2,'desc':'', 'parents':[1]},
-    'трилър':{'level':2,'desc':'', 'parents':[1]},
-    'крими':{'level':2,'desc':'', 'parents':[1]},
-    'исторически':{'level':2,'desc':'', 'parents':[1]},
-    'романс':{'level':2,'desc':'', 'parents':[1]},
-    'детски':{'level':2,'desc':'', 'parents':[1]},
-    'съвременни':{'level':2,'desc':'', 'parents':[1]},
-    'хумор':{'level':2,'desc':'', 'parents':[1]},
-    'приключенски':{'level':2,'desc':'', 'parents':[1]},
-    'действителни':{'level':2,'desc':'', 'parents':[1]},
-#subgenres level3
-#scifi
-    'научна':{'level':3, 'parents':['фантастика'],'desc':'Научна фантастика'},
-    'класическа':{'level':3, 'parents':['фантастика'],'desc':'Класическа фантастика'},
-    'киберпънк':{'level':3, 'parents':['фантастика'],'desc':'Киберпънк фантастика'},
-    'соларпънк':{'level':3, 'parents':['фантастика'],'desc':'Соларпънк фантастика'},
-    'стиймпънк':{'level':3, 'parents':['фантастика'],'desc':'Стиймпънк фантастика'},
-    'утопия':{'level':3, 'parents':['фантастика'],'desc':'Фантастика - утопия'},
-    'антиутопия':{'level':3, 'parents':['фантастика'],'desc':'Фантастика - антиутопия'},
-    'постапокалипсис':{'level':3, 'parents':['фантастика'],'desc':'Постапокалиптична фантастика'},
-    'биопънк':{'level':3, 'parents':['фантастика'],'desc':'Биопънк фантастика'},
-    'технотрилър':{'level':3, 'parents':['фантастика'],'desc':'Фантастика технотрилър'},
-    'шпионска':{'level':3, 'parents':['фантастика'],'desc':'Шпионска фантастика'},
-    'хумористична':{'level':3, 'parents':['фантастика'],'desc':'Хумористична фантастика'},
-    'супергерои':{'level':3, 'parents':['фантастика'],'desc':'Фантастика със супергерои'},
-    'военна':{'level':3, 'parents':['фантастика'],'desc':'Военна фантастика'},
-#crime
-    'детективски':{'level':3, 'parents':['крими'],'desc':'Детективско криминале'},
-    'психопати и убийци':{'level':3, 'parents':['крими'],'desc':'Криминале с психопати убийци'},
-    'мистерии':{'level':3, 'parents':['крими'],'desc':'Криминале с мистерии'},
-#thriller
-    'психопати и серийни убийци':{'level':3, 'parents':['трилър'],'desc':'Трилър с психопати убийци'},
-    'криминален':{'level':3, 'parents':['трилър'],'desc':'Криминален трилър'},
-    'техно':{'level':3, 'parents':['трилър'],'desc':'Техно трилър'},
-    'исторически':{'level':3, 'parents':['трилър'],'desc':'Исторически трилър'},
-    'психологически':{'level':3, 'parents':['трилър'],'desc':'Психологически трилър'},
-    'медицински':{'level':3, 'parents':['трилър'],'desc':'Медицински трилър'},
-    'шпионски':{'level':3, 'parents':['трилър'],'desc':'Шпионски трилър'},
-    'политически':{'level':3, 'parents':['трилър'],'desc':'Политически трилър'},
-    'романтичен':{'level':3, 'parents':['трилър'],'desc':'Романтичен трилър'},
-#contemporary
-    'експериментална':{'level':3, 'parents':['съвременни'],'desc':''},
-    'поток на мисълта':{'level':3, 'parents':['съвременни'],'desc':''},
-    'епистоларна':{'level':3, 'parents':['съвременни'],'desc':''},
-    'мемоари':{'level':3, 'parents':['съвременни'],'desc':''},
-    'лгтб+':{'level':3, 'parents':['съвременни'],'desc':''},
-    'пътепис':{'level':3, 'parents':['съвременни'],'desc':''},
-    'гурме':{'level':3, 'parents':['съвременни'],'desc':''},
-    'чиклит':{'level':3, 'parents':['съвременни'],'desc':''},
-    'феминизъм':{'level':3, 'parents':['съвременни'],'desc':''},
-#drama
-    'историческа драма':{'level':3, 'parents':['драма'],'desc':''},
-    'военна драма':{'level':3, 'parents':['драма'],'desc':''},
-    'любовна драма':{'level':3, 'parents':['драма'],'desc':''},
-    'семейна сага':{'level':3, 'parents':['драма'],'desc':''},
-    'политическа драма':{'level':3, 'parents':['драма'],'desc':''},
-#historical
-    'исторически по действителни събития':{'level':3, 'parents':[],'desc':''},
-    'историческа фикция':{'level':3, 'parents':['исторически'],'desc':''},
-    'исторически романс':{'level':3, 'parents':['исторически'],'desc':''},
-    'исторически трилър':{'level':3, 'parents':['исторически'],'desc':''}
-}
 
 if __name__ == '__main__':
     test = GenresClass()

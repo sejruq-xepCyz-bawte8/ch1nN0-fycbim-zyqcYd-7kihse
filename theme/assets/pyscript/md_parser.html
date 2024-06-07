@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.5.2/core.css">
+
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2024.5.2/core.js"></script>
+</head>
+<body>
+    <script type="py" src="./MD_parser.py" config="./MD_parser.toml" terminal></script>
+    <label for="Upload a File"></label>
+    <input type="file" id="file-upload" py-click="upload_file">
+    <button id="foo" py-click="click_button">Click me</button>
+</body>
+</html>

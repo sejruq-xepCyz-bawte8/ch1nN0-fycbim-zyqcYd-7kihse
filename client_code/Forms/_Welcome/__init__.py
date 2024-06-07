@@ -12,11 +12,11 @@ class _Welcome(_FormTemplate):
   def show_form(self, **event):
     self.add_div(text=self.form_name)
     self.add_div(text="---")
-    self.add_div(text="ЧетеМе 0.5.3")
+    self.add_div(text="ЧетеМе 0.5.4")
     self.add_div(text="---")
     self.add_div(text="---")
     self.add_div(text="---")
-    self.add_div(text="Тази версия е само за тестване на формите за тагове на нова творба и корицата и")
+    self.add_div(text="Тази версия е само за тестване на писателските/авторски форми (без тези за профил и публикуване)")
 
     
     
