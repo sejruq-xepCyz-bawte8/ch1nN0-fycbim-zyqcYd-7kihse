@@ -88,7 +88,7 @@ class Editor_Cover(_FormTemplate):
     self.cover = CoverClass(data=EDITOR.data)
     self.append_jq_el(element=self.cover.el, parent=self.cover_container)
 
-    EDITOR.update(u_html=False)
+    EDITOR.update(full=False)
 
 
  
