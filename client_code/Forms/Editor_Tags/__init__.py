@@ -59,7 +59,7 @@ class Editor_Tags(_FormTemplate):
     genre = EDITOR.data['genres'][level]
     genres = guess_genres(words=EDITOR.data['words'])
     if genre and genre not in genres:
-      genre_list_guess += [genre]
+      genres += [genre]
     for g in genres:
         chip = self.add_chip(bg=g, level=level)
         chip.selected = True if g is genre else False
