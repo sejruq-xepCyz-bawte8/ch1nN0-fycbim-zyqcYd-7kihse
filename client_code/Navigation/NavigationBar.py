@@ -63,7 +63,7 @@ NAV_TREE = [
         'init_hidden':True,
         'links':[
         {'text':'Днес', 'form':'Reader_Today'},
-        {'text':'Редактор', 'form':'Editor_Work'},
+        {'text':'Нова', 'form':'Author_NewWork'},
         {'text':'Творби', 'form':'Author_Works'},
         {'text':'Профил', 'form':'Author_Profile'},
         {'text':'Статс', 'form':'Author_Stats'},
@@ -79,7 +79,6 @@ NAV_TREE = [
         'init_hidden':True,
         'links':[
         {'text':'Назад', 'form':'Author_Works'},
-        {'text':'Нова', 'form':'Editor_NewWork'},
         {'text':'Текст', 'form':'Editor_Work'},
         {'text':'Жанр', 'form':'Editor_Tags'},
         {'text':'Корица', 'form':'Editor_Cover'},
@@ -161,7 +160,7 @@ class NavigationClass:
         if link.attr('data-current_group') is not link.attr('data-form_group'):
             jQ(f"#navg-{link.attr('data-current_group')}").hide()
             jQ(f"#navg-{link.attr('data-form_group')}").show()
-
+        print(link.attr('data-current_group'), link.attr('data-form_group'))
  
         
             

@@ -5,6 +5,7 @@ device_store = indexed_db.create_store('device')
 from ..Navigation.NavigationBar import NavigationClass
 from ..Database.AwesomeDB import AwesomeClass
 from ..Database.GenresDB import GenresClass
+from ..Database.EditorDB import EditorClass
 
 from .DevMode import dev_mode_init
 
@@ -25,6 +26,7 @@ IS_AUTHOR:bool = None
 NAVIGATION:NavigationClass = None
 AW:AwesomeClass = AwesomeClass()
 GENRES:GenresClass = GenresClass()
+EDITOR:EditorClass = None
 
 def init_app()->bool:
     load_js_script('/_/theme/javascript/init_viewport.js')
@@ -45,6 +47,7 @@ def init_app()->bool:
     global AUTHOR_ID
     global IS_AUTHOR
     global ADULT
+    global EDITOR
   
     USER = anvil.users.get_user()
     USER_ID = USER['user_id'] if USER else None
@@ -58,6 +61,8 @@ def init_app()->bool:
     
 
     if DEVMODE:dev_mode_init()
+
+    EDITOR = EditorClass() if IS_AUTHOR else None
     NAVIGATION = NavigationClass()
     return True
 
@@ -74,6 +79,7 @@ def init_user()->bool:
     global AUTHOR_ID
     global IS_AUTHOR
     global ADULT
+    global EDITOR
   
     USER = anvil.users.get_user()
     USER_ID = USER['user_id'] if USER else None
@@ -83,6 +89,7 @@ def init_user()->bool:
     ADULT = USER['adult'] if USER and 'adult' in USER else None
     IS_AUTHOR = USER['is_author'] if USER and 'is_author' in USER else None
     
+    #EDITOR = EditorClass() if IS_AUTHOR else None
     NAVIGATION.reset()
 
     return True

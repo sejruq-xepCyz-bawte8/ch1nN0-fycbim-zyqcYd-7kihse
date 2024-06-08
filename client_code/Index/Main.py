@@ -15,7 +15,7 @@ def is_init()->bool:
 def main():
     App.NAVIGATION.add_to_body()
     open_form('Forms._Welcome')
-    #App.NAVIGATION.click('navl-Reader-Today')
+
     
     
 

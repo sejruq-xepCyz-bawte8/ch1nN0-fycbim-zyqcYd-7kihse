@@ -5,10 +5,9 @@ from io import BytesIO
 import xml.etree.ElementTree as ET
 
 def confirm_loading():
-    element = document.querySelector('#appGoesHere > div')
-    window.anvil.call(element, "FILES_parser_loaded", 'this')
-
-
+    element = document.querySelector('html')
+    element.classList.add("pyscript-cheteme")
+    
 def expose_to_anvil():
     window.MD_parser = md_to_html
     window.DOCX_parser = docx_to_html

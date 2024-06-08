@@ -48,17 +48,21 @@ class _FormTemplate(_FormTemplateTemplate):
      if not parent : parent = self.el
      parent.append(element)
      
+  def navClick_by_id(self, link_id:str=None, from_group:str=None):
+      link = jQ(link_id)
+      link.attr('data-current_group', from_group)
+      self.navClick(link=link)
+     
 
   def navClick(self, link, **event):
       App.NAVIGATION.click(link) #send back for visuals
-
       onclick = link.attr('data-onclick')
       if onclick == 'open_form':
-         open_form(f"Forms.{link.attr('data-form')}") #open new form
-         
+         open_form(f"Forms.{link.attr('data-form')}") #open new form  
       else:
          function_to_call = getattr(self, onclick) #find and fire func in cur form
          function_to_call()
+
 
   def show_form(self, **event):
       self.init_form_element()

@@ -1,6 +1,5 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from anvil_extras.storage import indexed_db
 
 from ...Index.App import GENRES, AW
 from anvil_extras.Autocomplete import Autocomplete
@@ -10,8 +9,7 @@ from anvil_extras.Chip import Chip
 from .GuessGenres import guess_genres
 from time import time
 
-META_STORE = indexed_db.create_store('editor_meta')
-HTML_STORE = indexed_db.create_store('editor_html')
+from ...Index.App import EDITOR
 
 CHIP_BG = {
     0:['LightSalmon', 'LightGreen'],
@@ -25,12 +23,9 @@ class Editor_Tags(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
     self.init_components(**properties)
-    self.work_id = META_STORE['CURRENT']
-    self.data = META_STORE[self.work_id]
-    self.html_work = HTML_STORE[self.work_id]
-   
+    
     self.chip_panels = {}
-    self.title_info = self.add_label(text=self.data['title'])
+    self.title_info = self.add_label(text=EDITOR.data['title'])
     for p in range(5):
         self.chip_panels[p] = self.add_flowpanel()
 
@@ -49,20 +44,20 @@ class Editor_Tags(_FormTemplate):
 
   def level0(self):
       level = 0
-      genre = self.data['genres'][level]
-      parent_genre = self.data['genres'][level+1]
+      genre = EDITOR.data['genres'][level]
+      parent_genre = EDITOR.data['genres'][level+1]
       if parent_genre:
         parents = GENRES.get_genre_parent_names(bg=parent_genre)
         genre = parents[0]
-        self.data['genres'][level] = genre
+        EDITOR.data['genres'][level] = genre
       else:
-        self.data['genres'][level] = None
-      self.update_meta()
+        EDITOR.data['genres'][level] = None
+      EDITOR.update()
 
   def level1(self):
     level = 1
-    genre = self.data['genres'][level]
-    genres = guess_genres(words=self.data['words'])
+    genre = EDITOR.data['genres'][level]
+    genres = guess_genres(words=EDITOR.data['words'])
     if genre and genre not in genres:
       genre_list_guess += [genre]
     for g in genres:
@@ -75,15 +70,15 @@ class Editor_Tags(_FormTemplate):
         else:
             chip.visible = True
         chip.background = CHIP_BG[level][1] if g is genre else CHIP_BG[level][0]
-    if not self.data['genres'][level]:
-       self.data['genres'][level] = genre
-       self.update_meta()
+    if not EDITOR.data['genres'][level]:
+       EDITOR.data['genres'][level] = genre
+       EDITOR.update()
     
     self.level0()
    
   def level2(self):
     level = 2
-    genre = self.data['genres'][level]
+    genre = EDITOR.data['genres'][level]
     genres = GENRES.get_genre_names_by_level(level=level)
     for g in genres:
         chip = self.add_chip(bg=g, level=level)
@@ -99,8 +94,8 @@ class Editor_Tags(_FormTemplate):
 
   def level3(self):
     level = 3
-    genre = self.data['genres'][level]
-    parent_genre = self.data['genres'][level-1]
+    genre = EDITOR.data['genres'][level]
+    parent_genre = EDITOR.data['genres'][level-1]
     genres = GENRES.get_genre_children_names(genre_name=parent_genre)
     for g in genres:
         chip = self.add_chip(bg=g, level=level)
@@ -110,8 +105,8 @@ class Editor_Tags(_FormTemplate):
 
   def level4(self):
     level = 4
-    keywords = self.data['keywords']
-    icons = self.data['icons']
+    keywords = EDITOR.data['keywords']
+    icons = EDITOR.data['icons']
     for k in keywords:
         chip = self.add_chip(bg=k, level=level)
         chip.selected = True if k in icons else False
@@ -140,17 +135,17 @@ class Editor_Tags(_FormTemplate):
     if len(neighbours) > 10: neighbours[-1].remove_from_parent()
     self.add_chip(bg=keyword, level=level)
     neighbours = parent.get_components()
-    self.data['keywords'] = [k.text for k in neighbours]
-    self.update_meta()
+    EDITOR.data['keywords'] = [k.text for k in neighbours]
+    EDITOR.update()
 
   def delete_keyword(self, sender, **event):
     level = 4
     parent = self.chip_panels[level]
     sender.remove_from_parent()
     neighbours = parent.get_components()
-    self.data['keywords'] = [k.text for k in neighbours]
-    self.data['icons'] = [i.text for i in neighbours if i.selected]
-    self.update_meta()
+    EDITOR.data['keywords'] = [k.text for k in neighbours]
+    EDITOR.data['icons'] = [i.text for i in neighbours if i.selected]
+    EDITOR.update()
 
 
   def chip_click(self, sender, **event):
@@ -163,7 +158,7 @@ class Editor_Tags(_FormTemplate):
     if level == 2 :
        sub_genres_parent = self.chip_panels[level+1]
        sub_genres_parent.clear()
-       self.data['genres'][level+1] = None
+       EDITOR.data['genres'][level+1] = None
        if not is_selected:
           new_subgenres_names = GENRES.get_genre_children_names(genre_name=genre)
           for ns in new_subgenres_names:
@@ -184,8 +179,8 @@ class Editor_Tags(_FormTemplate):
 
 
     
-    self.data['genres'][level] = sender.text if not is_selected else None
-    META_STORE[self.work_id] = self.data
+    EDITOR.data['genres'][level] = sender.text if not is_selected else None
+    EDITOR.update()
 
     if level == 1: self.level0()
 
@@ -202,10 +197,5 @@ class Editor_Tags(_FormTemplate):
     if len(icons) < 3 or is_selected:
       sender.selected = not is_selected
       sender.background = CHIP_BG[level][1] if sender.selected else CHIP_BG[level][0]
-      self.data['icons'] = [i.text for i in neighbours if i.selected]
-      self.update_meta()
-   
-       
-  def update_meta(self):
-     self.data['mtime'] = time()
-     META_STORE[self.work_id] = self.data
+      EDITOR.data['icons'] = [i.text for i in neighbours if i.selected]
+      EDITOR.update()
