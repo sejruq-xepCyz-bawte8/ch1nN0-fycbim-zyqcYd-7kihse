@@ -19,6 +19,8 @@ class Author_Works(_FormTemplate):
 
   def draw_works(self, **event):
       self.clear()
+      works = EDITOR.all_works_data()
+      if not works : works = []
       for work in EDITOR.all_works_data():
         container = self.add_flowpanel()
         
