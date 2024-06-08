@@ -13,8 +13,8 @@ class Author_NewWork(_FormTemplate):
     super().__init__(**properties)
   
     self.action_bar = self.add_flowpanel()
-    self.action_empty = self.add_button(text="Създай", parent=self.action_bar, click=self.make_and_open)
-    self.action_loaded = self.add_button(text="Изчисти", parent=self.action_bar, click=self.clean_data)
+    self.action_create = self.add_button(text="Създай", parent=self.action_bar, click=self.make_and_open)
+    self.action_clean = self.add_button(text="Изчисти", parent=self.action_bar, click=self.clean_data)
     self.file_loader = self.add_uploader(change=self.on_upload, text="Отвори файл", parent=self.action_bar)
     self.file_loader.file_types =  '.txt,.md,.docx'
     self.file_loader.enabled = True if has_pyscript() else False 
@@ -41,7 +41,7 @@ class Author_NewWork(_FormTemplate):
 
 
   def make_and_open(self, sender=None, html:str=None, **event):
-    if sender is self.action_loaded:
+    if sender is self.action_create:
       html = self.preview.content
     else:
       html = None
