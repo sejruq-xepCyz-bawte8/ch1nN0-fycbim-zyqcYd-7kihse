@@ -41,9 +41,18 @@ class EditorClass:
    
    #itterators
    def all_works_data(self):
-      return self.store_data.values()
+      try:
+        iterator = self.store_data.values()
+      except:
+        iterator = []
+      return iterator
+     
    def all_works_id(self):
-      return self.store_html.keys()
+      try:
+        iterator = self.store_html.keys()
+      except:
+        iterator = []
+      return iterator
 
    def new_work(self, html:str=None, title:str=None)->str:
       #work id
