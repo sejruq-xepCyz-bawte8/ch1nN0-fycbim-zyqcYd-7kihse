@@ -89,7 +89,7 @@ def init_user()->bool:
     ADULT = USER['adult'] if USER and 'adult' in USER else None
     IS_AUTHOR = USER['is_author'] if USER and 'is_author' in USER else None
     
-    #EDITOR = EditorClass() if IS_AUTHOR else None
+    EDITOR = EditorClass() if IS_AUTHOR else None
     NAVIGATION.reset()
 
     return True
