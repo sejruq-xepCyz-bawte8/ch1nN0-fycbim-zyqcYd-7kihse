@@ -3,28 +3,12 @@ from .._FormTemplate import _FormTemplate
 from anvil_extras.Quill import Quill
 from anvil_extras.Tabs import Tabs
 from anvil.js.window import jQuery as jQ
+import anvil.image
+from ...Index.App import USER_ID
+import anvil.http
 
 
-toolbarOptions_:list = [
-  ['bold', 'italic', 'underline', 'strike'],        # toggled buttons
-  ['blockquote', 'code-block'],
-  ['link', 'image', 'video', 'formula'],
-
-  [{ 'header': 1 }, { 'header': 2 }],               # custom button values
-  [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
-  [{ 'script': 'sub'}, { 'script': 'super' }],      # superscript/subscript
-  [{ 'indent': '-1'}, { 'indent': '+1' }],          # outdent/indent
-  [{ 'direction': 'rtl' }],                         # text direction
-
-  [{ 'size': ['small', 'false', 'large', 'huge'] }],  # custom dropdown
-  [{ 'header': [1, 2, 3, 4, 5, 6, 'false'] }],
-
-  [{ 'color': [] }, { 'background': [] }],          # dropdown with defaults from theme
-  [{ 'font': [] }],
-  [{ 'align': [] }],
-
-  ['clean']                                         # remove formatting button
-]
+print(USER_ID)
 
 toolbarOptions:list = [
   [{ 'header': 1 },
@@ -62,7 +46,7 @@ class Author_Profile(_FormTemplate):
     #self.add_label(text=self.form_name)
 
     #TABS
-    self.tabs = Tabs(tab_titles=['За Автора', 'Име, Линк и Кавър']) #tab_click
+    self.tabs = Tabs(tab_titles=['За Автора', 'Пермалинк']) #tab_click
     self.tabs.add_event_handler('tab_click', self.tab_click)
     self.add_component(self.tabs)
 
@@ -77,15 +61,23 @@ class Author_Profile(_FormTemplate):
     #NAME AND URI AND IMAGE
     self.name_panel = self.add_colpanel(visible=False)
     self.author_name = self.add_textbox(parent=self.name_panel, placeholder="Имена Автор")
-    self.add_label(parent=self.name_panel, text='chete.me/линк_автор_на_латиница')
-    self.author_url = self.add_textbox(parent=self.name_panel, placeholder="линк автор")
-    self.uri_generate = self.add_button(parent=self.name_panel, text="Генерирай линк от името")
-    self.uri_check = self.add_button(parent=self.name_panel, text="Провери линка за уникалност")
+    self.description = self.add_textbox(parent=self.name_panel, placeholder="Descr")
+    self.uri_panel = self.add_flowpanel(parent=self.name_panel)
+    self.add_label(parent=self.uri_panel, text='Пермалинк: chete.me/')
+    self.author_uri = self.add_textbox(parent=self.uri_panel, placeholder="vasia-cheteme-link")
+    
+    self.cover = self.add_image(parent=self.name_panel)
 
-    self.uploader = self.add_uploader(parent=self.name_panel)
+    self.uploader = self.add_uploader(parent=self.name_panel, change=self.tumbnail_gen)
     self.cover = self.add_image(parent=self.name_panel)
     
-
+  def tumbnail_gen(self, file, **event):
+    print(file)
+    print('tumbnail')
+    small_img = anvil.image.generate_thumbnail(file, 32)
+    self.cover.width = 32
+    self.cover.heigth = 32
+    self.cover.source = small_img
 
   def editor_change(self, sender, **event):
     print('editor changed')
@@ -107,3 +99,6 @@ class Author_Profile(_FormTemplate):
   def parse_image(self, image_el):
     print('parse_image', image_el)
     #image_el.addClass('parsed')
+
+
+
