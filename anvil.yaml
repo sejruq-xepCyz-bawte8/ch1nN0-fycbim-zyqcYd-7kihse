@@ -10,31 +10,28 @@ services:
   client_config: {}
   server_config: {}
 - source: /runtime/services/anvil/users.yml
-  client_config: {allow_signup: true, enable_automatically: true, use_email: true,
-    confirm_email: true, require_secure_passwords: false, allow_remember_me: true,
-    remember_me_days: 30}
+  client_config: {allow_signup: true, enable_automatically: true, use_email: true, confirm_email: true, require_secure_passwords: false, allow_remember_me: true, remember_me_days: 30}
   server_config:
     user_table: users
     email_content:
-      confirm_address: {subject: ЧетеМе - активиране на акаунт, html: '<p>Активирайте
-          акаунта кликвайки линка за потвърждение:</p>
-
+      confirm_address:
+        subject: ЧетеМе - активиране на акаунт
+        html: |-
+          <p>Активирайте акаунта кликвайки линка за потвърждение:</p>
 
           <p>{{confirm_link}}</p>
 
+          <p>ЧетеМе</p>
+      reset_password:
+        subject: ЧетеМе - смяна на парола
+        html: |-
+          <p>Hi there,</p>
 
-          <p>ЧетеМе</p>'}
-      reset_password: {subject: ЧетеМе - смяна на парола, html: '<p>Hi there,</p>
-
-
-          <p>Поискахте да смените паролата на {{email}}. За да го направите кликнете
-          линка (валиден 10 минути):</p>
-
+          <p>Поискахте да смените паролата на {{email}}. За да го направите кликнете линка (валиден 10 минути):</p>
 
           <p>{{reset_link}}</p>
 
-
-          <p>ЧетеМе</p>'}
+          <p>ЧетеМе</p>
 startup: {type: module, module: Index.Main}
 package_name: ChetemeApp
 allow_embedding: false
@@ -145,4 +142,7 @@ db_schema:
 secrets:
   IDHMAC:
     value: {NGQUW2Q5LEUR66SD: DdXd+9npfwNgD+8y/GApCGS7p56qZxkI2vl46Z0J5OJNJTOwQfv5ccZK0yWkkFY4Gv5zOj/852MxN000sZ+5+nbKmOC9lw0373NH9PX2TvDkLBmQ+ZUYpqzq438AjY6SZBDL}
+    type: secret
+  CHETEME:
+    value: {NGQUW2Q5LEUR66SD: p3sr16K2XzY8Svqn2b+9oiLM5Cd3eHpkNjrKWZxFftE3c/hl11FdxGXZBlYlYdXIiUW+CvUEFa4YE0ZrBFkxHlOi+br58YN8fDQifn6aV58VoGrkIfwT6viYcX5Fm62B7FPxxq/Llc+LAAZE1Xc/Nbv3cg+lHDU=}
     type: secret

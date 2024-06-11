@@ -4,8 +4,9 @@ from anvil_extras.Quill import Quill
 from anvil_extras.Tabs import Tabs
 from anvil.js.window import jQuery as jQ
 import anvil.image
+import base64
 from ...Index.App import USER_ID
-import anvil.http
+import anvil.server
 
 
 print(USER_ID)
@@ -26,12 +27,11 @@ toolbarOptions:list = [
    ],
 ]
 
-
-
 class Author_Profile(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
-    
+    self.data = {}
+    self.html_author = ''
     self.init_components(**properties)
     
 
@@ -40,8 +40,6 @@ class Author_Profile(_FormTemplate):
     self.about_panel.visible = True if tab == 0  else False
     self.name_panel.visible = True if tab == 1  else False
    
-
-
   def show_form(self, **event):
     #self.add_label(text=self.form_name)
 
@@ -60,45 +58,46 @@ class Author_Profile(_FormTemplate):
 
     #NAME AND URI AND IMAGE
     self.name_panel = self.add_colpanel(visible=False)
-    self.author_name = self.add_textbox(parent=self.name_panel, placeholder="Имена Автор")
-    self.description = self.add_textbox(parent=self.name_panel, placeholder="Descr")
+    self.author_name = self.add_textbox(parent=self.name_panel, placeholder="Имена Автор", change=self.change_data)
+    self.description = self.add_textbox(parent=self.name_panel, placeholder="Descr", change=self.change_data)
     self.uri_panel = self.add_flowpanel(parent=self.name_panel)
     self.add_label(parent=self.uri_panel, text='Пермалинк: chete.me/')
-    self.author_uri = self.add_textbox(parent=self.uri_panel, placeholder="vasia-cheteme-link")
+    self.author_uri = self.add_textbox(parent=self.uri_panel, placeholder="vasia-cheteme-link", change=self.change_data)
+   
     
-    self.cover = self.add_image(parent=self.name_panel)
-
     self.uploader = self.add_uploader(parent=self.name_panel, change=self.tumbnail_gen)
     self.cover = self.add_image(parent=self.name_panel)
+    self.publish_button = self.add_button(parent=self.name_panel, text="Публикувай промените", click= self.publish)
+
+  def change_data(self, sender, **event):
+    self.data['author_name'] = self.author_name.text
+    self.data['description'] = self.description.text
+    self.data['author_uri'] = self.author_uri.text
     
   def tumbnail_gen(self, file, **event):
-    print(file)
-    print('tumbnail')
-    small_img = anvil.image.generate_thumbnail(file, 32)
-    self.cover.width = 32
-    self.cover.heigth = 32
-    self.cover.source = small_img
+    self.data['background-image'] = self.parse_cover_image(file)
 
   def editor_change(self, sender, **event):
-    print('editor changed')
-    #html = self.about.get_html()
-    text = self.about.get_text()
-    print(text)
-    words = text.split()
-    print('word count', len(words))
+    self.html_author = self.editor.get_html()
+    
 
-  def parse_editor_images(self, html):
-    all_images = jQ(".ql-editor img")
-    parsed_images = jQ(".ql-editor img.parsed")
-    not_parsed_images = jQ(".ql-editor img:not(.parsed)") 
-    print("images", len(all_images), len(parsed_images), len(not_parsed_images))
-    for image in not_parsed_images:
-      self.parse_image(image)
-   
+  def publish(self, sender, **event):
+    print('publush click')
 
-  def parse_image(self, image_el):
-    print('parse_image', image_el)
-    #image_el.addClass('parsed')
+    if USER_ID:
+      print('publush calling')
+      anvil.server.call('update_author_profile', html=self.html_author, data=self.data)
 
 
 
+
+  def parse_cover_image(self, file, **event)->str:
+      cover = anvil.image.generate_thumbnail(file, 450)
+      content_type = file.content_type
+      cover_bytes = cover.get_bytes()
+      image_base64 = base64.b64encode(cover_bytes).decode('utf-8')
+      image_url = f'data:{content_type};base64,{image_base64}'
+      url = f'url("{image_url}")'
+      #bytes = image_base64
+      #mime = content_type
+      return url
