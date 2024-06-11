@@ -67,7 +67,7 @@ class Author_Profile(_FormTemplate):
     
     self.uploader = self.add_uploader(parent=self.name_panel, change=self.tumbnail_gen)
     self.cover = self.add_image(parent=self.name_panel)
-    self.publish_button = self.add_button(parent=self.name_panel, text="Публикувай промените", click= self.publish)
+    self.publish_button = self.add_button(parent=self.name_panel, text="Публикувай промените...", click= self.publish)
 
   def change_data(self, sender, **event):
     self.data['author_name'] = self.author_name.text
