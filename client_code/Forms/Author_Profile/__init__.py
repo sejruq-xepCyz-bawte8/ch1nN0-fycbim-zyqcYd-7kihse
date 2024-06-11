@@ -97,7 +97,7 @@ class Author_Profile(_FormTemplate):
       cover_bytes = cover.get_bytes()
       image_base64 = base64.b64encode(cover_bytes).decode('utf-8')
       image_url = f'data:{content_type};base64,{image_base64}'
-      url = f'url("{image_url}")'
+      #url = f'url("{image_url}")'
       #bytes = image_base64
       #mime = content_type
-      return url
+      return image_url
