@@ -6,6 +6,7 @@ import json
 import anvil.server
 import anvil.tables.query as q
 import anvil.secrets
+import anvil.http
 
 CHETEME = anvil.secrets.get_secret("CHETEME")
 
