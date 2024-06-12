@@ -30,23 +30,30 @@ def update_author_profile(html, data):
         if author_uri == old_record['author_uri']:
           data_string = json.dumps(data)
           old_record.update(author_uri=author_uri, data=data_string, html=html)
-          cf = cloudflare_api(data)
+          cf = cloudflare_api(data, html)
           return cf
         else:
           check_uri_all = len(app_tables.authorprofiles.search(author_uri=author_uri))
           if check_uri_all == 0:
             data_string = json.dumps(data)
             old_record.update(author_uri=author_uri, data=data_string, html=html)
-            cf = cloudflare_api(data)
+            cf = cloudflare_api(data, html)
             return cf
           else:
             return {'success':False, 'message':'duplicate_uri'}
 
 
-def cloudflare_api(data):
-  data['CHETEME'] = CHETEME
-  data_string = json.dumps(data)
-  cf = anvil.http.request(url="https://api.chete.me/author",
+def cloudflare_api(data, html):
+  request_data = {
+    'CHETEME': CHETEME,
+    'target': 'author_profile',
+    'data':data,
+    'html':html
+  }
+  payload = json.dumps(request_data)
+  #data['CHETEME'] = CHETEME
+  #data_string = json.dumps(data)
+  cf = anvil.http.request(url="https://api.chete.me/",
                     method="POST",
-                    data=data_string,
+                    data=payload,
                     )

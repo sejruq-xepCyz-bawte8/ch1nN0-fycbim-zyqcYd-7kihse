@@ -18,7 +18,8 @@ NAV_TREE = [
         {'text':'Отметки', 'form':'Reader_Bookmarks'},
         {'text':'Настр.', 'form':'Settings_Info'},
         {'text':'Писател', 'form':'Author_Works', 'is_author':True,},
-        {'text':'Творба', 'form':'Work_Viewer','style':'thin'},
+        {'text':'Творба', 'form':'ViewerW_Work','style':'thin'},
+        {'text':'Автор', 'form':'ViewerA_Author','style':'thin'},
         ],
     },
             {   
@@ -37,8 +38,8 @@ NAV_TREE = [
         {'text':'Инфо', 'form':'Settings_Info'},
         ],
     },
-        {   
-        'group': 'Work',
+        {#VieverAuthor
+        'group': 'ViewerA',
         'is_device':True,
         'is_user':False,
         'is_author':False,
@@ -47,10 +48,26 @@ NAV_TREE = [
         'init_hidden':True,
         'links':[
         {'text':'Назад', 'form':'Reader_Today'},
-        {'text':'Творба', 'form':'Work_Viewer'},
-        {'text':'Корица', 'form':'Work_Cover'},
-        {'text':'Запази', 'form':'Work_Viewer', 'onclick':'click_bookmark'},
-        {'text':'Харесай', 'form':'Work_Viewer', 'onclick':'click_like'},
+        {'text':'Инфо', 'form':'ViewerA_Author'},
+        {'text':'Творби', 'form':'ViewerA_Cover'},
+        {'text':'Запази', 'form':'ViewerA_Author', 'onclick':'click_bookmark'},
+        {'text':'Харесай', 'form':'ViewerA_Author', 'onclick':'click_like'},
+        ],
+    },
+        {#VieverWork
+        'group': 'ViewerW',
+        'is_device':True,
+        'is_user':False,
+        'is_author':False,
+        'onclick':'open_form',
+        'style':'duotone',
+        'init_hidden':True,
+        'links':[
+        {'text':'Назад', 'form':'Reader_Today'},
+        {'text':'Творба', 'form':'ViewerW_Work'},
+        {'text':'Корица', 'form':'ViewerW_Cover'},
+        {'text':'Запази', 'form':'ViewerW_Work', 'onclick':'click_bookmark'},
+        {'text':'Харесай', 'form':'ViewerW_Work', 'onclick':'click_like'},
         ],
     },
         {   

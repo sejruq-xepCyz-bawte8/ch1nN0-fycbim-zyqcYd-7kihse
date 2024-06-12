@@ -2,7 +2,7 @@ from anvil import *
 from .._FormTemplate import _FormTemplate
 
 
-class Work_Cover(_FormTemplate):
+class ViewerA_Works(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
     

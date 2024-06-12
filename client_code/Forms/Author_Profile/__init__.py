@@ -7,9 +7,9 @@ import anvil.image
 import base64
 from ...Index.App import USER_ID
 import anvil.server
+from anvil_extras.storage import indexed_db
 
 
-print(USER_ID)
 
 toolbarOptions:list = [
   [{ 'header': 1 },
@@ -30,9 +30,17 @@ toolbarOptions:list = [
 class Author_Profile(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
-    self.data = {}
-    self.html_author = ''
+    
     self.init_components(**properties)
+    self.store_author = indexed_db.create_store('author_profile')
+    if 'data' in self.store_author:
+      self.data = self.store_author['data']
+    else:
+      self.data = {}
+    if 'html' in self.store_author:
+      self.html_author = self.store_author['html']
+    else:
+      self.html_author = ''
     
 
   def tab_click(self, sender, **event):
@@ -73,12 +81,15 @@ class Author_Profile(_FormTemplate):
     self.data['author_name'] = self.author_name.text
     self.data['description'] = self.description.text
     self.data['author_uri'] = self.author_uri.text
+    self.store_author['data'] = self.data
     
   def tumbnail_gen(self, file, **event):
     self.data['background-image'] = self.parse_cover_image(file)
+    self.store_author['data'] = self.data
 
   def editor_change(self, sender, **event):
     self.html_author = self.editor.get_html()
+    self.store_author['html'] = self.data
     
 
   def publish(self, sender, **event):
