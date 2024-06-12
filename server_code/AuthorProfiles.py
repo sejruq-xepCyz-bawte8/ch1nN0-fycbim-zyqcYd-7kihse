@@ -51,8 +51,6 @@ def cloudflare_api(data, html):
     'html':html
   }
   payload = json.dumps(request_data)
-  #data['CHETEME'] = CHETEME
-  #data_string = json.dumps(data)
   cf = anvil.http.request(url="https://api.chete.me/",
                     method="POST",
                     data=payload,
