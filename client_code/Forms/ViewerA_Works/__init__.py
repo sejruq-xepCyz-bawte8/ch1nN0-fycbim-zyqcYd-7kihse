@@ -11,10 +11,5 @@ class ViewerA_Works(_FormTemplate):
 
   def show_form(self, **event):
     self.add_label(text=self.form_name)
-
-    
-    
- 
-
-
-
+        # Set Form properties and Data Bindings.
+        #self.reader = self.dom_nodes['cheteme_reader']

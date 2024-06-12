@@ -167,3 +167,33 @@ align-items: center;
   height: 80vh !important;
 }
 
+/*READER*/
+#cheteme_reader{
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scroll-snap-type: y mandatory;
+  inset: 0rem;
+  margin: auto;
+  padding: 10px 10px 10px 10px;
+
+}
+
+.page{
+  scroll-snap-align: start;
+  min-height: 100%;
+  width: 100%;
+  border-top: 1px dotted gray;
+  inset: 0rem;
+  margin: auto;
+  padding-top: 1rem;
+  margin-bottom: 3rem;
+}
+
+p {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: 2rem;
+}
