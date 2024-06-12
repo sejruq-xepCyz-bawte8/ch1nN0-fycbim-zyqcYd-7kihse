@@ -10,15 +10,17 @@ class ViewerA_Author(_FormTemplate):
     self.uri = get_url_hash()
     
     self.init_components(**properties)
-    data, html = api_author('beach')
+    data, html = api_author(self.uri)
     self.data = data
     self.author_html = html
 
   def show_form(self, **event):
-    
-    self.add_div(text=self.data['author_name'])
-    author_info = self.add_div()
-    author_info.html(self.author_html)
+    if self.data:
+      self.add_div(text=self.data['author_name'])
+      author_info = self.add_div()
+      author_info.html(self.author_html)
+    else:
+      self.add_div(text=f'No author with uri {self.uri}')
     
     
 

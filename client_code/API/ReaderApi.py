@@ -30,6 +30,7 @@ def make_request(data):
                     method="POST",
                     data=json.dumps(data),
                     )
+    
     return response
 
 def parse_response(response):
@@ -37,6 +38,9 @@ def parse_response(response):
     resp_text = resp_bytes.decode('utf-8')
     resp_json = json.loads(resp_text)
     data_string = resp_json['data']
-    data = json.loads(data_string)
+    if data_string:
+        data = json.loads(data_string)
+    else:
+        data = None
     html = resp_json['html']
     return data, html
