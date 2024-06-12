@@ -36,7 +36,7 @@ class Author_Profile(_FormTemplate):
     if 'data' in self.store_author:
       self.data = self.store_author['data']
     else:
-      self.data = {}
+      self.data = {'author_name':'', 'author_uri':'','description':'', 'background-image':''}
     if 'html' in self.store_author:
       self.html_author = self.store_author['html']
     else:
@@ -61,16 +61,18 @@ class Author_Profile(_FormTemplate):
     
     self.editor = Quill(toolbar=toolbarOptions, placeholder="За Автора ...", sanitize=True)
     self.editor.add_event_handler('text_change', self.editor_change)
+    self.editor.set_html(self.html_author)
+
     self.about_panel.add_component(self.editor)
     
 
     #NAME AND URI AND IMAGE
     self.name_panel = self.add_colpanel(visible=False)
-    self.author_name = self.add_textbox(parent=self.name_panel, placeholder="Имена Автор", change=self.change_data)
-    self.description = self.add_textbox(parent=self.name_panel, placeholder="Descr", change=self.change_data)
+    self.author_name = self.add_textbox(text=self.data['author_name'], parent=self.name_panel, placeholder="Имена Автор", change=self.change_data)
+    self.description = self.add_textbox(text=self.data['description'], parent=self.name_panel, placeholder="Descr", change=self.change_data)
     self.uri_panel = self.add_flowpanel(parent=self.name_panel)
     self.add_label(parent=self.uri_panel, text='Пермалинк: chete.me/')
-    self.author_uri = self.add_textbox(parent=self.uri_panel, placeholder="vasia-cheteme-link", change=self.change_data)
+    self.author_uri = self.add_textbox(text=self.data['author_uri'], parent=self.uri_panel, placeholder="vasia-cheteme-link", change=self.change_data)
    
     
     self.uploader = self.add_uploader(parent=self.name_panel, change=self.tumbnail_gen)
@@ -89,7 +91,7 @@ class Author_Profile(_FormTemplate):
 
   def editor_change(self, sender, **event):
     self.html_author = self.editor.get_html()
-    self.store_author['html'] = self.data
+    self.store_author['html'] = self.editor.get_html()
     
 
   def publish(self, sender, **event):
