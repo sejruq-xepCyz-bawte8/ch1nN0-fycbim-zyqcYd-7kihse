@@ -44,6 +44,7 @@ def update_author_profile(html, data):
 
 
 def cloudflare_api(data, html):
+  print('send to cf')
   request_data = {
     'CHETEME': CHETEME,
     'target': 'author_profile',
