@@ -16,7 +16,7 @@ def update_author_profile(html:str=None, data:dict=None):
                                                html=html,
                                                data=data,
                                                user=anvil.users.get_user(),
-                                               client=anvil.server.context.client)
+                                               client=anvil.server.context.client.ip)
     return task    
 
 
