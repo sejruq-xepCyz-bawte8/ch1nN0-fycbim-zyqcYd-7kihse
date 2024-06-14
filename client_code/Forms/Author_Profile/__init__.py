@@ -100,11 +100,12 @@ class Author_Profile(_FormTemplate):
     if USER_ID:
       print('publush calling')
       task = anvil.server.call('update_author_profile', html=self.html_author, data=self.data)
+      self.add_div(text=self.data)
       for t in range(20):
         sleep(1)
         self.add_div(text=task.get_state())
         if task.is_completed(): break
-      self.add_div(text=f'Резултат task.get_return_value()')
+      self.add_div(text=f'Резултат {task.get_return_value()}')
         
 
 
