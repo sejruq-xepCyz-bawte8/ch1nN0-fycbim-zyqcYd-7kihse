@@ -39,11 +39,11 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
       if not old_record:
         
         status(f'Започва създаване на {data["author_uri"]}')
-        return make_new_profile(user_id=user["user_id"], data=data, html=html)
+        result = make_new_profile(user_id=user["user_id"], data=data, html=html)
       else:
         status(f'Започва ъпдейт на {data["author_uri"]}')
-        return update_profile(old_record=old_record, data=data, html=html)
-   
+        result = update_profile(old_record=old_record, data=data, html=html)
+      return result
 
 def make_new_profile(user_id:str, data:dict, html:str)->dict:
    data_text=json.dumps(data)
