@@ -35,6 +35,8 @@ def update_author_profile_bg(html:str=None, data:dict=None, user_id=None):
       #if not has_keys(target=data, keys=keys_to_check) : return False
       #if not is_valid_uri(data["author_uri"]) : return False
       return 42
+
+def temp():
       this_uri_records = PROFILES.search(author_uri=data["author_uri"])
       
       for u in this_uri_records:
