@@ -122,7 +122,7 @@ def update_profile_works(user_id:str):
 
     old_record = PROFILES.get(user_id=user_id)
     
-    data = old_record["data"]
+    data = json.loads(old_record["data"])
     html = old_record["html"]
     data["works"] = author_works
 
