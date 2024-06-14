@@ -43,6 +43,13 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
       else:
         status(f'Започва ъпдейт на {data["author_uri"]}')
         result = update_profile(old_record=old_record, data=data, html=html)
+
+      if result:
+         status('ГОТОВО всичко е успешно')
+         return True
+      else:
+         status('ПРИКЛЮЧИ но с грешки')
+         return False
       return result
 
 def make_new_profile(user_id:str, data:dict, html:str)->dict:
@@ -62,7 +69,7 @@ def make_new_profile(user_id:str, data:dict, html:str)->dict:
       return False
    
    if has_record(PROFILES, record_hash):
-      status(f'Готово')
+      status('Бекъпа е записан')
       return True
    else:
       return fail('Неуспешен бекъп')
@@ -85,7 +92,7 @@ def update_profile(old_record, data:dict, html:str):
       return False
    
    if has_record(PROFILES, record_hash):
-      status(f'Готово')
+      status('Бекъпа е записан')
       return True
    else:
       return fail('Неуспешен бекъп')

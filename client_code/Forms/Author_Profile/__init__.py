@@ -102,7 +102,7 @@ class Author_Profile(_FormTemplate):
       task = anvil.server.call('update_author_profile', html=self.html_author, data=self.data)
       query = self.add_label()
       for t in range(60):
-        sleep(2)
+        sleep(1)
         query.text=task.get_state()
    
         if task.is_completed(): break
