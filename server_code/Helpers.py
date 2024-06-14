@@ -1,6 +1,5 @@
 import hashlib
 from time import time
-from Suspicious import log_suspicious
 import re
 import anvil.server
 from anvil.tables import app_tables
