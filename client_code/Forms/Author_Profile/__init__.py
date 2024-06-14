@@ -103,7 +103,7 @@ class Author_Profile(_FormTemplate):
       query = self.add_label()
       for t in range(60):
         sleep(2)
-        query.text=task.get_termination_status() + task.get_state()
+        query.text=task.get_state()
    
         if task.is_completed(): break
       self.add_div(text=f'Резултат {task.get_return_value()}')
