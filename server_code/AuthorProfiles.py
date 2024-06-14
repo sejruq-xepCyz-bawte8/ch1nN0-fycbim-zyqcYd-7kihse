@@ -26,32 +26,32 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
       status('Проверки на заявката')
       if not is_user_author(user=user, client=client): return False
       if not data or html: return fail('Липсват метаданни или съдържание')
-      if not has_keys(target=data, keys=['author_uri', 'author_name']) : return False
-      if not is_valid_uri(data['author_uri']) : return False
+      if not has_keys(target=data, keys=["author_uri', 'author_name"]) : return False
+      if not is_valid_uri(data["author_uri"]) : return False
 
-      this_uri_records = PROFILES.search(author_uri=data['author_uri'])
+      this_uri_records = PROFILES.search(author_uri=data["author_uri"])
       for u in this_uri_records:
-         if u['user_id'] != user['user_id']: return fail('Зает линк')
+         if u["user_id"] != user["user_id"]: return fail('Зает линк')
       
-      old_record = PROFILES.get(user_id=user['user_id'])
+      old_record = PROFILES.get(user_id=user["user_id"])
 
       if not old_record:
         
-        status(f'Започва създаване на {data['author_uri']}')
-        return make_new_profile(user_id=user['user_id'], data=data, html=html)
+        status(f'Започва създаване на {data["author_uri"]}')
+        return make_new_profile(user_id=user["user_id"], data=data, html=html)
       else:
-        status(f'Започва ъпдейт на {data['author_uri']}')
+        status(f'Започва ъпдейт на {data["author_uri"]}')
         return update_profile(old_record=old_record, data=data, html=html)
    
 
 def make_new_profile(user_id:str, data:dict, html:str)->dict:
    data_text=json.dumps(data)
-   data['version'] = 1
+   data["version"] = 1
    record_hash = hash_strings(data_text, html)
    cf_success = cf_author_profile(data=data, html=html)
    if cf_success:
       PROFILES.add_row(user_id=user_id,
-                                       author_uri=data['author_uri'],
+                                       author_uri=data["author_uri"],
                                        data=data_text,
                                        html=html,
                                        cf_success=cf_success,
@@ -68,16 +68,16 @@ def make_new_profile(user_id:str, data:dict, html:str)->dict:
 
 def update_profile(old_record, data:dict, html:str):
    data_text=json.dumps(data)
-   data['version'] = old_record['version'] + 1
+   data["version"] = old_record["version"] + 1
    record_hash = hash_strings(data_text, html)
    cf_success = cf_author_profile(data=data, html=html)
    if cf_success:
-      old_record.update(author_uri=data['author_uri'],
+      old_record.update(author_uri=data["author_uri"],
                            data=json.dumps(data),
                            html=html,
                            cf_success=cf_success,
                            hash=record_hash,
-                           version=data['version'])
+                           version=data["version"])
    else:
       return False
    
