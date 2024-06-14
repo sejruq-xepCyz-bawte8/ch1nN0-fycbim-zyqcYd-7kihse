@@ -26,7 +26,8 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
       status('Проверки на заявката')
       if not is_user_author(user=user, client=client): return False
       if not data or not html: return fail('Липсват метаданни или съдържание')
-      if not has_keys(target=data, keys=["author_uri', 'author_name"]) : return False
+      keys_to_check = ['author_uri', 'author_name']
+      if not has_keys(target=data, keys=keys_to_check) : return False
       if not is_valid_uri(data["author_uri"]) : return False
 
       this_uri_records = PROFILES.search(author_uri=data["author_uri"])
