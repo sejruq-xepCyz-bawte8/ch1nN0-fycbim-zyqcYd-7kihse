@@ -6,6 +6,8 @@ import anvil.server
 CHETEME = anvil.secrets.get_secret("CHETEME")
 API_URL = "https://api.chete.me/"
 
+def status(message):
+   anvil.server.task_state = message
 
 def prepare_payload(data:dict, html:str, target:str):
     request_data = {
@@ -23,10 +25,10 @@ def parse_request(payload:str):
                                     method="POST",
                                     data=payload,
                                     )
-        anvil.server.task_state('има апи отговор ...')
+        status('има апи отговор ...')
     except anvil.http.HttpError as e:
         print('API HttpError', e)
-        anvil.server.task_state(f'API HttpError {e}')
+        status(f'API HttpError {e}')
         return False
 
     body_bytes = response.get_bytes()
@@ -36,7 +38,7 @@ def parse_request(payload:str):
         rdata = json.loads(body_string)
         if not rdata:
             print('responce not rdata')
-            anvil.server.task_state(f'Неправилен отговор от сървъра')
+            status(f'Неправилен отговор от сървъра')
             return False
     except:
         print('responce json err')
@@ -44,22 +46,23 @@ def parse_request(payload:str):
 
     success = rdata.get('success')
     if success:
-        anvil.server.task_state(f'Успешен отговор от API сървъра')
+        status(f'Успешен отговор от API сървъра')
         return True
     else:
-        anvil.server.task_state(f'API сървъра съобщава за неуспех {rdata.get("message")}')
+        status(f'API сървъра съобщава за неуспех {rdata.get("message")}')
     return False
 
 
 def cf_api(data:dict, html:str, target:str):
-  anvil.server.task_state('пейлод ...')
+  status('пейлод ...')
   payload = prepare_payload(data=data, html=html, target=target)
-  anvil.server.task_state('изпраща апи заявка ...')
+  status('изпраща апи заявка ...')
   result = parse_request(payload=payload)
   return result
 
 def cf_author_profile(data:dict, html:str):
-    anvil.server.task_state('API сървъра стартира за ...')
+    
+    status('API сървъра стартира за ...')
     return cf_api(data=data, html=html, target="author_profile")
 
 def cf_author_work(data:dict, html:str, wid:str):
