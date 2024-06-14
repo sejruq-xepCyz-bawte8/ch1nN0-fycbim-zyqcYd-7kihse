@@ -12,30 +12,28 @@ PROFILES = app_tables.authorprofiles
 
 @anvil.server.callable
 def update_author_profile(html:str=None, data:dict=None):
-   user=anvil.users.get_user()
-   if user['is_author'] and user['user_id']:
-      task = anvil.server.launch_background_task('update_author_profile_bg',
+   task = anvil.server.launch_background_task('update_author_profile_bg',
                                                 html=html,
                                                 data=data,
-                                                user_id=user['user_id'],
+                                                user=anvil.users.get_user(),
+                                                client = anvil.server.context.client.ip
                                                 )
-      return task    
-   else:
-      return None
+   return task    
+
       #client=anvil.server.context.client.ip
 
 
 @anvil.server.background_task
-def update_author_profile_bg(html:str=None, data:dict=None, user_id=None):
+def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=None):
       
       status('Проверки на заявката')
-      #if not is_user_author(user=user, client=client): return False
+      if not is_user_author(user=user, client=client): return False
       if not data or not html: return fail('Липсват метаданни или съдържание')
       keys_to_check = ['author_uri', 'author_name']
       if not has_keys(target=data, keys=keys_to_check) : return False
       if not is_valid_uri(data["author_uri"]) : return False
     
-      #return 42
+      user_id = user[user_id]
 
       this_uri_records = PROFILES.search(author_uri=data["author_uri"])
       

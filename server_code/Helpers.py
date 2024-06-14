@@ -24,12 +24,14 @@ def has_keys(target:dict, keys:list)->bool:
 def is_user_author(user, client)->bool:
     user_id = user.get('user_id')
     is_author = user.get('is_author')
-    if not user_id or not is_author:
+    if user_id and is_author:
+        return True
+    elif not user_id or not is_author:
         log_suspicious(cheteme='publish work', client=client)
         status('Невалиден потребител/автор')
         return False
     else:
-        return True
+        return False
     
 
 def hash_strings(*args)->str:
