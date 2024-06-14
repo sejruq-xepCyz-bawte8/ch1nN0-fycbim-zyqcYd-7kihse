@@ -46,7 +46,7 @@ def parse_request(payload:str):
         anvil.server.task_state(f'Успешен отговор от API сървъра')
         return True
     else:
-        anvil.server.task_state(f'API сървъра съобщава за неуспех {rdata.get('message')}')
+        anvil.server.task_state(f'API сървъра съобщава за неуспех {rdata.get("message")}')
     return False
 
 
