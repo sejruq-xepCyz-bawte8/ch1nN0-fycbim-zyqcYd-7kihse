@@ -23,7 +23,7 @@ def update_author_profile(html:str=None, data:dict=None):
 
 @anvil.server.background_task
 def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=None):
-      return 42
+      
       status('Проверки на заявката')
       if not is_user_author(user=user, client=client): return False
       if not data or not html: return fail('Липсват метаданни или съдържание')
@@ -35,6 +35,7 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
       for u in this_uri_records:
          if u["user_id"] != user["user_id"]: return fail('Зает линк')
       
+      return 42
       old_record = PROFILES.get(user_id=user["user_id"])
 
       if not old_record:
