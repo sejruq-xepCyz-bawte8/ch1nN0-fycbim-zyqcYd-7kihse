@@ -33,7 +33,7 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
     if not profile_record : return fail('Първо направете профил :)')
 
     if not data or not html: return fail('Липсват метаданни или съдържание')
-    if not has_keys(target=data, keys=["work_uri', 'work_id', 'title', 'ptime"]) : return False
+    if not has_keys(target=data, keys=['work_uri', 'work_id', 'title', 'ptime']) : return False
     if not is_valid_uri(data["work_uri"]) : return False
     
     this_uri_records = WORKS.search(work_uri=data["work_uri"], user_id=user["user_id"])
