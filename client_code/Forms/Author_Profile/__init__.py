@@ -105,7 +105,13 @@ class Author_Profile(_FormTemplate):
         sleep(1)
         query.text=task.get_state()['message']
         if task.is_completed(): break
-      self.add_div(text=f'Резултат {task.get_return_value()}')
+      result = task.get_return_value()
+      if result:
+         self.add_div(text='ГОТОВО всичко е успешно')
+  
+      else:
+         self.add_div(text='ПРИКЛЮЧИ но с грешки')
+    
         
 
 

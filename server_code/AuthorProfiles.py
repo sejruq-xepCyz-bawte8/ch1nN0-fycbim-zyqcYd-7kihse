@@ -51,12 +51,6 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
         status(f'Започва ъпдейт на {data["author_uri"]}')
         result = update_profile(old_record=old_record, data=data, html=html)
 
-      if result:
-         status('ГОТОВО всичко е успешно')
-         return True
-      else:
-         status('ПРИКЛЮЧИ но с грешки')
-         return False
       return result
 
 def make_new_profile(user_id:str, data:dict, html:str)->dict:
