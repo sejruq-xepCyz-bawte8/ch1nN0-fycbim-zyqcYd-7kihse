@@ -117,6 +117,7 @@ def update_profile_works(user_id:str):
     status('Започва ъпдейт на профила')
     published_works = WORKS.search(user_id=user_id, published=True)
     author_works = {}
+    status('Ъпдейт на списъка творби на профила')
     for w in published_works:
         author_works[w["work_uri"]] = w["wid"]
 
@@ -125,10 +126,13 @@ def update_profile_works(user_id:str):
     data = json.loads(old_record["data"])
     html = old_record["html"]
     data["works"] = author_works
-
-    data_text=json.dumps(old_record)
+    # after having data and html modified
+    status(f'Приготвяне на заявката на {data["author_uri"]}')
+    data_text=json.dumps(data)
     data["version"] = old_record["version"] + 1
     record_hash = hash_strings(data_text, html)
+    status(f'Изпращане на заявката {data["author_uri"]}')
+
     cf_success = cf_author_profile(data=data, html=html)
     if cf_success:
         old_record.update(author_uri=data["author_uri"],
