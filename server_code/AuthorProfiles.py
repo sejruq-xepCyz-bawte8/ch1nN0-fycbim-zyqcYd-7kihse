@@ -7,7 +7,7 @@ from Helpers import is_user_author, is_valid_uri, has_keys, hash_strings, has_re
 
 
 
-PROFILES = app_tables.authorprofiles
+
 
 
 @anvil.server.callable
@@ -27,7 +27,7 @@ def update_author_profile(html:str=None, data:dict=None):
 
 @anvil.server.background_task
 def update_author_profile_bg(html:str=None, data:dict=None, user_id=None):
-      
+      PROFILES = app_tables.authorprofiles
       status('Проверки на заявката')
       #if not is_user_author(user=user, client=client): return False
       if not data or not html: return fail('Липсват метаданни или съдържание')
