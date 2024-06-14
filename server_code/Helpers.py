@@ -24,7 +24,7 @@ def is_user_author(user, client)->bool:
     user_id = user.get('user_id')
     is_author = user.get('is_author')
     if not user_id or not is_author:
-        task = log_suspicious(cheteme='publish work', client=client)
+        log_suspicious(cheteme='publish work', client=client)
         status('Невалиден потребител/автор')
         return False
     else:
