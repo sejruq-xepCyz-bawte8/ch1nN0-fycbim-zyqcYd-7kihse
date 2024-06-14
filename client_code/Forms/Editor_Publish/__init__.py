@@ -3,7 +3,7 @@ from .._FormTemplate import _FormTemplate
 from ...Index.App import EDITOR
 from ...Index.App import USER_ID
 import anvil.server
-from time import sleep
+from time import sleep, time
 
 class Editor_Publish(_FormTemplate):
   def __init__(self, **properties):
@@ -37,6 +37,7 @@ class Editor_Publish(_FormTemplate):
 
     if USER_ID:
       print('publush calling')
+      EDITOR.data['ptime'] = time()
       task = anvil.server.call('publish_author_work', html=EDITOR.html, data=EDITOR.data)
       query = self.add_label()
       for t in range(60):
