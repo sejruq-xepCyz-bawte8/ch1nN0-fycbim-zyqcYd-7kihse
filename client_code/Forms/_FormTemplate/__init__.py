@@ -50,7 +50,7 @@ class _FormTemplate(_FormTemplateTemplate):
      
   def navClick_by_id(self, link_id:str=None, from_group:str=None):
       link = jQ(link_id)
-      if not link.attr('data-current_group'):
+      if from_group:
         link.attr('data-current_group', from_group)
       self.navClick(link=link)
      

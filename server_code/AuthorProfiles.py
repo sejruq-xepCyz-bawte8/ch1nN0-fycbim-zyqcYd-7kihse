@@ -1,58 +1,91 @@
+import anvil.server
 import anvil.users
-import anvil.tables as tables
-import anvil.tables.query as q
 from anvil.tables import app_tables
 import json
-import anvil.server
-import anvil.tables.query as q
-import anvil.secrets
-import anvil.http
+from CloudflareAuthors import cf_author_profile
+from Helpers import is_user_author, is_valid_uri, has_keys, hash_strings, has_record, status, fail
 
-CHETEME = anvil.secrets.get_secret("CHETEME")
+PROFILES = app_tables.authorprofiles
+
+
+
 
 @anvil.server.callable
-def update_author_profile(html, data):
-    print('server publ')
-    user = anvil.users.get_user()
-    if user['is_author']:
-      print('server publ save/upd')
-      user_id = user['user_id']
-      old_record = app_tables.authorprofiles.get(user_id=user_id)
-      author_uri = data['author_uri']
+def update_author_profile(html:str=None, data:dict=None):
+    task = anvil.server.launch_background_task('update_author_profile_bg',
+                                               html=html,
+                                               data=data,
+                                               user=anvil.users.get_user(),
+                                               client=anvil.server.context.client)
+    return task    
+
+
+
+@anvil.server.background_task
+def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=None):
+      status('Проверки на заявката')
+      if not is_user_author(user=user, client=client): return False
+      if not data or html: return fail('Липсват метаданни или съдържание')
+      if not has_keys(target=data, keys=['author_uri', 'author_name']) : return False
+      if not is_valid_uri(data['author_uri']) : return False
+
+      this_uri_records = PROFILES.search(author_uri=data['author_uri'])
+      for u in this_uri_records:
+         if u['user_id'] != user['user_id']: return fail('Зает линк')
+      
+      old_record = PROFILES.get(user_id=user['user_id'])
+
       if not old_record:
-        # making new need look for uri first
-        check_uri_all = len(app_tables.authorprofiles.search(author_uri=author_uri))
-        if check_uri_all == 0:
-          app_tables.authorprofiles.add_row(user_id=user_id, author_uri=author_uri, data=json.dumps(data), html=html)
-        else:
-          return {'success':False, 'message':'duplicate_uri'}
+        
+        status(f'Започва създаване на {data['author_uri']}')
+        return make_new_profile(user_id=user['user_id'], data=data, html=html)
       else:
-        if author_uri == old_record['author_uri']:
-          data_string = json.dumps(data)
-          old_record.update(author_uri=author_uri, data=data_string, html=html)
-          cf = cloudflare_api(data, html)
-          return cf
-        else:
-          check_uri_all = len(app_tables.authorprofiles.search(author_uri=author_uri))
-          if check_uri_all == 0:
-            data_string = json.dumps(data)
-            old_record.update(author_uri=author_uri, data=data_string, html=html)
-            cf = cloudflare_api(data, html)
-            return cf
-          else:
-            return {'success':False, 'message':'duplicate_uri'}
+        status(f'Започва ъпдейт на {data['author_uri']}')
+        return update_profile(old_record=old_record, data=data, html=html)
+   
+
+def make_new_profile(user_id:str, data:dict, html:str)->dict:
+   data_text=json.dumps(data)
+   data['version'] = 1
+   record_hash = hash_strings(data_text, html)
+   cf_success = cf_author_profile(data=data, html=html)
+   if cf_success:
+      PROFILES.add_row(user_id=user_id,
+                                       author_uri=data['author_uri'],
+                                       data=data_text,
+                                       html=html,
+                                       cf_success=cf_success,
+                                       hash=record_hash,
+                                       version=1)
+   else:
+      return False
+   
+   if has_record(PROFILES, record_hash):
+      status(f'Готово')
+      return True
+   else:
+      return fail('Неуспешен бекъп')
+
+def update_profile(old_record, data:dict, html:str):
+   data_text=json.dumps(data)
+   data['version'] = old_record['version'] + 1
+   record_hash = hash_strings(data_text, html)
+   cf_success = cf_author_profile(data=data, html=html)
+   if cf_success:
+      old_record.update(author_uri=data['author_uri'],
+                           data=json.dumps(data),
+                           html=html,
+                           cf_success=cf_success,
+                           hash=record_hash,
+                           version=data['version'])
+   else:
+      return False
+   
+   if has_record(PROFILES, record_hash):
+      status(f'Готово')
+      return True
+   else:
+      return fail('Неуспешен бекъп')
 
 
-def cloudflare_api(data, html):
-  print('send to cf')
-  request_data = {
-    'CHETEME': CHETEME,
-    'target': 'author_profile',
-    'data':data,
-    'html':html
-  }
-  payload = json.dumps(request_data)
-  cf = anvil.http.request(url="https://api.chete.me/",
-                    method="POST",
-                    data=payload,
-                    )
+

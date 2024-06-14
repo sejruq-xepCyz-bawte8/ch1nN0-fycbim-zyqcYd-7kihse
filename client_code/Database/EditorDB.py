@@ -20,12 +20,12 @@ WORK_TEMPLATE = {
   'words':0,
   'ctime':0,
   'mtime':0,
-  'published':False,
   'author_id':AUTHOR_ID,
   'work_id':None,
+  'wid':None,
+  'published':False,
+  'ptime':0,
   'work_uri':'',
-  'id_local': True,
-  'id_server':False,
   'size': 0
 }
 

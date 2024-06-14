@@ -2,10 +2,6 @@ import hashlib
 from time import time
 
 
-
-
-
-
 def make_id(request_data:dict)->str:
     device_id:str = 'new id'
     string1 = request_data['ip'] + request_data['session_id'] + str(time())
@@ -16,7 +12,6 @@ def make_id(request_data:dict)->str:
     hash2 = hash_string(string2)
     hash2_lhalf = hash2[midpoint:]
     return hash2_lhalf + hash1_lhalf
-
 
 
 def hash_string(input_string):
