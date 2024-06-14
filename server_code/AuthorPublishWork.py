@@ -139,6 +139,7 @@ def update_profile_works(user_id:str):
         old_record.update(author_uri=data["author_uri"],
                            data=json.dumps(data),
                            html=html,
+                           works = author_works,
                            cf_success=cf_success,
                            hash=record_hash,
                            version=data["version"])

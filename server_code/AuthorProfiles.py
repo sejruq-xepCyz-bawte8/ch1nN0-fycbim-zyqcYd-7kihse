@@ -56,6 +56,7 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
 def make_new_profile(user_id:str, data:dict, html:str)->dict:
    data_text=json.dumps(data)
    data["version"] = 1
+   data["works"] = {}
    record_hash = hash_strings(data_text, html)
    cf_success = cf_author_profile(data=data, html=html)
    if cf_success:
@@ -65,6 +66,7 @@ def make_new_profile(user_id:str, data:dict, html:str)->dict:
                                        html=html,
                                        cf_success=cf_success,
                                        hash=record_hash,
+                                       works={},
                                        version=1)
    else:
       return False
@@ -79,6 +81,7 @@ def update_profile(old_record, data:dict, html:str):
    status(f'Приготвяне на заявката на {data["author_uri"]}')
    data_text=json.dumps(data)
    data["version"] = old_record["version"] + 1
+   data["works"] = old_record["works"]
    record_hash = hash_strings(data_text, html)
    status(f'Изпращане на заявката {data["author_uri"]}')
    cf_success = cf_author_profile(data=data, html=html)
