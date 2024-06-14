@@ -21,11 +21,11 @@ class _Welcome(_FormTemplate):
       self.navClick_by_id("#navl-Reader-ViewerW_Work")
 
  
-    self.add_div(text="ЧетеМе 0.6.1")
+    self.add_div(text="ЧетеМе 0.6.9")
     self.add_div(text="---")
     self.add_div(text="---")
     self.add_div(text="---")
-    self.add_div(text="Тази версия е само за тестване на писателските профили и пермалинкове")
+    self.add_div(text="Тази версия е само за тестване на писателския пълен цикъл")
 
 
 
