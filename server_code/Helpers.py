@@ -3,6 +3,8 @@ from time import time
 from Suspicious import log_suspicious
 import re
 import anvil.server
+from anvil.tables import app_tables
+from datetime import datetime
 
 def is_valid_uri(uri:str)->bool:
     pattern = re.compile(r'^[a-zA-Z0-9._~%-]+$')
@@ -48,3 +50,11 @@ def status(message):
 def fail(message):
    anvil.server.task_state = message
    return False
+
+
+def log_suspicious(cheteme:str, client):
+     app_tables.suspicious.add_row(datetime=datetime.datetime.now(),
+                                      type=client.type,
+                                      ip=client.ip,
+                                      location=client.location,
+                                      cheteme=cheteme)
