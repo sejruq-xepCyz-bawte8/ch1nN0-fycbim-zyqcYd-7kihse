@@ -119,6 +119,7 @@ def update_profile_works(user_id:str):
     author_works = {}
     status('Ъпдейт на списъка творби на профила')
     for w in published_works:
+        print(w)
         author_works[w["work_uri"]] = w["wid"]
 
     old_record = PROFILES.get(user_id=user_id)
