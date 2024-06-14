@@ -8,7 +8,7 @@ import base64
 from ...Index.App import USER_ID
 import anvil.server
 from anvil_extras.storage import indexed_db
-
+from time import sleep
 
 
 toolbarOptions:list = [
@@ -99,8 +99,13 @@ class Author_Profile(_FormTemplate):
 
     if USER_ID:
       print('publush calling')
-      anvil.server.call('update_author_profile', html=self.html_author, data=self.data)
-
+      task = anvil.server.call('update_author_profile', html=self.html_author, data=self.data)
+      for t in range(20):
+        sleep(1)
+        self.add_div(text=task.get_state())
+        if task.is_completed(): break
+      self.add_div(text=f'Резултат task.get_return_value()')
+        
 
 
 
