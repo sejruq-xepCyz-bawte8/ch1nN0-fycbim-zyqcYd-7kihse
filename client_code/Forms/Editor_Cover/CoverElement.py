@@ -20,7 +20,7 @@ class CoverClass:
         #self.el.attr('id', 'navigation')
         self.el.addClass('ch ch-cover-work')
         self.el.css('background-color', self.data['background-color'])
-        if self.data['background-image'] : self.el.css('background-image', self.data['background-image'])
+        if self.data['background-image'] : self.el.css('background-image', self.data['background-image']) #f'url("{self.data['background-image']}")'
         self.el.css('color', self.data['color'])
 
         #HEADER
