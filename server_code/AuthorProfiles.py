@@ -12,21 +12,24 @@ PROFILES = app_tables.authorprofiles
 
 @anvil.server.callable
 def update_author_profile(html:str=None, data:dict=None):
-    task = anvil.server.launch_background_task('update_author_profile_bg',
-                                               html=html,
-                                               data=data,
-                                               user=anvil.users.get_user(),
-                                               client=anvil.server.context.client.ip)
-    return task    
-
+   user=anvil.users.get_user()
+   if user['is_author'] and user['user_id']:
+      task = anvil.server.launch_background_task('update_author_profile_bg',
+                                                html=html,
+                                                data=data,
+                                                user_id=user['user_id'],
+                                                )
+      return task    
+   else:
+      return None
+      #client=anvil.server.context.client.ip
 
 
 @anvil.server.background_task
-def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=None):
+def update_author_profile_bg(html:str=None, data:dict=None, user_id=None):
       
       status('Проверки на заявката')
-      if not is_user_author(user=user, client=client): return False
-      return 42
+      #if not is_user_author(user=user, client=client): return False
       if not data or not html: return fail('Липсват метаданни или съдържание')
       keys_to_check = ['author_uri', 'author_name']
       if not has_keys(target=data, keys=keys_to_check) : return False
@@ -34,15 +37,15 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
       
       this_uri_records = PROFILES.search(author_uri=data["author_uri"])
       for u in this_uri_records:
-         if u["user_id"] != user["user_id"]: return fail('Зает линк')
+         if u["user_id"] != user_id: return fail('Зает линк')
       
       
-      old_record = PROFILES.get(user_id=user["user_id"])
+      old_record = PROFILES.get(user_id=user_id)
 
       if not old_record:
         
         status(f'Започва създаване на {data["author_uri"]}')
-        result = make_new_profile(user_id=user["user_id"], data=data, html=html)
+        result = make_new_profile(user_id=user_id, data=data, html=html)
       else:
         status(f'Започва ъпдейт на {data["author_uri"]}')
         result = update_profile(old_record=old_record, data=data, html=html)
