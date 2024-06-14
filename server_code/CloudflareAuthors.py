@@ -23,6 +23,7 @@ def parse_request(payload:str):
                                     method="POST",
                                     data=payload,
                                     )
+        anvil.server.task_state('има апи отговор ...')
     except anvil.http.HttpError as e:
         print('API HttpError', e)
         anvil.server.task_state(f'API HttpError {e}')
@@ -51,12 +52,15 @@ def parse_request(payload:str):
 
 
 def cf_api(data:dict, html:str, target:str):
+  anvil.server.task_state('пейлод ...')
   payload = prepare_payload(data=data, html=html, target=target)
+  anvil.server.task_state('изпраща апи заявка ...')
   result = parse_request(payload=payload)
   return result
 
 def cf_author_profile(data:dict, html:str):
-   return cf_api(data=data, html=html, target="author_profile")
+    anvil.server.task_state('API сървъра стартира за ...')
+    return cf_api(data=data, html=html, target="author_profile")
 
 def cf_author_work(data:dict, html:str, wid:str):
    pdata = public_data_work(data=data, wid=wid)

@@ -68,9 +68,11 @@ def make_new_profile(user_id:str, data:dict, html:str)->dict:
       return fail('Неуспешен бекъп')
 
 def update_profile(old_record, data:dict, html:str):
+   status(f'Приготвяне на заявката на {data["author_uri"]}')
    data_text=json.dumps(data)
    data["version"] = old_record["version"] + 1
    record_hash = hash_strings(data_text, html)
+   status(f'Изпращане на заявката {data["author_uri"]}')
    cf_success = cf_author_profile(data=data, html=html)
    if cf_success:
       old_record.update(author_uri=data["author_uri"],
