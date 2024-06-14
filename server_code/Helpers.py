@@ -48,7 +48,7 @@ def status(message):
    
 
 def fail(message):
-   anvil.server.task_state = message
+   anvil.server.task_state['message'] = message
    return False
 
 

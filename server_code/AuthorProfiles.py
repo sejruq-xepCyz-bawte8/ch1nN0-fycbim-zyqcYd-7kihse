@@ -6,7 +6,7 @@ from CloudflareAuthors import cf_author_profile
 from Helpers import is_user_author, is_valid_uri, has_keys, hash_strings, has_record, status, fail
 
 
-
+PROFILES = app_tables.authorprofiles
 
 
 
@@ -27,17 +27,16 @@ def update_author_profile(html:str=None, data:dict=None):
 
 @anvil.server.background_task
 def update_author_profile_bg(html:str=None, data:dict=None, user_id=None):
-      #PROFILES = app_tables.authorprofiles
+      
       status('Проверки на заявката')
       #if not is_user_author(user=user, client=client): return False
-      #if not data or not html: return fail('Липсват метаданни или съдържание')
+      if not data or not html: return fail('Липсват метаданни или съдържание')
       keys_to_check = ['author_uri', 'author_name']
-      #if not has_keys(target=data, keys=keys_to_check) : return False
-      #if not is_valid_uri(data["author_uri"]) : return False
-      print('44')
-      return 42
+      if not has_keys(target=data, keys=keys_to_check) : return False
+      if not is_valid_uri(data["author_uri"]) : return False
+    
+      #return 42
 
-def temp():
       this_uri_records = PROFILES.search(author_uri=data["author_uri"])
       
       for u in this_uri_records:

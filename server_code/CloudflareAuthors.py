@@ -7,7 +7,7 @@ CHETEME = anvil.secrets.get_secret("CHETEME")
 API_URL = "https://api.chete.me/"
 
 def status(message):
-   anvil.server.task_state = message
+   anvil.server.task_state['message'] = message
 
 def prepare_payload(data:dict, html:str, target:str):
     request_data = {
