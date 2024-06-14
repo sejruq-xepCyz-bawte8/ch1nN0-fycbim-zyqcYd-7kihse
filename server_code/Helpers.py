@@ -14,8 +14,7 @@ def is_valid_uri(uri:str)->bool:
 
 def has_keys(target:dict, keys:list)->bool:
     for key in keys:
-        value = target.get(key)
-        if not value:
+        if not key in target:
             status(f'Непълни метаданни - {key}')
             return False
     return True
