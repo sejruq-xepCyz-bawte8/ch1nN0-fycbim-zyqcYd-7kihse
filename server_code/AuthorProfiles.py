@@ -39,7 +39,7 @@ def update_author_profile_bg(html:str=None, data:dict=None, user_id=None):
       for u in this_uri_records:
          if u["user_id"] != user_id: return fail('Зает линк')
       
-      
+      return 42
       old_record = PROFILES.get(user_id=user_id)
 
       if not old_record:
