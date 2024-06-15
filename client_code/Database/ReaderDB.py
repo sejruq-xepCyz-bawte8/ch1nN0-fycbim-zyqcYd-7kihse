@@ -9,22 +9,39 @@ class ReaderClass:
         self.author_id:str = None
         self.author_data:dict = None
         self.author_html:str = None
-
+        self.cache = {}
 
 
     def set_current_work(self, work_id:str):
         self.work_id = work_id
         self.data = None
         self.html = None
-        self.data, self.html = api_work(work_id)
+        self.data, self.html = self.get_update_cache(work_id, api_work)
         return True
 
     def set_current_author(self, author_id:str):
         self.author_id = author_id
         self.author_data = None
         self.author_html = None
-        self.author_data, self.author_html = api_author(author_id)
+        self.author_data, self.author_html = self.get_update_cache(author_id, api_author)
         return True
+
+    def get_update_cache(self, id:str, api):
+        result = self.cache.get(id)
+        if result:
+            return result['data'], result['html']
+        else:
+            data, html = api(id)
+            self.cache[id] = {'data':data, 'html':html}
+            return data, html
+        
+
+
+
+
+
+
+
 
 
 
