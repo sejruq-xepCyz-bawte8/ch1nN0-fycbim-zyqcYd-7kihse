@@ -1,7 +1,7 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
 from ...Index.App import READER
-
+from anvil.js import window, document
 
 class _Welcome(_FormTemplate):
   def __init__(self, **properties):
@@ -9,6 +9,7 @@ class _Welcome(_FormTemplate):
    
     
     self.uri = get_url_hash()
+    window.history.replaceState({}, document.title, window.location.origin)
     #self.uris = self.uri.split('/')
     self.init_components(**properties)
 
@@ -23,7 +24,6 @@ class _Welcome(_FormTemplate):
       
     if 'work' in self.uri:
       READER.set_current_work(self.uri['work'])
-      #window.history.replaceState({}, document.title, window.location.origin);
       self.navClick_by_id("#navl-Reader-ViewerW_Work")
 
  
