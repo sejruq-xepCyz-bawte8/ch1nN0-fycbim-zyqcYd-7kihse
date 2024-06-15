@@ -6,6 +6,9 @@ class ReaderClass:
         self.html:str = None
         self.work_id:str = None
         self.author_uri = None
+        self.author_id:str = None
+        self.author_data:dict = None
+        self.author_html:str = None
 
 
 
@@ -16,7 +19,12 @@ class ReaderClass:
         self.data, self.html = api_work(work_id)
         return True
 
-
+    def set_current_author(self, author_id:str):
+        self.author_id = author_id
+        self.author_data = None
+        self.author_html = None
+        self.author_data, self.author_html = api_work(author_id)
+        return True
 
 
 
