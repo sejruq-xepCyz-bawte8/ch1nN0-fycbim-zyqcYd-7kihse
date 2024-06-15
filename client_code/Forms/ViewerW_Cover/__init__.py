@@ -35,5 +35,5 @@ class ViewerW_Cover(_FormTemplate):
       self.add_div(text=genre)
     author_id = READER.data.get('author_id')
     author_data = READER.get_author_data(author_id)
-    authhor_name = author_data.get('authhor_name')
-    self.add_div(text=f"автор: {authhor_name}")
+    author_name = author_data.get('author_name')
+    self.add_div(text=f"автор: {author_name}")
