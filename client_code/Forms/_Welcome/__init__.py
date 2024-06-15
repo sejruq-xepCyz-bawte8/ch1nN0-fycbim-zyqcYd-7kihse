@@ -9,7 +9,7 @@ class _Welcome(_FormTemplate):
    
     
     self.uri = get_url_hash()
-    window.history.replaceState({}, document.title, window.location.origin)
+    #window.history.replaceState({}, document.title, window.location.origin)
     #self.uris = self.uri.split('/')
     self.init_components(**properties)
 
@@ -17,10 +17,11 @@ class _Welcome(_FormTemplate):
 
   def show_form(self, **event):
     self.add_div(text=self.form_name)
+    
     if 'author' in self.uri:
       READER.set_current_author(self.uri['author'])
       self.navClick_by_id("#navl-Reader-ViewerA_Author")
-    #if len(self.uris) == 1 and self.uri != '':
+    
       
     if 'work' in self.uri:
       READER.set_current_work(self.uri['work'])
