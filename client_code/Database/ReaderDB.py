@@ -40,6 +40,9 @@ class ReaderClass:
             return data, html
         
 
+    def get_author_data(self, author_id:str):
+        data, _ = self.get_update_cache(author_id, api_author)
+        return data
 
 
 
