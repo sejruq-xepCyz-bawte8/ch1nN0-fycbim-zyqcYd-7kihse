@@ -66,6 +66,7 @@ def publish_new_work(user_id:str, author_id:str, data:dict, html:str):
     data_text=json.dumps(data)
     data["version"] = 1
     data['author_id'] = author_id
+    data['published'] = True
     record_hash = hash_strings(data_text, html)
     cf_success = cf_author_work(data=data, html=html, wid=wid)
     if cf_success:
