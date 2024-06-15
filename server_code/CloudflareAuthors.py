@@ -75,18 +75,19 @@ def cf_author_work(data:dict, html:str, wid:str):
 def public_data_work(data:dict, wid:str)->dict:
     pdata = {}
     keys = ['title',
+            'author_id',
+            'work_uri',
             'words',
             'genres',
             'keywords',
             'icons',
-            'background-image',
             'font',
             'background-color',
             'color',
             'cover_mask',
             'mask_color',
             'ptime',
-            'work_uri']
+            'background-image',]
     for key in keys:
         pdata[key] = data.get(key)
     pdata['wid'] = wid
