@@ -6,6 +6,7 @@ from ..Navigation.NavigationBar import NavigationClass
 from ..Database.AwesomeDB import AwesomeClass
 from ..Database.GenresDB import GenresClass
 from ..Database.EditorDB import EditorClass
+from ..Database.ReaderDB import ReaderClass
 
 from .DevMode import dev_mode_init
 
@@ -26,6 +27,7 @@ IS_AUTHOR:bool = None
 NAVIGATION:NavigationClass = None
 AW:AwesomeClass = AwesomeClass()
 GENRES:GenresClass = GenresClass()
+READER = ReaderClass()
 EDITOR:EditorClass = None
 
 def init_app()->bool:
@@ -63,6 +65,7 @@ def init_app()->bool:
     if DEVMODE:dev_mode_init()
 
     EDITOR = EditorClass() if IS_AUTHOR else None
+    
     NAVIGATION = NavigationClass()
     return True
 

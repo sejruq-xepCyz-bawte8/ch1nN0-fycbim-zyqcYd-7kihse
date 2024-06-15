@@ -3,8 +3,14 @@ import anvil.http
 import json
 
 
-def author_html():
-    pass
+
+def api_work(target_id='beach'):
+    request_data = prepare_request(target='work', target_id=target_id)
+    response = make_request(request_data)
+    data, html = parse_response(response)
+    return data, html
+
+
 def api_author(target_id='beach'):
     request_data = prepare_request(target='author', target_id=target_id)
     response = make_request(request_data)

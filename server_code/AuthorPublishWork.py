@@ -29,8 +29,8 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
     status('Проверки на заявката')
     if not is_user_author(user=user, client=client): return False
 
-    profile_record = PROFILES.get(user_id=user["user_id"])
-    if not profile_record : return fail('Първо направете профил :)')
+    author_record = PROFILES.get(user_id=user["user_id"])
+    if not author_record : return fail('Първо направете профил :)')
 
     if not data or not html: return fail('Липсват метаданни или съдържание')
     if not has_keys(target=data, keys=['work_uri', 'work_id', 'title', 'ptime']) : return False
@@ -49,7 +49,8 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
         result_profile = update_profile_works(user["user_id"])
     else:
         status(f'Започва публикуване на {data["title"]}')
-        result_work =  publish_new_work(user_id=user["user_id"], data=data, html=html)
+        author_id = author_record['author_id']
+        result_work =  publish_new_work(user_id=user["user_id"], author_id=author_id, data=data, html=html)
         result_profile = update_profile_works(user["user_id"])
 
     if result_work and result_profile:
@@ -60,23 +61,25 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
        return False
        
 
-def publish_new_work(user_id:str, data:dict, html:str):
+def publish_new_work(user_id:str, author_id:str, data:dict, html:str):
     wid=hash_strings(user_id, data["work_id"])
     data_text=json.dumps(data)
     data["version"] = 1
+    data['author_id'] = author_id
     record_hash = hash_strings(data_text, html)
     cf_success = cf_author_work(data=data, html=html, wid=wid)
     if cf_success:
         WORKS.add_row(user_id=user_id,
-                                work_id=data["work_id"],
-                                work_uri=data["work_uri"],
-                                wid=wid,
-                                published = True,
-                                cf_success = cf_success,
-                                data=json.dumps(data),
-                                html=html,
-                                hash=record_hash,
-                                version = 1)
+                      author_id = author_id,
+                      work_id=data["work_id"],
+                      work_uri=data["work_uri"],
+                      wid=wid,
+                      published = True,
+                      cf_success = cf_success,
+                      data=json.dumps(data),
+                      html=html,
+                      hash=record_hash,
+                      version = 1)
     
     else:
       return False

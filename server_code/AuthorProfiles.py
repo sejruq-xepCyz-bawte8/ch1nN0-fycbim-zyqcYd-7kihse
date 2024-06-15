@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import json
 from CloudflareAuthors import cf_author_profile
 from Helpers import is_user_author, is_valid_uri, has_keys, hash_strings, has_record, status, fail
-
+from time import time
 
 PROFILES = app_tables.authorprofiles
 
@@ -54,14 +54,17 @@ def update_author_profile_bg(html:str=None, data:dict=None, user=None, client=No
       return result
 
 def make_new_profile(user_id:str, data:dict, html:str)->dict:
+   author_id=hash_strings(user_id, str(time()))
    data_text=json.dumps(data)
    data["version"] = 1
+   data["author_id"] = author_id
    data["works"] = {}
    record_hash = hash_strings(data_text, html)
    cf_success = cf_author_profile(data=data, html=html)
    if cf_success:
       PROFILES.add_row(user_id=user_id,
                                        author_uri=data["author_uri"],
+                                       author_id = author_id,
                                        data=data_text,
                                        html=html,
                                        cf_success=cf_success,

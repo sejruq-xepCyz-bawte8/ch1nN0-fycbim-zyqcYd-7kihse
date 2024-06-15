@@ -4,7 +4,7 @@ from time import time
 from random import randint
 import datetime
 
-AUTHOR_ID = 'author_id'
+
 
 WORK_TEMPLATE = {
   'title':None,
@@ -20,9 +20,7 @@ WORK_TEMPLATE = {
   'words':0,
   'ctime':0,
   'mtime':0,
-  'author_id':AUTHOR_ID,
   'work_id':None,
-  'wid':None,
   'published':False,
   'ptime':0,
   'work_uri':'',

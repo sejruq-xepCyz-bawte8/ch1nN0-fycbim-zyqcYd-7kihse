@@ -75,6 +75,7 @@ def cf_author_work(data:dict, html:str, wid:str):
 def public_data_work(data:dict, wid:str)->dict:
     pdata = {}
     keys = ['title',
+            'words',
             'genres',
             'keywords',
             'icons',

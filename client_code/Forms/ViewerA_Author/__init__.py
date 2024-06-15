@@ -8,9 +8,10 @@ class ViewerA_Author(_FormTemplate):
     super().__init__(**properties)
     
     self.uri = get_url_hash()
+    self.author_uri = self.uri.get('author')
     
     self.init_components(**properties)
-    data, html = api_author(self.uri)
+    data, html = api_author(self.author_uri)
     self.data = data
     self.author_html = html
 
