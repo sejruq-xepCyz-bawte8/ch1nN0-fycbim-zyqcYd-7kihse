@@ -1,4 +1,4 @@
-from ..API.ReaderApi import api_work
+from ..API.ReaderApi import api_work, api_author
 
 class ReaderClass:
     def __init__(self) -> None:
@@ -23,7 +23,7 @@ class ReaderClass:
         self.author_id = author_id
         self.author_data = None
         self.author_html = None
-        self.author_data, self.author_html = api_work(author_id)
+        self.author_data, self.author_html = api_author(author_id)
         return True
 
 
