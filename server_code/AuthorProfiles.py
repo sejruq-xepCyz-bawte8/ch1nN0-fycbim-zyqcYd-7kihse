@@ -85,6 +85,7 @@ def update_profile(old_record, data:dict, html:str):
    data_text=json.dumps(data)
    data["version"] = old_record["version"] + 1
    data["works"] = old_record["works"]
+   data["author_id"] = old_record["author_id"]
    record_hash = hash_strings(data_text, html)
    status(f'Изпращане на заявката {data["author_uri"]}')
    cf_success = cf_author_profile(data=data, html=html)
