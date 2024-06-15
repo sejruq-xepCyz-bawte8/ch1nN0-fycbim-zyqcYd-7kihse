@@ -49,7 +49,7 @@ NAV_TREE = [
         'links':[
         {'text':'Назад', 'form':'Reader_Today'},
         {'text':'Инфо', 'form':'ViewerA_Author'},
-        {'text':'Творби', 'form':'ViewerA_Cover'},
+        {'text':'Творби', 'form':'ViewerA_Works'},
         {'text':'Запази', 'form':'ViewerA_Author', 'onclick':'click_bookmark'},
         {'text':'Харесай', 'form':'ViewerA_Author', 'onclick':'click_like'},
         ],
