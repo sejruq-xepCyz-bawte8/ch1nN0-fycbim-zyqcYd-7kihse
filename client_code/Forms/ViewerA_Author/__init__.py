@@ -1,6 +1,6 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...API.ReaderApi import api_author
+from ...Index.App import READER
 
 
 class ViewerA_Author(_FormTemplate):
@@ -17,11 +17,10 @@ class ViewerA_Author(_FormTemplate):
 
   def show_form(self, **event):
     if self.data:
-      self.add_div(text=self.data['author_name'])
+      self.add_div(text=READER.author_data)
       author_info = self.add_div()
-      author_info.html(self.author_html)
-    else:
-      self.add_div(text=f'No author with uri {self.uri}')
+      author_info.html(READER.author_html)
+
     
     
 
