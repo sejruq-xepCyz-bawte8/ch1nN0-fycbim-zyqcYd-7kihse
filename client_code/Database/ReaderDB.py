@@ -1,7 +1,11 @@
 from ..API.ReaderApi import api_work, api_author
+#from anvil_extras.storage import indexed_db
 
 class ReaderClass:
     def __init__(self) -> None:
+        #self.store_cache_data = indexed_db.create_store('cache_data')
+        #self.store_cache_html = indexed_db.create_store('cache_html')
+        #self.store_cache_log = indexed_db.create_store('cache_log')
         self.data:dict = None
         self.html:str = None
         self.work_id:str = None
