@@ -95,6 +95,8 @@ def publish_new_work(user_id:str, author_id:str, data:dict, html:str):
 def update_work(old_record, data:str, html:str):
     data_text=json.dumps(data)
     data["version"] = old_record["version"] + 1
+    data['author_id'] = old_record["author_id"]
+    data['published'] = True
     record_hash = hash_strings(data_text, html)
     cf_success = cf_author_work(data=data, html=html, wid=old_record["wid"])
     if cf_success:
