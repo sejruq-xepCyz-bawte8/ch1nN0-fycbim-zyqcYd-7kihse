@@ -17,7 +17,7 @@ class ViewerA_Author(_FormTemplate):
 
   def show_form(self, **event):
     
-    self.add_div(text=READER.author_data)
+    self.add_div(text=READER.author_data['author_name'])
     author_info = self.add_div()
     author_info.html(READER.author_html)
 
