@@ -14,9 +14,10 @@ class Reader_Today(_FormTemplate):
   def show_form(self, **event):
     self.add_label(text=self.form_name)
     self.cover_container = self.add_div(id='cover-container')
+    print(READER.today)
     for w in READER.today:
       wid = next(iter(w))
-      print(w)
+      
       work_data = READER.get_work_data(wid)
       cover = CoverClass(work_data)
       self.append_jq_el(element=cover.el, parent=self.cover_container)
