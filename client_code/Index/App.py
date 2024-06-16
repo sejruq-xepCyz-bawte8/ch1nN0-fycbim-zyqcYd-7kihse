@@ -29,6 +29,7 @@ AW:AwesomeClass = AwesomeClass()
 GENRES:GenresClass = GenresClass()
 
 EDITOR:EditorClass = None
+READER:ReaderClass = None
 
 def init_app()->bool:
     load_js_script('/_/theme/javascript/init_viewport.js')
@@ -50,6 +51,7 @@ def init_app()->bool:
     global IS_AUTHOR
     global ADULT
     global EDITOR
+    global READER
   
     USER = anvil.users.get_user()
     USER_ID = USER['user_id'] if USER else None
