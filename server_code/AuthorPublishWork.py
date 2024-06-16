@@ -8,6 +8,7 @@ import hashlib
 
 WORKS = app_tables.works
 PROFILES = app_tables.authorprofiles
+WORKS_NEW = app_tables.worksnew
 
 from CloudflareAuthors import cf_author_work, cf_author_profile
 from Helpers import is_user_author, is_valid_uri, has_keys, hash_strings, has_record, status, fail
@@ -86,7 +87,9 @@ def publish_new_work(user_id:str, author_id:str, data:dict, html:str):
       return False
    
     if has_record(WORKS, record_hash):
-      status(f'Творбата е публикувана, следва ъпдейт на профила с нея')
+      status(f'Творбата е публикувана, следва регистрация в нови творби')
+      WORKS_NEW.add_row(wid=wid, ptime=time())
+      status(f'Творбата е регистрирана, следва ъпдейт на профила с нея')
       return True
     else:
       return fail('Неуспешен бекъп')
