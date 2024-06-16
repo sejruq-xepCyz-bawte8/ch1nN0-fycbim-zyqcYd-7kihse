@@ -201,4 +201,5 @@ p {
 /*TODAY*/
 #form-Reader_Today #cover-container{
   display: flex;
+  flex-wrap: wrap;
 }
