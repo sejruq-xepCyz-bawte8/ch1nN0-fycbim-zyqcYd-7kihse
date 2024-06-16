@@ -12,8 +12,8 @@ class Reader_Today(_FormTemplate):
   def show_form(self, **event):
     self.add_label(text=self.form_name)
     for w in READER.today:
-      print(w)
-      work_data = READER.get_work_data(wid=w['wid'])
+      wid = next(iter(w))
+      work_data = READER.get_work_data(wid)
       self.add_div(text=work_data['title'])
     
     
