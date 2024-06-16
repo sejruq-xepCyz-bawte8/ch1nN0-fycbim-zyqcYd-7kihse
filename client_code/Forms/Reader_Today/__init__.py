@@ -22,6 +22,7 @@ class Reader_Today(_FormTemplate):
       if work_data['background-image'] == True:
         work_data['background-image'] = f'https://images.chete.me/{wid}'
       cover = CoverClass(work_data)
+      #cover.attr('data-onclick', "open_work")
       cover.el.attr('onclick', f'anvil.call($("#appGoesHere > div"), "open_work", "{wid}")')
       self.append_jq_el(element=cover.el, parent=self.cover_container)
     
@@ -33,5 +34,5 @@ class Reader_Today(_FormTemplate):
     wid = sender
     print(wid)
     READER.set_current_work(wid)
-    self.navClick_by_id("#navl-Reader-ViewerW_Work")
+    #self.navClick_by_id("#navl-Reader-ViewerW_Work")
 
