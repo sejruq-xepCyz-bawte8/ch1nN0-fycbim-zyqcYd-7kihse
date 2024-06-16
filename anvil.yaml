@@ -146,4 +146,10 @@ secrets:
   CHETEME:
     value: {NGQUW2Q5LEUR66SD: 6iFvhLjFdNlpi4kA8WY7DlPBWorhk3jsiZHJX7hLFQyKAdUoflVKXvnM/Ct0xZVdW8OR0YMRXpQDACaMpB8b2JiLHl21JLDgpnq/ER0VEee+SHVS7qxCb6kse/nkt/bZFGkZdksal6Fckk2EmSYjde/fAphSFtD2rA==}
     type: secret
-scheduled_tasks: []
+scheduled_tasks:
+- task_name: today_new_works
+  time_spec:
+    n: 1
+    every: minute
+    at: {}
+  job_id: VCLSCTCF
