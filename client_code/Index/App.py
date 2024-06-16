@@ -27,7 +27,7 @@ IS_AUTHOR:bool = None
 NAVIGATION:NavigationClass = None
 AW:AwesomeClass = AwesomeClass()
 GENRES:GenresClass = GenresClass()
-READER = ReaderClass()
+
 EDITOR:EditorClass = None
 
 def init_app()->bool:
@@ -67,6 +67,7 @@ def init_app()->bool:
     EDITOR = EditorClass() if IS_AUTHOR else None
     
     NAVIGATION = NavigationClass()
+    READER = ReaderClass()
     return True
 
 def load_js_script(src:str) -> None:
