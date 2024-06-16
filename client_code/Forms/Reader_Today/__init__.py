@@ -22,7 +22,7 @@ class Reader_Today(_FormTemplate):
       if work_data['background-image'] == True:
         work_data['background-image'] = f'https://images.chete.me/{wid}'
       cover = CoverClass(work_data)
-      cover.el.attr('onclick', f'anvil.call($("#appGoesHere > div"), "open_work", {wid})')
+      cover.el.attr('onclick', f'anvil.call($("#appGoesHere > div"), "open_work", "{wid}")')
       self.append_jq_el(element=cover.el, parent=self.cover_container)
     
     
