@@ -46,7 +46,9 @@ class ReaderClass:
         data, _ = self.get_update_cache(author_id, api_author)
         return data
 
-
+    def get_work_data(self, wid:str):
+        data, _ = self.get_update_cache(wid, api_work)
+        return data
 
 
 
