@@ -33,6 +33,6 @@ class Reader_Today(_FormTemplate):
     wid = sender
     print('opening work', wid)
     READER.set_current_work = wid
-    form_id = ''
+    form_id = 'navl-ViewerW-ViewerW_Work'
     self.navClick_by_id(form_id)
 
