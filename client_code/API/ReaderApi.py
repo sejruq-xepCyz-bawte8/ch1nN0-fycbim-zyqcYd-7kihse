@@ -49,6 +49,7 @@ def make_request(data):
     return response
 
 def parse_response(response):
+    if not response: return None, None
     resp_bytes = response.get_bytes()
     resp_text = resp_bytes.decode('utf-8')
     resp_json = json.loads(resp_text)
