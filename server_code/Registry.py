@@ -20,6 +20,7 @@ def today_new_works():
     print(today_works)
     status('пейлод ...')
     payload = prepare_payload(data=today_works, key=key)
+    print(payload)
     status('изпраща апи заявка ...')
     result = parse_request(payload=payload)
     print(result)
