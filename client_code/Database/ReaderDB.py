@@ -1,4 +1,4 @@
-from ..API.ReaderApi import api_work, api_author
+from ..API.ReaderApi import api_work, api_author, api_today
 #from anvil_extras.storage import indexed_db
 
 class ReaderClass:
@@ -14,6 +14,7 @@ class ReaderClass:
         self.author_data:dict = None
         self.author_html:str = None
         self.cache = {}
+        self.today = api_today()
 
 
     def set_current_work(self, work_id:str):
