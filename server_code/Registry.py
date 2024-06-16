@@ -28,8 +28,8 @@ def prepare_payload(data:dict, registry_key:str):
     request_data = {
        'CHETEME': CHETEME,
        'target': 'registry',
-       'registry_data':data,
-       'registry_key':registry_key
+       'data':data,
+       'key':registry_key
        }
     payload = json.dumps(request_data)
     return payload
