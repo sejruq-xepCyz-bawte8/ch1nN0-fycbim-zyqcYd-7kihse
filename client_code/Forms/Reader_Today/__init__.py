@@ -31,6 +31,7 @@ class Reader_Today(_FormTemplate):
 
   def open_work(self, sender, *event):
     wid = sender
+    print(wid)
     READER.set_current_work(wid)
     self.navClick_by_id("#navl-Reader-ViewerW_Work")
 
