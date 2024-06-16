@@ -17,9 +17,7 @@ NAV_TREE = [
         {'text':'Автори', 'form':'Reader_Authors'},
         {'text':'Отметки', 'form':'Reader_Bookmarks'},
         {'text':'Настр.', 'form':'Settings_Info'},
-        {'text':'Писател', 'form':'Author_Works', 'is_author':True,},
-        {'text':'Творба', 'form':'ViewerW_Work','style':'thin'},
-        {'text':'Автор', 'form':'ViewerA_Author','style':'thin'},
+        {'text':'Писател', 'form':'Author_Works', 'is_author':True,}
         ],
     },
             {   
