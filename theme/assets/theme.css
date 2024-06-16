@@ -197,3 +197,8 @@ p {
   gap: 5px;
   font-size: 2rem;
 }
+
+/*TODAY*/
+#form-Reader_Today #cover-container{
+  display: flex;
+}
