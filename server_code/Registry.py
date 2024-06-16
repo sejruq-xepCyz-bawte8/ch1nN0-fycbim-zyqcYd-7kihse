@@ -18,10 +18,10 @@ def today_new_works():
     data_iterator = WORKS_NEW.search()
     today_works = [{w['wid']:w['ptime']} for w in data_iterator if w['ptime'] > today_unix]
     
-    status('пейлод ...')
+    print('пейлод ...')
     payload = prepare_payload(data=today_works, key=key)
     
-    status('изпраща апи заявка ...')
+    print('изпраща апи заявка ...')
     result = parse_request(payload=payload)
     print(result)
 
@@ -50,7 +50,7 @@ def parse_request(payload:str):
         status('има апи отговор ...')
     except anvil.http.HttpError as e:
         print('API HttpError', e)
-        status(f'API HttpError {e}')
+        print(f'API HttpError {e}')
         return False
 
     body_bytes = response.get_bytes()
@@ -60,7 +60,7 @@ def parse_request(payload:str):
         rdata = json.loads(body_string)
         if not rdata:
             print('responce not rdata')
-            status(f'Неправилен отговор от сървъра')
+            print(f'Неправилен отговор от сървъра')
             return False
     except:
         print('responce json err')
@@ -68,10 +68,10 @@ def parse_request(payload:str):
 
     success = rdata.get('success')
     if success:
-        status(f'Успешен отговор от API сървъра')
+        print(f'Успешен отговор от API сървъра')
         return True
     else:
-        status(f'API сървъра съобщава за неуспех {rdata.get("message")}')
+        print(f'API сървъра съобщава за неуспех {rdata.get("message")}')
     return False
 
 
