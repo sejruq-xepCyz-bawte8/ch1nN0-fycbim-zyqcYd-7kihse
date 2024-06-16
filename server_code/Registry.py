@@ -16,7 +16,7 @@ def today_new_works():
     key = 'today'
     today_unix = today()
     data_iterator = WORKS_NEW.search()
-    today_works = [w for w in data_iterator if w['ptime'] > today_unix]
+    today_works = [{w['wid']:w['ptime']} for w in data_iterator if w['ptime'] > today_unix]
     print(today_works)
     status('пейлод ...')
     payload = prepare_payload(data=today_works, key=key)
