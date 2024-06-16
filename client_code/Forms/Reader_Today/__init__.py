@@ -19,8 +19,8 @@ class Reader_Today(_FormTemplate):
       wid = next(iter(w))
       
       work_data = READER.get_work_data(wid)
-      if work_data['background_image'] == True:
-        work_data['background_image'] = f'https://images.chete.me/{wid}'
+      if work_data['background-image'] == True:
+        work_data['background-image'] = f'https://images.chete.me/{wid}'
       cover = CoverClass(work_data)
       self.append_jq_el(element=cover.el, parent=self.cover_container)
     
