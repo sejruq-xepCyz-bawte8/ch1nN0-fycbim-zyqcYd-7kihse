@@ -22,7 +22,7 @@ class ViewerW_Cover(_FormTemplate):
     #cover.css("width", "100%")
     #cover.css('background-color', READER.data['background-color'])
     if READER.data['background-image']:
-      image_url = f'https://images.chete.me/{READER.data['wid']}'
+      image_url = f'https://images.chete.me/{READER.data["wid"]}'
       cover = jQ('<img>')
       cover.addClass('ch ch-cover-work-reader')
       cover.attr('src', image_url) #f'url("{self.data['background-image']}")'
