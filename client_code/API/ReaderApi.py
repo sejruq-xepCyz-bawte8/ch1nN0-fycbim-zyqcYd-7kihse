@@ -39,11 +39,13 @@ def prepare_request(target=None, target_id=None):
 def make_request(data):
     if not data:
         return None
-    response = anvil.http.request(url="https://pub.chete.me",
-                    method="POST",
-                    data=json.dumps(data),
-                    )
-    
+    try:
+        response = anvil.http.request(url="https://pub.chete.me",
+                        method="POST",
+                        data=json.dumps(data),
+                        )
+    except:
+        return None
     return response
 
 def parse_response(response):
