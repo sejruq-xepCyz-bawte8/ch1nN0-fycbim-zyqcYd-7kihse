@@ -30,10 +30,10 @@ class Editor_Cover(_FormTemplate):
 
   def show_form(self, **event):
     
-    self.title = self.add_textbox(text=EDITOR.data['title'], placeholder='Заглавие', change=self.design_change)
+    self.title = self.add_textbox(text=EDITOR.data.get('title'), placeholder='Заглавие', change=self.design_change)
     
     self.uri = self.add_textbox(placeholder='URI', change=self.design_change)
-    self.uri.text = EDITOR.data['work_uri']
+    self.uri.text = EDITOR.get('work_uri')
     uri_zod(self.uri)
 
     self.permalink = self.add_label(text='https://chete.me...')
