@@ -33,7 +33,7 @@ class Editor_Cover(_FormTemplate):
     self.title = self.add_textbox(text=EDITOR.data.get('title'), placeholder='Заглавие', change=self.design_change)
     
     self.uri = self.add_textbox(placeholder='URI', change=self.design_change)
-    self.uri.text = EDITOR.get('work_uri')
+    self.uri.text = EDITOR.data.get('work_uri')
     uri_zod(self.uri)
 
     self.permalink = self.add_label(text='https://chete.me...')
