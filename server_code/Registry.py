@@ -13,23 +13,24 @@ API_URL = "https://api.chete.me/"
 
 @anvil.server.background_task
 def today_new_works():
+    key = 'today'
     today_unix = today()
     data_iterator = WORKS_NEW.search()
     today_works = [w for w in data_iterator if w['ptime'] > today_unix]
     status('пейлод ...')
-    payload = prepare_payload(data=today_works)
+    payload = prepare_payload(data=today_works, key=key)
     status('изпраща апи заявка ...')
     result = parse_request(payload=payload)
     print(result)
 
 
 
-def prepare_payload(data:dict, registry_key:str):
+def prepare_payload(data:dict, key:str):
     request_data = {
        'CHETEME': CHETEME,
        'target': 'registry',
        'data':data,
-       'key':registry_key
+       'key':key
        }
     payload = json.dumps(request_data)
     return payload
