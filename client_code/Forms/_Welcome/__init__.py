@@ -32,7 +32,7 @@ class _Welcome(_FormTemplate):
     self.add_div(text="---")
     self.add_div(text="---")
     self.add_div(text="---")
-    self.add_div(text="Тази версия е само за тестване")
+    self.add_div(text="Тази версия е само за тестване...")
 
 
 
