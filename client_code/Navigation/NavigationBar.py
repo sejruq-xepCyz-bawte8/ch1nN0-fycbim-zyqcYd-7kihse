@@ -156,7 +156,7 @@ class NavigationClass:
                 text_el.addClass('ch ch-nav-text')
                 text_el.text(link['text'])
 
-                if link['init_hidden']:
+                if link.get('init_hidden'):
                     link_el.hide()
 
                 jQ(link_el).append(icon_el)
