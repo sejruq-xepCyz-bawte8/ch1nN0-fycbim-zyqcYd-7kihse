@@ -14,6 +14,7 @@ class ReaderClass:
         self.author_data:dict = None
         self.author_html:str = None
         self.cache = {}
+        
         self.today = api_today()
 
 

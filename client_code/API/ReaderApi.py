@@ -8,7 +8,10 @@ def api_today():
     request_data = prepare_request(target='today', target_id='today')
     response = make_request(request_data)
     data, _ = parse_response(response)
-    return data
+    if data:
+        return data
+    else:
+        return []
 
 
 def api_work(target_id='beach'):
