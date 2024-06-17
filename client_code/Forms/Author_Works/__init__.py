@@ -15,10 +15,12 @@ class Author_Works(_FormTemplate):
     super().__init__(**properties)
     
     self.init_components(**properties)
+    self.add_help_panel(text='Чернови на това устройство', help=HELP)
+    self.works = self.add_colpanel()
     
 
   def draw_works(self, **event):
-      self.clear()
+      self.works.clear()
       works = []
       try:
         works = EDITOR.all_works_data()
@@ -26,7 +28,7 @@ class Author_Works(_FormTemplate):
         works = []
         
       for work in works:
-        container = self.add_flowpanel()
+        container = self.add_flowpanel(parent=self.works)
         
 
         button_o = self.add_button(parent=container, click=self.open_work)
@@ -59,3 +61,8 @@ class Author_Works(_FormTemplate):
 
 
 
+HELP = """<p>Тук са творбите създавани е редактирани на това устройство и браузер.</p>
+<p>Те не се съхраняват никъде другаде.</p>
+<p>При публикуване на творба, същата изпраща съдържанието си за публикуване.</p>
+<p>Ако след това я редактирате или изтриете това няма да се отрази на Публикуваната и респ. Онлайн версия.</p>
+<p>За да се отразят промени в Публикуваната творбата тук трябва да се публикува изрично отново.</p>"""

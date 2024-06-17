@@ -125,9 +125,7 @@ align-items: center;
 .ch-nav-text{
   font-size: 10px;
 }
-.nav-clicked{
-  background-color: pink;
-}
+
 #navl-Reader-Work_Viewer-Work-open_form{
   position: absolute;
   top:0;
@@ -197,9 +195,90 @@ p {
   gap: 5px;
   font-size: 2rem;
 }
-
+.ql-align-center{
+  text-align: center;
+}
 /*TODAY*/
 #form-Reader_Today #cover-container{
   display: flex;
   flex-wrap: wrap;
+}
+
+
+/*DUOTONE NAVBAR*/
+.ch-nav-icon{
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(125, 125, 125);
+  --fa-secondary-color: rgb(172, 172, 172);
+}
+
+.nav-clicked .fa-home {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(108, 108, 108);
+}
+.nav-clicked .fa-books {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(254, 212, 1);
+}
+.nav-clicked .fa-glasses {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(1, 170, 254);
+}
+.nav-clicked .fa-bookmark {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(254, 47, 1);
+}
+.nav-clicked .fa-sliders {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(1, 170, 254);
+}
+.nav-clicked .fa-typewriter {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(1, 170, 254);
+}
+.nav-clicked .fa-file-plus {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(255, 235, 148);
+}
+.nav-clicked .fa-address-card {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(255, 235, 148);
+}
+.nav-clicked .fa-chart-simple {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(255, 235, 148);
+}
+.nav-clicked .fa-filter {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(255, 235, 148);
+}
+.nav-clicked .fa-palette {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(255, 235, 148);
+}
+.nav-clicked .fa-user {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(255, 235, 148);
+}
+.nav-clicked .fa-circle-info {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(255, 235, 148);
+}
+.nav-clicked .fa-folder {
+  --fa-secondary-opacity: 1;
+  --fa-primary-color: rgb(0, 0, 0);
+  --fa-secondary-color: rgb(255, 235, 148);
 }

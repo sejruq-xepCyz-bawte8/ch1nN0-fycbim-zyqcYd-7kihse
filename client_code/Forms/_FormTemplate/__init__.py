@@ -87,6 +87,12 @@ class _FormTemplate(_FormTemplateTemplate):
                  ) -> Button:
      element = Button(text=text, role=role, visible=visible)
      return self.prep_anvil_element(parent=parent, element=element, name=name, click=click)
+  
+  def add_link(self,name:str = None,text:str = None,parent:object = None,
+                 click = None,role:str = 'ch',visible = True,
+                 ) -> Link:
+     element = Link(text=text, role=role, visible=visible)
+     return self.prep_anvil_element(parent=parent, element=element, name=name, click=click)
 
   def add_label(self,name:str = None,text:str = None,parent:object = None,
                 role:str = 'ch',visible = True
@@ -120,7 +126,7 @@ class _FormTemplate(_FormTemplateTemplate):
       return self.prep_anvil_element(parent=parent, element=element, name=name)
 
   def add_textbox(self, name:str = None, text:str = None, change = None, placeholder:str = None,
-          parent:object = None, role:str = 'ch', hide_text = None, visible = True,
+          parent:object = None, role:str = 'ch', hide_text = None, visible = True
           ) -> TextBox:
    element = TextBox(text=text, placeholder=placeholder, role=role, hide_text=hide_text, visible=visible)
    return self.prep_anvil_element(parent=parent, element=element, name=name, change=change)
@@ -132,16 +138,16 @@ class _FormTemplate(_FormTemplateTemplate):
    return self.prep_anvil_element(parent=parent, element=element, name=name)
 
   def add_flowpanel(self, name:str = None, parent:object = None,role:str = 'ch',
-                     visible = True
+                     visible = True, align='left'
                      ) -> FlowPanel:
-      element = FlowPanel(role=role, visible=visible)
+      element = FlowPanel(role=role, visible=visible, align=align, vertical_align='middle', spacing='tiny', spacing_above='none', spacing_below='none')
       return self.prep_anvil_element(parent=parent, element=element, name=name)
 
   def add_image(self, name:str = None, parent:object = None,role:str = 'ch',
-                source=None,
+                source=None, width=None, height=None,
                   visible = True
                      ) -> Image:
-      element = Image(role=role, visible=visible)
+      element = Image(role=role, source=source, visible=visible, width=None, height=None)
       return self.prep_anvil_element(parent=parent, element=element, name=name)
   
   def add_uploader(self, name:str = None, parent:object = None,role:str = 'ch',
@@ -161,3 +167,18 @@ class _FormTemplate(_FormTemplateTemplate):
       if placeholder: include_placeholder = True
       element = DropDown(role=role, visible=visible, selected_value=selected_value, items=items, include_placeholder=include_placeholder, placeholder=placeholder)
       return self.prep_anvil_element(parent=parent, element=element, name=name, change=change)
+  
+  def add_help_panel(self, name:str = None, parent:object = None,role:str = 'ch',
+                     visible = True, align='justify', text=None, help=None
+                     ) -> FlowPanel:
+      element = ColumnPanel(role=role, visible=visible)
+      header = FlowPanel(role=role, visible=visible, align=align, vertical_align='middle', spacing='tiny', spacing_above='none', spacing_below='none')
+      element.add_component(header)
+      self.add_label(parent=header, text=text)
+      self.add_link(parent=header, text='Помощ', click=self.help_click)
+      self.help_info = self.add_rich_html(parent=element, text=help, visible=False)
+
+      return self.prep_anvil_element(parent=parent, element=element, name=name)
+
+  def help_click(self, sender, **event):
+     self.help_info.visible = not self.help_info.visible

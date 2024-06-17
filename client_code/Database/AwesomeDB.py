@@ -159,6 +159,8 @@ AWESOME_DATA = {
     'назад':'chevrons-left',
     'жанр':'tags',
     'редактор':'file-code',
+    'чернови':'folder',
+    'онлайн':'books',
 
 
 

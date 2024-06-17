@@ -81,7 +81,8 @@ NAV_TREE = [
         'links':[
         {'text':'Днес', 'form':'Reader_Today'},
         {'text':'Нова', 'form':'Author_NewWork'},
-        {'text':'Творби', 'form':'Author_Works'},
+        {'text':'Чернови', 'form':'Author_Works'},
+        {'text':'Онлайн', 'form':'Author_PWorks'},
         {'text':'Профил', 'form':'Author_Profile'},
         {'text':'Статс', 'form':'Author_Stats'},
         ],

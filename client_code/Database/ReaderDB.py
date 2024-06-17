@@ -1,4 +1,7 @@
 from ..API.ReaderApi import api_work, api_author, api_today
+from anvil_extras import non_blocking
+from time import sleep
+from anvil.js.window import jQuery as jQ
 #from anvil_extras.storage import indexed_db
 
 class ReaderClass:
@@ -15,7 +18,17 @@ class ReaderClass:
         self.author_html:str = None
         self.cache = {}
         
+        self.today = []
+        self.update_today = non_blocking.defer(self.update_today, 0)
+
+    def update_today(self):
         self.today = api_today()
+        icon_element = jQ('.fa-home')
+        icon_element.toggleClass('fa-fade')
+        sleep(2)
+        icon_element.toggleClass('fa-fade')
+
+        
 
 
     def set_current_work(self, work_id:str):
