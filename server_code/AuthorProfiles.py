@@ -13,7 +13,7 @@ def get_author_id():
    user=anvil.users.get_user()
    if user['is_author'] and user['user_id']:
       user_id = user['user_id']
-      author = PROFILES.get(user_id)
+      author = PROFILES.get(user_id=user_id)
       if author:
          user['author_id'] = author['author_id']
          return author['author_id']
