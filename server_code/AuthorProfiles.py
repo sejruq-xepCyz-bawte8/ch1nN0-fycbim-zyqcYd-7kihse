@@ -8,7 +8,19 @@ from time import time
 
 PROFILES = app_tables.authorprofiles
 
-
+@anvil.server.callable
+def get_author_id():
+   user=anvil.users.get_user()
+   if user['is_author'] and user['user_id']:
+      user_id = user['user_id']
+      author = PROFILES.get(user_id)
+      if author:
+         user['author_id'] = author['author_id']
+         return author['author_id']
+      else:
+         return None
+   else:
+      return None
 
 @anvil.server.callable
 def update_author_profile(html:str=None, data:dict=None):
