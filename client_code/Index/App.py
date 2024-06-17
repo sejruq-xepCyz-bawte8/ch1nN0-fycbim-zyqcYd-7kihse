@@ -92,7 +92,7 @@ def init_user()->bool:
     USER_EMAIL = USER['email'] if USER else None
     IS_USER = bool(USER)
     AUTHOR_ID = USER['author_id'] if USER and 'author_id' in USER else None
-    print(AUTHOR_ID)
+    print('AUTHOR_ID',AUTHOR_ID)
     ADULT = USER['adult'] if USER and 'adult' in USER else None
     IS_AUTHOR = USER['is_author'] if USER and 'is_author' in USER else None
     
