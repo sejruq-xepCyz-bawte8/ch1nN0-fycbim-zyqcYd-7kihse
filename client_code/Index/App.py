@@ -64,7 +64,7 @@ def init_app()->bool:
     #AW = AwesomeClass() # beff others
     
 
-    #if DEVMODE:dev_mode_init()
+    if DEVMODE:dev_mode_init()
 
     EDITOR = EditorClass() if IS_AUTHOR else None
     
