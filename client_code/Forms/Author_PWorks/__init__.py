@@ -16,7 +16,7 @@ non_blocking.defer(pyscript_defer_load, 0)
 class Author_PWorks(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
-    
+   
     self.init_components(**properties)
     self.author_data, _ = api_author(AUTHOR_ID)
     self.author_works = self.author_data.get('works')
