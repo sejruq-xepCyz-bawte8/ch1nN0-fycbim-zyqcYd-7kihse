@@ -1,13 +1,14 @@
-from ..API.ReaderApi import api_work, api_author, api_today
+from ..API.ReaderApi import api_today, api_work_data, api_work_html, api_author_data, api_author_html
 from anvil_extras import non_blocking
 from time import sleep
 from anvil.js.window import jQuery as jQ
-#from anvil_extras.storage import indexed_db
+from anvil_extras.storage import indexed_db
+import json
 
 class ReaderClass:
     def __init__(self) -> None:
-        #self.store_cache_data = indexed_db.create_store('cache_data')
-        #self.store_cache_html = indexed_db.create_store('cache_html')
+        self.store_registry = indexed_db.create_store('registry')
+        self.store_cache_html = indexed_db.create_store('cache_html')
         #self.store_cache_log = indexed_db.create_store('cache_log')
         self.data:dict = None
         self.html:str = None
@@ -18,50 +19,90 @@ class ReaderClass:
         self.author_html:str = None
         self.cache = {}
         
-        self.today = []
-        self.update_today = non_blocking.defer(self.update_today, 0)
+        self.today = self.store_registry.get('today')
+        if self.today == None : self.today = []
+        self.today_update = non_blocking.defer(self.update_today, 0)
+        
+        self.works_data = self.store_registry.get('works_data')
+        if self.works_data == None : self.works_data = {}
+
+        self.works_html = self.store_registry.get('works_html')
+        if self.works_html == None : self.works_html = {}
+
+        self.authors_data = self.store_registry.get('authors_data')
+        if self.authors_data == None : self.authors_data = {}
+
+        self.authors_html = self.store_registry.get('authors_html')
+        if self.authors_html == None : self.authors_html = {}
+
 
     def update_today(self):
-        self.today = api_today()
+        today = api_today()
+        self.store_registry['today'] = today
+        self.today = today
         icon_element = jQ('.fa-home')
         icon_element.toggleClass('fa-fade')
-        sleep(2)
+        sleep(3)
         icon_element.toggleClass('fa-fade')
-
-        
-
+        self.today_update = non_blocking.repeat(self.update_today, 600)
 
     def set_current_work(self, work_id:str):
         self.work_id = work_id
         self.data = None
         self.html = None
-        self.data, self.html = self.get_update_cache(work_id, api_work)
+        self.data = self.get_work_data(work_id)
+        self.html = self.get_work_html(work_id)
         return True
 
     def set_current_author(self, author_id:str):
         self.author_id = author_id
         self.author_data = None
         self.author_html = None
-        self.author_data, self.author_html = self.get_update_cache(author_id, api_author)
+        self.author_data = self.get_author_data(author_id)
+        self.author_html = self.get_author_html(author_id)
         return True
 
-    def get_update_cache(self, id:str, api):
-        result = self.cache.get(id)
-        if result:
-            return result['data'], result['html']
-        else:
-            data, html = api(id)
-            self.cache[id] = {'data':data, 'html':html}
-            return data, html
-        
-
-    def get_author_data(self, author_id:str):
-        data, _ = self.get_update_cache(author_id, api_author)
-        return data
 
     def get_work_data(self, wid:str):
-        data, _ = self.get_update_cache(wid, api_work)
-        return data
+        data = self.works_data.get(wid)
+        if data:
+            return data
+        else:
+            data = api_work_data(wid)
+            self.works_data[wid] = data
+            self.store_registry['works_data'] = self.works_data
+            return data
+
+    def get_work_html(self, wid:str):
+        html = self.works_html.get(wid)
+        if html:
+            return html
+        else:
+            html = api_work_html(wid)
+            self.works_html[wid] = html
+            self.store_registry['works_html'] = self.works_html
+            return html
+
+    def get_author_data(self, author_id:str):
+        data = self.authors_data.get(author_id)
+        if data:
+            return data
+        else:
+            data = api_author_data(author_id)
+            self.authors_data[author_id] = data
+            self.store_registry['authors_data'] = self.authors_data
+            return data
+
+    def get_author_html(self, author_id:str):
+        html = self.authors_html.get(author_id)
+        if html:
+            return html
+        else:
+            html = api_author_html(author_id)
+            self.authors_html[author_id] = html
+            self.store_registry['authors_html'] = self.authors_html
+            return html
+        
 
 
 

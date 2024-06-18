@@ -20,6 +20,38 @@ def api_work(target_id='beach'):
     data, html = parse_response(response)
     return data, html
 
+def api_work_data(target_id='beach'):
+    request_data = prepare_request(target='work_data', target_id=target_id)
+    response = make_request(request_data)
+    data, _ = parse_response(response)
+    return data
+
+def api_work_html(target_id='beach'):
+    request_data = prepare_request(target='work_html', target_id=target_id)
+    response = make_request(request_data)
+    _, html = parse_response(response)
+    return html
+
+def api_author_data(target_id='beach'):
+    request_data = prepare_request(target='author_data', target_id=target_id)
+    response = make_request(request_data)
+    data, _ = parse_response(response)
+    return data
+
+def api_author_html(target_id='beach'):
+    request_data = prepare_request(target='author_html', target_id=target_id)
+    response = make_request(request_data)
+    _, html = parse_response(response)
+    return html
+
+
+
+
+
+
+
+
+
 
 def api_author(target_id='beach'):
     request_data = prepare_request(target='author', target_id=target_id)
