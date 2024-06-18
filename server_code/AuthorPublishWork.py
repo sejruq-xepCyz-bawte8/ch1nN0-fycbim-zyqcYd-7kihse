@@ -53,13 +53,13 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
 
     if work_record:
         result_work = update_work(work_record=work_record, author_record=author_record, data=data, html=html)
-        result_profile = update_profile_works(user["user_id"])
+        
     else:
         print(f'Започва публикуване на {data["title"]}')
         result_work =  new_work(author_record=author_record, data=data, html=html)
-        result_profile = update_profile_works(author_id)
+        
 
-    if result_work and result_profile:
+    if result_work:
        status('ГОТОВО :) всичко е успешно')
        return True
     else:
