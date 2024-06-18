@@ -60,8 +60,5 @@ def cf_api(data:dict, html:str, target:str):
   result = parse_request(payload=payload)
   return result
 
-def cf_author_profile(data:dict, html:str):
-    
-    status('API сървъра стартира за ...')
-    return cf_api(data=data, html=html, target="author_profile")
+
 

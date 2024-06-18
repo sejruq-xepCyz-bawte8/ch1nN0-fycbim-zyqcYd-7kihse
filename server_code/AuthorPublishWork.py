@@ -10,6 +10,9 @@ WORKS = app_tables.works
 WORKS_DATA = app_tables.worksdata
 WORKS_HTML = app_tables.workshtml
 PROFILES = app_tables.authorprofiles
+AUTHORS = app_tables.authors
+AUTHORS_DATA = app_tables.authorsdata
+AUTHORS_HTML = app_tables.authorshtml
 WORKS_NEW = app_tables.worksnew
 
 from CloudflareAuthors import cf_api, cf_author_profile
@@ -26,35 +29,34 @@ def publish_author_work(html:str=None, data:dict=None):
     return task
 
 
-
 @anvil.server.background_task
 def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None):
-    print('Проверки на заявката')
+    print('Проверка на валидност потр/автор')
     if not is_user_author(user=user, client=client): return False
 
-    author_record = PROFILES.get(user_id=user["user_id"])
+    author_record = AUTHORS.get(user_id=user["user_id"])
+
     if not author_record : return fail('Първо направете профил :)')
 
     if not data or not html: return fail('Липсват метаданни или съдържание')
-   
-    if not is_valid_uri(data["work_uri"]) : return False
+
+    data = parse_incoming_data(data)
+    if not data : return fail('Грешни метаданни')
+
+    if not is_valid_uri(data["work_uri"]) : return fail('Грешен пермалинк')
 
     author_id = author_record.get('author_id')
     
-    this_uri_records = WORKS.search(work_uri=data["work_uri"], author_id=user["author_id"])
-    for u in this_uri_records:
-        if u["work_id"] != data["work_id"]: return fail('Ползвате линка в друга творба')
+    if data["work_uri"] in author_record['works'] : return fail('Ползвате линка в друга творба')
+ 
+    work_record = WORKS.get(author_id=user["author_id"], work_id=data["work_id"])
 
-    
-    old_record = WORKS.get(author_id=user["author_id"], work_id=data["work_id"])
-
-    if old_record:
-        print(f'Започва ъпдейт на {data["title"]}')
-        result_work = update_work(old_record=old_record, data=data, html=html)
+    if work_record:
+        result_work = update_work(work_record=work_record, author_record=author_record, data=data, html=html)
         result_profile = update_profile_works(user["user_id"])
     else:
         print(f'Започва публикуване на {data["title"]}')
-        result_work =  publish_new_work(author_id=author_id, data=data, html=html)
+        result_work =  new_work(author_record=author_record, data=data, html=html)
         result_profile = update_profile_works(author_id)
 
     if result_work and result_profile:
@@ -64,8 +66,6 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
        status('ГОТОВО :( имаше проблеми и резултата е несигурен.')
        return False
        
-
-
 
 def parse_incoming_data(data:dict):
    print('parse incoming to clean data')
@@ -181,36 +181,31 @@ def parse_public_data_work(data:dict, wid:str, author_id:str, ptime:float, versi
   }
   return pdata
 
-def publish_new_work(author_id:str, data:dict, html:str):
-      data_clean = parse_incoming_data(data)
-      if not data_clean :
-         print('NO clean data')
-         return False
-      print('YES clean data')
-
-      #new 
-      wid=hash_strings(author_id, data_clean["work_id"])
-      ptime = time()
-      version = 1
+def new_work(author_record, data:dict, html:str):
       #from incoming
-      work_uri = data_clean['work_uri']
-      work_id = data_clean['work_id']
+      author_id:str = author_record['author_id']
+      work_id:str = data["work_id"]
+      work_uri:str = data['work_uri']
+      #new 
+      wid:str = hash_strings(author_id, work_id)
+      ptime:float = time()
+      version:int = 1
+      data_hash:str = hash_strings(json.dumps(data))
+      html_hash:str = hash_strings(html)
     
-      data_hash = hash_strings(json.dumps(data_clean))
-      html_hash = hash_strings(html)
-    
-      data_clean['wid'] = wid
+      #update dict
+      data['wid'] = wid
 
-      data_public = parse_public_data_work(data=data_clean, wid=wid, author_id=author_id, ptime=ptime, version=version)
-      print('new work1')
-      WORKS_DATA.add_row(**data_clean)
+      #save work to db
+      WORKS_DATA.add_row(**data)
       WORKS_HTML.add_row(wid=wid, html=html)
       new_work = WORKS.add_row(
          author_id = author_id,
          wid=wid,
          work_id = work_id,
          work_uri=work_uri,
-         cf_success = False,
+         cf_work = False,
+         cf_author = False,
          published = True,
          data_hash=data_hash,
          html_hash = html_hash,
@@ -218,102 +213,130 @@ def publish_new_work(author_id:str, data:dict, html:str):
          ptime = ptime,
     )
 
-      cf_success = cf_api(data=data_public, html=html, target="author_work")
+      #update author db
+      works:dict = author_record['works']
+      works[work_uri] = work_id
+      author_version:int = author_record['version'] + 1
+      author_record.update(works = works, version = author_version)
 
-      if cf_success:
-         new_work.update(cf_success = True)
+      # update work public/online version  now
+      data_work_public = parse_public_data_work(data=data, wid=wid, author_id=author_id, ptime=ptime, version=version)
+      cf_work = cf_api(data=data_work_public, html=html, target="author_work")
+      cf_author = update_profile_works(author_record)
+      # update author profile
+
+      #check for success
+      if cf_work and cf_author:
+         new_work.update(cf_work = True, cf_author = True)
          return True
+      elif cf_work and not cf_author:
+         new_work.update(cf_work = True, cf_author = False)
+         return False
+      elif not cf_work and cf_author:
+         new_work.update(cf_work = False, cf_author = True)
+         return False
       else:
+         new_work.update(cf_work = False, cf_author = False)
          return False
 
 
 
 
-def update_work(old_record, data:str, html:str):
-   data_clean = parse_incoming_data(data)
-   if not data_clean : return False
+def update_work(work_record, author_record, data:str, html:str):
+   #from incoming
+   work_uri_new:str = data['work_uri']
+   data_hash_new:str = hash_strings(json.dumps(data))
+   html_hash_new:str = hash_strings(html)
+   #from record and upd
+   author_id:str = author_record['author_id']
+   work_id:str = work_record["work_id"]
+   work_uri_old:str = work_record["work_uri"]
+   wid:str = work_record['wid']
+   ptime:float = work_record['ptime']
+   version:int = work_record['version'] + 1
+   data_hash_old:str = work_record['data_hash']
+   html_hash_old:str = work_record['html_hash']
 
-   # new for works from clean
-   work_uri = data_clean['work_uri']
-
-   data_hash = hash_strings(json.dumps(data_clean))
-   html_hash = hash_strings(html)
-
-   # get and update from record
-   version = old_record['version'] + 1
-   wid = old_record['wid']
-   author_id = old_record['author_id']
-   ptime = old_record['ptime']
+   #update work records
+   if data_hash_old != data_hash_new:
+       work_data_record = WORKS_DATA.get(wid=wid)
+       work_data_record.update(data)
     
-   data_clean['wid'] = wid
-   data_public = parse_public_data_work(data=data_clean, wid=wid, author_id=author_id, ptime=ptime, version=version)
-    
-   if data_hash != old_record['data_hash']:
-       work_data_row = WORKS_DATA.get(wid=wid)
-       work_data_row.update(data_clean)
-    
-   if html_hash != old_record['html_hash']:
-        work_html_row = WORKS_HTML.get(wid=wid)
-        work_html_row.update(html=html)
+   if html_hash_old != html_hash_new:
+        work_html_record = WORKS_HTML.get(wid=wid)
+        work_html_record.update(html=html)
 
-   old_record.update(
-       cf_success = False,
+   work_record.update(
+       cf_work = False,
+       cf_author = False,
        published = True,
-       data_hash=data_hash,
-       html_hash=html_hash,
+       data_hash=data_hash_new,
+       html_hash=html_hash_new,
        version = version,
-       work_uri = work_uri,
+       work_uri = work_uri_new,
     )
+   
+   #update author db
+   if work_uri_new != work_uri_old:
+      works:dict = author_record['works']
+      works[work_uri_new] = work_id
+      del works[work_uri_old]
+      author_version:int = author_record['version'] + 1
+      author_record.update(works = works, version = author_version)
 
-   cf_success = cf_api(data=data_public, html=html, target="author_work")
-
-   if cf_success:
-       old_record.update(cf_success = True)
-       return True
+   #update online
+   data_public = parse_public_data_work(data=data, wid=wid, author_id=author_id, ptime=ptime, version=version)
+   cf_work = cf_api(data=data_public, html=html, target="author_work")
+   if work_uri_new != work_uri_old:
+      cf_author = update_profile_works(author_record)
    else:
-       return False
+      cf_author = True
 
+   #check for success
+   if cf_work and cf_author:
+      new_work.update(cf_work = True, cf_author = True)
+      return True
+   elif cf_work and not cf_author:
+      new_work.update(cf_work = True, cf_author = False)
+      return False
+   elif not cf_work and cf_author:
+      new_work.update(cf_work = False, cf_author = True)
+      return False
+   else:
+      new_work.update(cf_work = False, cf_author = False)
+      return False
 
+def update_profile_works(author_record):
+   #author record is already updated from work and will run only if neceseary
+   #from incoming
+   author_id:str = author_record['author_id']
+   version:int = author_record['version']
+   works:dict = author_record['works']
+   data = AUTHORS_DATA.get(author_id)
+   #generate data
+   
 
-
-
-
-
-
-def update_profile_works(author_id:str):
-    status('Започва ъпдейт на профила')
-    published_works = WORKS.search(author_id=author_id, published=True)
-    author_works = {}
-    status('Ъпдейт на списъка творби на профила')
-    for w in published_works:
-        author_works[w["work_uri"]] = w["wid"]
-
-    old_record = PROFILES.get(author_id=author_id)
-    
-    data = json.loads(old_record["data"])
-    html = old_record["html"]
-    data["works"] = author_works
-    # after having data and html modified
-    status(f'Приготвяне на заявката на {data["author_uri"]}')
-    data_text=json.dumps(data)
-    data["version"] = old_record["version"] + 1
-    record_hash = hash_strings(data_text, html)
-    status(f'Изпращане на заявката {data["author_uri"]}')
-
-    cf_success = cf_author_profile(data=data, html=html)
-    if cf_success:
-        old_record.update(author_uri=data["author_uri"],
-                           data=json.dumps(data),
-                           html=html,
-                           works = author_works,
-                           cf_success=cf_success,
-                           hash=record_hash,
-                           version=data["version"])
-    else:
+   data_public = parse_public_data_author(data=data, author_id=author_id, version=version, works=works)
+   print(f'Изпращане на заявката {data["author_uri"]}')
+   cf_success = cf_api(data=data_public, html=None, target="author_profile_works")
+   if cf_success:
+      author_record.update(cf_success = True)
+      return True
+   else:
       return False
    
-    if has_record(PROFILES, record_hash):
-      status(f'Готово')
-      return True
-    else:
-      return fail('Неуспешен бекъп на профиля')
+
+def parse_public_data_author(data:dict, author_id:str, version:int, works:dict)->dict:
+  print('parse public data')
+  pdata = {
+     #from data
+'author_name' : data['author_name'],
+'background_image' : data['background_image'],
+'author_uri' : data['author_uri'],
+'description' : data['description'],
+#from srv
+'author_id' : author_id,
+'version': version,
+'works':works,
+  }
+  return pdata
