@@ -103,7 +103,7 @@ def parse_incoming_data(data:dict):
       print('No clean data color', color)
       return False
    cover_mask = data.get('cover_mask') #:50,
-   if not isinstance(cover_mask, int) or cover_mask > 100 :
+   if not isinstance(cover_mask, str) or len(cover_mask) > 3 :
       print('No clean data cover_mask', cover_mask)
       return False
    mask_color = data.get('mask_color') #:'#FFFFFF',
