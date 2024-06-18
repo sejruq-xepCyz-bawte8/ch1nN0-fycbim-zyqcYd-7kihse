@@ -25,10 +25,10 @@ def parse_request(payload:str):
                                     method="POST",
                                     data=payload,
                                     )
-        status('има апи отговор ...')
+        print('има апи отговор ...')
     except anvil.http.HttpError as e:
         print('API HttpError', e)
-        status(f'API HttpError {e}')
+        print(f'API HttpError {e}')
         return False
 
     body_bytes = response.get_bytes()
@@ -54,9 +54,9 @@ def parse_request(payload:str):
 
 
 def cf_api(data:dict, html:str, target:str):
-  status('пейлод ...')
+  print('пейлод ...')
   payload = prepare_payload(data=data, html=html, target=target)
-  status('изпраща апи заявка ...')
+  print('изпраща апи заявка ...')
   result = parse_request(payload=payload)
   return result
 

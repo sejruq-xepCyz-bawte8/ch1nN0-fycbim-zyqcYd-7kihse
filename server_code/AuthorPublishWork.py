@@ -15,7 +15,7 @@ AUTHORS_DATA = app_tables.authorsdata
 AUTHORS_HTML = app_tables.authorshtml
 WORKS_NEW = app_tables.worksnew
 
-from CloudflareAuthors import cf_api, cf_author_profile
+from CloudflareAuthors import cf_api
 from Helpers import is_user_author, is_valid_uri, has_keys, hash_strings, has_record, status, fail
 
 
