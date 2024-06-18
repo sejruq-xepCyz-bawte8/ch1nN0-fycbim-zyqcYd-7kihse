@@ -188,10 +188,13 @@ def publish_new_work(author_id:str, data:dict, html:str):
          return False
       print('YES clean data')
 
+      #new 
       wid=hash_strings(author_id, data_clean["work_id"])
       ptime = time()
       version = 1
+      #from incoming
       work_uri = data_clean['work_uri']
+      work_id = data_clean['work_id']
     
       data_hash = hash_strings(json.dumps(data_clean))
       html_hash = hash_strings(html)
@@ -205,6 +208,7 @@ def publish_new_work(author_id:str, data:dict, html:str):
       new_work = WORKS.add_row(
          author_id = author_id,
          wid=wid,
+         work_id = work_id,
          work_uri=work_uri,
          cf_success = False,
          published = True,
