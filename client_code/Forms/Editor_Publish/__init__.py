@@ -39,15 +39,13 @@ class Editor_Publish(_FormTemplate):
       print('publush calling')
       EDITOR.data['ptime'] = time()
       task = anvil.server.call('publish_author_work', html=EDITOR.html, data=EDITOR.data)
-      query = self.add_label()
+  
       for t in range(60):
-        sleep(1)
-        query.text=task.get_state()['message']
+        sleep(3)
         if task.is_completed(): break
       result = task.get_return_value()
       if result:
          self.add_div(text='ГОТОВО всичко е успешно')
-  
       else:
          self.add_div(text='ПРИКЛЮЧИ но с грешки')
 
