@@ -322,7 +322,7 @@ def update_profile_works(author_record):
 
    data_public = parse_public_data_author(data=data, author_id=author_id, version=version, works=works)
    print(f'Изпращане на заявката {data["author_uri"]}')
-   cf_success = cf_api(data=data_public, html=None, target="author_profile_works")
+   cf_success = cf_api(data=data_public, html=None, target="author_profile")
    if cf_success:
       author_record.update(cf_success = True)
       return True
