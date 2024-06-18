@@ -68,7 +68,7 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
 
 
 def parse_incoming_data(data:dict):
-  
+  print('parse incoming to clean data')
   title:str = data.get('title') #:None,
   if not isinstance(title, str) or len(title) > 100 : return False
   genres = data.get('genres') #:[None,None,None,None],
@@ -125,6 +125,7 @@ def parse_incoming_data(data:dict):
   return clean_data
 
 def parse_public_data_work(data:dict, wid:str, author_id:str, ptime:float, version:int)->dict:
+  print('parse public data')
   pdata = {
      #from data
 'title' : data['title'],
@@ -150,8 +151,11 @@ def parse_public_data_work(data:dict, wid:str, author_id:str, ptime:float, versi
 
 def publish_new_work(author_id:str, data:dict, html:str):
       data_clean = parse_incoming_data(data)
-      if not data_clean : return False
-
+      if not data_clean :
+         print('NO clean data')
+         return False
+      print('YES clean data')
+      
       wid=hash_strings(author_id, data_clean["work_id"])
       ptime = time()
       version = 1
