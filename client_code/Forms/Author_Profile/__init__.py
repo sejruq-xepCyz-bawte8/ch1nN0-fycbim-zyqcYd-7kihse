@@ -118,14 +118,14 @@ class Author_Profile(_FormTemplate):
     
 
   def delete_tumbnail(self, sender, **event):
-    self.data['background-image'] = ''
+    self.data['background_image'] = ''
     self.cover.source = None
     self.uploader.text = "Зареди изображение"
 
 
   def tumbnail_gen(self, file, **event):
     self.cover.source = file
-    self.data['background-image'] = self.parse_cover_image(file)
+    self.data['background_image'] = self.parse_cover_image(file)
     self.store_author['data'] = self.data
 
   def editor_change(self, sender, **event):
