@@ -280,7 +280,10 @@ def update_work(work_record, author_record, data:str, html:str):
    if work_uri_new != work_uri_old:
       works:dict = author_record['works']
       works[work_uri_new] = work_id
-      del works[work_uri_old]
+      try:
+         del works[work_uri_old]
+      except:
+         print(f'trying to delete {works[work_uri_old]} but its not')
       author_version:int = author_record['version'] + 1
       author_record.update(works = works, version = author_version)
 
