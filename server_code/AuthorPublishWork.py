@@ -29,7 +29,7 @@ def publish_author_work(html:str=None, data:dict=None):
 
 @anvil.server.background_task
 def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None):
-    status('Проверки на заявката')
+    print('Проверки на заявката')
     if not is_user_author(user=user, client=client): return False
 
     author_record = PROFILES.get(user_id=user["user_id"])
@@ -49,11 +49,11 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
     old_record = WORKS.get(author_id=user["author_id"], work_id=data["work_id"])
 
     if old_record:
-        status(f'Започва ъпдейт на {data["title"]}')
+        print(f'Започва ъпдейт на {data["title"]}')
         result_work = update_work(old_record=old_record, data=data, html=html)
         result_profile = update_profile_works(user["user_id"])
     else:
-        status(f'Започва публикуване на {data["title"]}')
+        print(f'Започва публикуване на {data["title"]}')
         result_work =  publish_new_work(author_id=author_id, data=data, html=html)
         result_profile = update_profile_works(author_id)
 
