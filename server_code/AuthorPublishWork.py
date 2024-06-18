@@ -9,7 +9,6 @@ import hashlib
 WORKS = app_tables.works
 WORKS_DATA = app_tables.worksdata
 WORKS_HTML = app_tables.workshtml
-PROFILES = app_tables.authorprofiles
 AUTHORS = app_tables.authors
 AUTHORS_DATA = app_tables.authorsdata
 AUTHORS_HTML = app_tables.authorshtml
