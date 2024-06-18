@@ -191,6 +191,7 @@ def publish_new_work(author_id:str, data:dict, html:str):
       wid=hash_strings(author_id, data_clean["work_id"])
       ptime = time()
       version = 1
+      work_uri = data_clean['work_uri']
     
       data_hash = hash_strings(json.dumps(data_clean))
       html_hash = hash_strings(html)
@@ -204,6 +205,7 @@ def publish_new_work(author_id:str, data:dict, html:str):
       new_work = WORKS.add_row(
          author_id = author_id,
          wid=wid,
+         work_uri=work_uri,
          cf_success = False,
          published = True,
          data_hash=data_hash,
@@ -224,42 +226,47 @@ def publish_new_work(author_id:str, data:dict, html:str):
 
 
 def update_work(old_record, data:str, html:str):
-    data_clean = parse_incoming_data(data)
-    if not data_clean : return False
+   data_clean = parse_incoming_data(data)
+   if not data_clean : return False
 
-    data_hash = hash_strings(json.dumps(data_clean))
-    html_hash = hash_strings(html)
+   # new for works from clean
+   work_uri = data_clean['work_uri']
 
-    version = old_record['version'] + 1
-    wid = old_record['wid']
-    author_id = old_record['author_id']
-    ptime = old_record['ptime']
+   data_hash = hash_strings(json.dumps(data_clean))
+   html_hash = hash_strings(html)
+
+   # get and update from record
+   version = old_record['version'] + 1
+   wid = old_record['wid']
+   author_id = old_record['author_id']
+   ptime = old_record['ptime']
     
-    data_clean['wid'] = wid
-    data_public = parse_public_data_work(data=data_clean, wid=wid, author_id=author_id, ptime=ptime, version=version)
+   data_clean['wid'] = wid
+   data_public = parse_public_data_work(data=data_clean, wid=wid, author_id=author_id, ptime=ptime, version=version)
     
-    if data_hash != old_record['data_hash']:
+   if data_hash != old_record['data_hash']:
        work_data_row = WORKS_DATA.get(wid=wid)
        work_data_row.update(data_clean)
     
-    if html_hash != old_record['html_hash']:
+   if html_hash != old_record['html_hash']:
         work_html_row = WORKS_HTML.get(wid=wid)
         work_html_row.update(html=html)
 
-    old_record.update(
+   old_record.update(
        cf_success = False,
        published = True,
        data_hash=data_hash,
        html_hash=html_hash,
        version = version,
+       work_uri = work_uri,
     )
 
-    cf_success = cf_api(data=data_public, html=html, target="author_work")
+   cf_success = cf_api(data=data_public, html=html, target="author_work")
 
-    if cf_success:
+   if cf_success:
        old_record.update(cf_success = True)
        return True
-    else:
+   else:
        return False
 
 
