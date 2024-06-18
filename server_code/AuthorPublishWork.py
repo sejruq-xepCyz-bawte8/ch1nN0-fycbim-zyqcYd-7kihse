@@ -54,7 +54,7 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
         result_profile = update_profile_works(user["user_id"])
     else:
         status(f'Започва публикуване на {data["title"]}')
-        result_work =  publish_new_work(user_id=user["user_id"], author_id=author_id, data=data, html=html)
+        result_work =  publish_new_work(author_id=author_id, data=data, html=html)
         result_profile = update_profile_works(author_id)
 
     if result_work and result_profile:
@@ -148,11 +148,11 @@ def parse_public_data_work(data:dict, wid:str, author_id:str, ptime:float, versi
   }
   return pdata
 
-def publish_new_work(user_id:str, author_id:str, data:dict, html:str):
+def publish_new_work(author_id:str, data:dict, html:str):
     data_clean = parse_incoming_data(data)
     if not data_clean : return False
 
-    wid=hash_strings(user_id, data_clean["work_id"])
+    wid=hash_strings(author_id, data_clean["work_id"])
     ptime = time()
     version = 1
     
@@ -163,7 +163,7 @@ def publish_new_work(user_id:str, author_id:str, data:dict, html:str):
 
     data_public = parse_public_data_work(data=data_clean, wid=wid, author_id=author_id, ptime=ptime, version=version)
 
-    WORKS_DATA.add_row(data_clean)
+    WORKS_DATA.add_row(**data_clean)
     WORKS_HTML.add_row(wid=wid, html=html)
     new_work = WORKS.add_row(
        author_id = author_id,
