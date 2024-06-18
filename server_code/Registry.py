@@ -23,7 +23,7 @@ def today_new_works():
             }
             } for w in list(data_iterator)[-20:]]
     #today_works = [{w['wid']:w['ptime']} for w in data_iterator if w['ptime'] > today_unix]
-    
+    last_20_works.reverse()
     print(f'пейлод с {len(last_20_works)} творби')
     payload = prepare_payload(data=last_20_works, key=key)
     
