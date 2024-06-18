@@ -13,7 +13,7 @@ class Reader_Today(_FormTemplate):
 
   def show_form(self, **event):
     #self.add_label(text=self.form_name)
-    self.add_div(text="Публикувани днес")
+    self.add_div(text="Последно публикувани")
     self.cover_container = self.add_div(id='cover-container')
     
     for w in READER.today:
