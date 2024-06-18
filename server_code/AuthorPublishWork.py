@@ -215,7 +215,7 @@ def new_work(author_record, data:dict, html:str):
 
       #update author db
       works:dict = author_record['works']
-      works[work_uri] = work_id
+      works[work_uri] = wid
       author_version:int = author_record['version'] + 1
       author_record.update(works = works, version = author_version)
 
@@ -279,11 +279,11 @@ def update_work(work_record, author_record, data:str, html:str):
    #update author db
    if work_uri_new != work_uri_old:
       works:dict = author_record['works']
-      works[work_uri_new] = work_id
+      works[work_uri_new] = wid
       if works and work_uri_old in works:
          del works[work_uri_old]
       else:
-         works = {work_uri_new:work_id}
+         works = {work_uri_new:wid}
       author_version:int = author_record['version'] + 1
       author_record.update(works = works, version = author_version)
 
