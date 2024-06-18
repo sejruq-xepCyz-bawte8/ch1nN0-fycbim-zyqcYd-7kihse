@@ -87,6 +87,7 @@ def public_data_work(data:dict, wid:str)->dict:
             'cover_mask',
             'mask_color',
             'ptime',
+            'version',
             'background-image',]
     for key in keys:
         pdata[key] = data.get(key)

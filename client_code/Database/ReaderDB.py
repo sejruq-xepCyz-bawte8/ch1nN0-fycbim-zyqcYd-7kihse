@@ -37,7 +37,9 @@ class ReaderClass:
 
 
     def update_today(self):
+        print('updating today')
         today = api_today()
+        print('today',today)
         self.store_registry['today'] = today
         self.today = today
         icon_element = jQ('.fa-home')

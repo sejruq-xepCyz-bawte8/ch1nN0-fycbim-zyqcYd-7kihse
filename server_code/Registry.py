@@ -19,12 +19,12 @@ def today_new_works():
     last_20_works = [{w['wid']:w['ptime']} for w in list(data_iterator)[-20:]]
     #today_works = [{w['wid']:w['ptime']} for w in data_iterator if w['ptime'] > today_unix]
     
-    print('пейлод ...')
+    print(f'пейлод с {len(last_20_works)} творби')
     payload = prepare_payload(data=last_20_works, key=key)
     
-    print('изпраща апи заявка ...')
     result = parse_request(payload=payload)
-    print(result)
+    print(f'резултат апи заявка {result}')
+   
 
 
 
