@@ -153,7 +153,7 @@ def parse_incoming_data(data:dict):
 'work_uri' : work_uri,
 'size' : size,
   }
- 
+   print('parse incoming data passed')
    return clean_data
 
 def parse_public_data_work(data:dict, wid:str, author_id:str, ptime:float, version:int)->dict:
@@ -179,6 +179,7 @@ def parse_public_data_work(data:dict, wid:str, author_id:str, ptime:float, versi
 'ptime': ptime,
 'version': version,
   }
+  print('parse public data passed')
   return pdata
 
 def new_work(author_record, data:dict, html:str):
