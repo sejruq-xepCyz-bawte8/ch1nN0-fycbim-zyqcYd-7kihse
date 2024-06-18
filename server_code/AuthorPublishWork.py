@@ -315,7 +315,7 @@ def update_profile_works(author_record):
    author_id:str = author_record['author_id']
    version:int = author_record['version']
    works:dict = author_record['works']
-   data = AUTHORS_DATA.get(author_id)
+   data = AUTHORS_DATA.get(author_id=author_id)
    #generate data
    
 
