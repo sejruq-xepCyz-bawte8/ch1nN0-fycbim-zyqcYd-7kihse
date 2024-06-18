@@ -103,7 +103,7 @@ def parse_incoming_data(data:dict):
       print('No clean data color', color)
       return False
    cover_mask = data.get('cover_mask') #:50,
-   if not isinstance(cover_mask, int) or len(cover_mask) > 100 :
+   if not isinstance(cover_mask, int) or cover_mask > 100 :
       print('No clean data cover_mask', cover_mask)
       return False
    mask_color = data.get('mask_color') #:'#FFFFFF',
@@ -111,7 +111,7 @@ def parse_incoming_data(data:dict):
       print('No clean data mask_color', mask_color)
       return False
    words = data.get('words') #:0,
-   if not isinstance(words, int) or len(words) > 1_000_000 :
+   if not isinstance(words, int) or words > 1_000_000 :
       print('No clean data words', words)
       return False
    ctime = data.get('ctime') #:0,
@@ -131,7 +131,7 @@ def parse_incoming_data(data:dict):
       print('No clean data work_uri', work_uri)
       return False
    size = data.get('size') #: 0
-   if not isinstance(size, int) or len(size) > 10_000_000 :
+   if not isinstance(size, int) or size > 10_000_000 :
       print('No clean data size', size)
       return False
 
