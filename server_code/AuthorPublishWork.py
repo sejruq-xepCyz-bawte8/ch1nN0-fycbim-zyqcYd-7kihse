@@ -149,40 +149,40 @@ def parse_public_data_work(data:dict, wid:str, author_id:str, ptime:float, versi
   return pdata
 
 def publish_new_work(author_id:str, data:dict, html:str):
-    data_clean = parse_incoming_data(data)
-    if not data_clean : return False
+      data_clean = parse_incoming_data(data)
+      if not data_clean : return False
 
-    wid=hash_strings(author_id, data_clean["work_id"])
-    ptime = time()
-    version = 1
+      wid=hash_strings(author_id, data_clean["work_id"])
+      ptime = time()
+      version = 1
     
-    data_hash = hash_strings(json.dumps(data_clean))
-    html_hash = hash_strings(html)
+      data_hash = hash_strings(json.dumps(data_clean))
+      html_hash = hash_strings(html)
     
-    data_clean['wid'] = wid
+      data_clean['wid'] = wid
 
-    data_public = parse_public_data_work(data=data_clean, wid=wid, author_id=author_id, ptime=ptime, version=version)
-
-    WORKS_DATA.add_row(**data_clean)
-    WORKS_HTML.add_row(wid=wid, html=html)
-    new_work = WORKS.add_row(
-       author_id = author_id,
-       wid=wid,
-       cf_success = False,
-       published = True,
-       data_hash=data_hash,
-       html_hash = html_hash,
-       version = version,
-       ptime = ptime,
+      data_public = parse_public_data_work(data=data_clean, wid=wid, author_id=author_id, ptime=ptime, version=version)
+      print('new work1')
+      WORKS_DATA.add_row(**data_clean)
+      WORKS_HTML.add_row(wid=wid, html=html)
+      new_work = WORKS.add_row(
+         author_id = author_id,
+         wid=wid,
+         cf_success = False,
+         published = True,
+         data_hash=data_hash,
+         html_hash = html_hash,
+         version = version,
+         ptime = ptime,
     )
 
-    cf_success = cf_api(data=data_public, html=html, target="author_work")
+      cf_success = cf_api(data=data_public, html=html, target="author_work")
 
-    if cf_success:
-       new_work.update(cf_success = True)
-       return True
-    else:
-       return False
+      if cf_success:
+         new_work.update(cf_success = True)
+         return True
+      else:
+         return False
 
 
 
