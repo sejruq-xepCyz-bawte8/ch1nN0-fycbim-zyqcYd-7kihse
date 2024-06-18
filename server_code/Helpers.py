@@ -46,10 +46,12 @@ def has_record(target, record_hash:str):
    return True if target.get(hash=record_hash) else False
 
 def status(message):
+   print(message)
    anvil.server.task_state['message'] = message
    
 
 def fail(message):
+   print(message)
    anvil.server.task_state['message'] = message
    return False
 
