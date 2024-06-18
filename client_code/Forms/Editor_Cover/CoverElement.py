@@ -19,10 +19,10 @@ class CoverClass:
         self.el = jQ(f'<dir>')
         #self.el.attr('id', 'navigation')
         self.el.addClass('ch ch-cover-work')
-        self.el.css('background-color', self.data['background-color'])
-        if self.data['background-image'] :
-            image = f"""url("{self.data['background-image']}")"""
-            self.el.css('background-image', image) #f'url("{self.data['background-image']}")'
+        self.el.css('background-color', self.data['background_color'])
+        if self.data['background_image'] :
+            image = f"""url("{self.data['background_image']}")"""
+            self.el.css('background-image', image) #f'url("{self.data['background_image']}")'
         self.el.css('color', self.data['color'])
 
         #HEADER

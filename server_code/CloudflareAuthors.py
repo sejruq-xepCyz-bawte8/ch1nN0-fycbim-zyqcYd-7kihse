@@ -65,31 +65,3 @@ def cf_author_profile(data:dict, html:str):
     status('API сървъра стартира за ...')
     return cf_api(data=data, html=html, target="author_profile")
 
-def cf_author_work(data:dict, html:str, wid:str):
-   pdata = public_data_work(data=data, wid=wid)
-   return cf_api(data=pdata, html=html, target="author_work")
-
-
-
-
-def public_data_work(data:dict, wid:str)->dict:
-    pdata = {}
-    keys = ['title',
-            'author_id',
-            'work_uri',
-            'words',
-            'genres',
-            'keywords',
-            'icons',
-            'font',
-            'background-color',
-            'color',
-            'cover_mask',
-            'mask_color',
-            'ptime',
-            'version',
-            'background-image',]
-    for key in keys:
-        pdata[key] = data.get(key)
-    pdata['wid'] = wid
-    return pdata

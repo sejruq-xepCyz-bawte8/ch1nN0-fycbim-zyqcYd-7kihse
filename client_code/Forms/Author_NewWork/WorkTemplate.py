@@ -15,7 +15,6 @@ WORK_TEMPLATE = {
   'words':0,
   'ctime':0,
   'mtime':0,
-  'published':False,
   'author_id':AUTHOR_ID,
   'work_id':None,
   'work_uri':'',

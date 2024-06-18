@@ -48,7 +48,7 @@ class Editor_Cover(_FormTemplate):
 
     self.colors_el = jQ(colors_html)
     jQ('#color').val(EDITOR.data['color'])
-    jQ('#background-color').val(EDITOR.data['background-color'])
+    jQ('#background-color').val(EDITOR.data['background_color'])
     jQ('#cover_mask').val(EDITOR.data['cover_mask'])
     jQ('#mask_color').val(EDITOR.data['mask_color'])
 
@@ -64,21 +64,21 @@ class Editor_Cover(_FormTemplate):
     EDITOR.data['font'] = self.font.selected_value
     if sender is 'color':
       EDITOR.data['color'] = jQ('#color').val()
-      EDITOR.data['background-color'] = adjust_color_for_contrast(EDITOR.data['color'], EDITOR.data['background-color'], 11)
+      EDITOR.data['background_color'] = adjust_color_for_contrast(EDITOR.data['color'], EDITOR.data['background_color'], 11)
       jQ('#color').val(EDITOR.data['color'])
-      jQ('#background-color').val(EDITOR.data['background-color'])
+      jQ('#background-color').val(EDITOR.data['background_color'])
     if sender is 'background-color':
-      EDITOR.data['background-color'] = jQ('#background-color').val()
-      EDITOR.data['color'] = adjust_color_for_contrast(EDITOR.data['background-color'], EDITOR.data['color'], 11)
+      EDITOR.data['background_color'] = jQ('#background-color').val()
+      EDITOR.data['color'] = adjust_color_for_contrast(EDITOR.data['background_color'], EDITOR.data['color'], 11)
       jQ('#color').val(EDITOR.data['color'])
-      jQ('#background-color').val(EDITOR.data['background-color'])
+      jQ('#background-color').val(EDITOR.data['background_color'])
       
     EDITOR.data['cover_mask'] = jQ('#cover_mask').val()
     if sender is self.cover_upload:
-      EDITOR.data['background-image'] = parse_cover_image(sender.file)
+      EDITOR.data['background_image'] = parse_cover_image(sender.file)
       sender.file.text = sender.file.name
     if sender is self.cover_delete:
-      EDITOR.data['background-image'] = None
+      EDITOR.data['background_image'] = None
       self.cover_upload.text='Ъплоад Корица'
 
     EDITOR.data['mask_color'] = adjust_color_for_contrast(EDITOR.data['color'], '000000', 100)

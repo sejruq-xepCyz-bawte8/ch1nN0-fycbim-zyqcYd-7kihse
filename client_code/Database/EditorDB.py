@@ -11,9 +11,9 @@ WORK_TEMPLATE = {
   'genres':[None,None,None,None],
   'keywords':[],
   'icons':[],
-  'background-image':None,
+  'background_image':None,
   'font':'Adys',
-  'background-color':'#FFFFFF',
+  'background_color':'#FFFFFF',
   'color':'#000000',
   'cover_mask':50,
   'mask_color':'#FFFFFF',
@@ -21,8 +21,6 @@ WORK_TEMPLATE = {
   'ctime':0,
   'mtime':0,
   'work_id':None,
-  'published':False,
-  'ptime':0,
   'work_uri':'',
   'size': 0
 }
