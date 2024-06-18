@@ -68,42 +68,74 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
 
 
 def parse_incoming_data(data:dict):
-  print('parse incoming to clean data')
-  title:str = data.get('title') #:None,
-  if not isinstance(title, str) or len(title) > 100 : return False
-  genres = data.get('genres') #:[None,None,None,None],
-  if not isinstance(genres, list) or len(genres) > 5 : return False
-  keywords = data.get('keywords') #:[],
-  if not isinstance(keywords, list) or len(keywords) > 20 : return False
-  icons = data.get('icons') #:[],
-  if not isinstance(icons, list) or len(icons) > 5 : return False
-  background_image:str = data.get('background_image') #:None,
-  if background_image:
-     if not background_image.startswith('data:image/') or len(background_image) > 1_000_000 : return False
-  font:str = data.get('font') #:'Adys',
-  if not isinstance(font, str) or len(font) > 50 : return False
-  background_color:str = data.get('background_color') #:'#FFFFFF',
-  if not isinstance(background_color, str) or len(background_color) > 10 : return False
-  color = data.get('color') #:'#000000',
-  if not isinstance(color, str) or len(color) > 10 : return False
-  cover_mask = data.get('cover_mask') #:50,
-  if not isinstance(cover_mask, int) or len(cover_mask) > 100 : return False
-  mask_color = data.get('mask_color') #:'#FFFFFF',
-  if not isinstance(mask_color, str) or len(mask_color) > 10 : return False
-  words = data.get('words') #:0,
-  if not isinstance(words, int) or len(words) > 1_000_000 : return False
-  ctime = data.get('ctime') #:0,
-  if not isinstance(ctime, (int, float)) or ctime < 1_710_000_000 or ctime > time(): return False
-  mtime = data.get('mtime') #:0,
-  if not isinstance(mtime, (int, float)) or mtime < 1_710_000_000 or mtime > time() : return False
-  work_id = data.get('work_id') #:None,
-  if not isinstance(work_id, str) or len(work_id) > 40 : return False
-  work_uri = data.get('work_uri') #:'',
-  if not isinstance(work_uri, str) or len(work_uri) > 100 : return False
-  size = data.get('size') #: 0
-  if not isinstance(size, int) or len(size) > 10_000_000 : return False
+   print('parse incoming to clean data')
+   title:str = data.get('title') #:None,
+   if not isinstance(title, str) or len(title) > 100 :
+      print('No clean data title', title)
+      return False
+   genres = data.get('genres') #:[None,None,None,None],
+   if not isinstance(genres, list) or len(genres) > 5 :
+      print('No clean data genres', genres)
+      return False
+   keywords = data.get('keywords') #:[],
+   if not isinstance(keywords, list) or len(keywords) > 20 :
+      print('No clean data keywords', keywords)
+      return False
+   icons = data.get('icons') #:[],
+   if not isinstance(icons, list) or len(icons) > 5 :
+      print('No clean data icons', icons)
+      return False
+   background_image:str = data.get('background_image') #:None,
+   if background_image:
+      if not background_image.startswith('data:image/') or len(background_image) > 1_000_000 :
+         print('No clean data background_image', background_image)
+         return False
+   font:str = data.get('font') #:'Adys',
+   if not isinstance(font, str) or len(font) > 50 :
+      print('No clean data font', font)
+      return False
+   background_color:str = data.get('background_color') #:'#FFFFFF',
+   if not isinstance(background_color, str) or len(background_color) > 10 :
+      print('No clean data background_color', background_color)
+      return False
+   color = data.get('color') #:'#000000',
+   if not isinstance(color, str) or len(color) > 10 :
+      print('No clean data color', color)
+      return False
+   cover_mask = data.get('cover_mask') #:50,
+   if not isinstance(cover_mask, int) or len(cover_mask) > 100 :
+      print('No clean data cover_mask', cover_mask)
+      return False
+   mask_color = data.get('mask_color') #:'#FFFFFF',
+   if not isinstance(mask_color, str) or len(mask_color) > 10 :
+      print('No clean data mask_color', mask_color)
+      return False
+   words = data.get('words') #:0,
+   if not isinstance(words, int) or len(words) > 1_000_000 :
+      print('No clean data words', words)
+      return False
+   ctime = data.get('ctime') #:0,
+   if not isinstance(ctime, (int, float)) or ctime < 1_710_000_000 or ctime > time():
+      print('No clean data ctime', ctime)
+      return False
+   mtime = data.get('mtime') #:0,
+   if not isinstance(mtime, (int, float)) or mtime < 1_710_000_000 or mtime > time() :
+      print('No clean data mtime', mtime)
+      return False
+   work_id = data.get('work_id') #:None,
+   if not isinstance(work_id, str) or len(work_id) > 40 :
+      print('No clean data work_id', work_id)
+      return False
+   work_uri = data.get('work_uri') #:'',
+   if not isinstance(work_uri, str) or len(work_uri) > 100 :
+      print('No clean data work_uri', work_uri)
+      return False
+   size = data.get('size') #: 0
+   if not isinstance(size, int) or len(size) > 10_000_000 :
+      print('No clean data size', size)
+      return False
 
-  clean_data = {
+   clean_data = {
 'title' : title,
 'genres' : genres,
 'keywords' : keywords,
@@ -122,7 +154,7 @@ def parse_incoming_data(data:dict):
 'size' : size,
   }
  
-  return clean_data
+   return clean_data
 
 def parse_public_data_work(data:dict, wid:str, author_id:str, ptime:float, version:int)->dict:
   print('parse public data')
@@ -155,7 +187,7 @@ def publish_new_work(author_id:str, data:dict, html:str):
          print('NO clean data')
          return False
       print('YES clean data')
-      
+
       wid=hash_strings(author_id, data_clean["work_id"])
       ptime = time()
       version = 1
