@@ -16,7 +16,12 @@ def today_new_works():
     key = 'today'
     #oday_unix = today()
     data_iterator = WORKS_NEW.search()
-    last_20_works = [{w['wid']:w['ptime']} for w in list(data_iterator)[-20:]]
+    last_20_works = [{
+        w['wid']:{
+            'ptime':w['ptime'],
+            'version':w['version']
+            }
+            } for w in list(data_iterator)[-20:]]
     #today_works = [{w['wid']:w['ptime']} for w in data_iterator if w['ptime'] > today_unix]
     
     print(f'пейлод с {len(last_20_works)} творби')
