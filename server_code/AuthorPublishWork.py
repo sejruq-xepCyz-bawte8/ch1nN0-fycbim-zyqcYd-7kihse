@@ -199,7 +199,7 @@ def new_work(author_record, data:dict, html:str):
       #save work to db
       WORKS_DATA.add_row(**data)
       WORKS_HTML.add_row(wid=wid, html=html)
-      new_work = WORKS.add_row(
+      work_record = WORKS.add_row(
          author_id = author_id,
          wid=wid,
          work_id = work_id,
@@ -227,16 +227,16 @@ def new_work(author_record, data:dict, html:str):
 
       #check for success
       if cf_work and cf_author:
-         new_work.update(cf_work = True, cf_author = True)
+         work_record.update(cf_work = True, cf_author = True)
          return True
       elif cf_work and not cf_author:
-         new_work.update(cf_work = True, cf_author = False)
+         work_record.update(cf_work = True, cf_author = False)
          return False
       elif not cf_work and cf_author:
-         new_work.update(cf_work = False, cf_author = True)
+         work_record.update(cf_work = False, cf_author = True)
          return False
       else:
-         new_work.update(cf_work = False, cf_author = False)
+         work_record.update(cf_work = False, cf_author = False)
          return False
 
 
@@ -294,16 +294,16 @@ def update_work(work_record, author_record, data:str, html:str):
 
    #check for success
    if cf_work and cf_author:
-      new_work.update(cf_work = True, cf_author = True)
+      work_record.update(cf_work = True, cf_author = True)
       return True
    elif cf_work and not cf_author:
-      new_work.update(cf_work = True, cf_author = False)
+      work_record.update(cf_work = True, cf_author = False)
       return False
    elif not cf_work and cf_author:
-      new_work.update(cf_work = False, cf_author = True)
+      work_record.update(cf_work = False, cf_author = True)
       return False
    else:
-      new_work.update(cf_work = False, cf_author = False)
+      work_record.update(cf_work = False, cf_author = False)
       return False
 
 def update_profile_works(author_record):
