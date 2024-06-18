@@ -7,7 +7,7 @@ from datetime import datetime, time
 
 
 
-WORKS_DATA = app_tables.worksdata
+WORKS = app_tables.works
 CHETEME = anvil.secrets.get_secret("CHETEME")
 API_URL = "https://api.chete.me/"
 
@@ -15,7 +15,7 @@ API_URL = "https://api.chete.me/"
 def today_new_works():
     key = 'today'
     #oday_unix = today()
-    data_iterator = WORKS_DATA.search()
+    data_iterator = WORKS.search()
     last_20_works = [{
         w['wid']:{
             'ptime':w['ptime'],
