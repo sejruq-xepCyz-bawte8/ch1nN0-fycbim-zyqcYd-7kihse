@@ -149,7 +149,7 @@ secrets:
 scheduled_tasks:
 - task_name: today_new_works
   time_spec:
-    n: 1
+    n: 30
     every: minute
     at: {}
   job_id: WOMWDNQF
