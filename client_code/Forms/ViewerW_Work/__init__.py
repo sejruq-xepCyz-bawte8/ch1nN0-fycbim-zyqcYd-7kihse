@@ -77,6 +77,13 @@ class ViewerW_Work(_FormTemplate):
                             self.createNewPage()
                             self.createNewParagraph(element)
                             self.currentParagraph.appendChild(wordSpan)
+                
+                elif element.tagName.lower() == 'h1':
+                    self.createNewPage()
+                    clone = element.cloneNode('true')
+                    self.currentPage.appendChild(clone)
+                
+                
                 else:
                     clone = element.cloneNode('true')
                     self.currentPage.appendChild(clone)
