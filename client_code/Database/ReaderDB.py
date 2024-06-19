@@ -121,5 +121,7 @@ class ReaderClass:
                 if id in new_works and new_works[id] > version:
                     newer_versions[id] = new_works[id]
 
-            print('new versions', newer_versions)
+            
+            for key in newer_versions.keys():
+                self.get_work_data(wid=key)
 
