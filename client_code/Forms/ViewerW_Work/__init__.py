@@ -79,17 +79,18 @@ class ViewerW_Work(_FormTemplate):
                           wordSpan.src = word.split('"')[1]
                           wordSpan.style.height = '200px'
                           wordSpan.style.width = '100%'
-                         
-                          
+           
                         else:
                           wordSpan = document.createElement('span')
                           wordSpan.innerHTML = word
+                        
                         self.currentParagraph.appendChild(wordSpan)
+
                         if self.currentPage.offsetHeight > self.targetHeigth:
-                            self.currentParagraph.removeChild(wordSpan)
-                            self.createNewPage()
-                            self.createNewParagraph(element)
-                            self.currentParagraph.appendChild(wordSpan)
+                          self.currentParagraph.removeChild(wordSpan)
+                          self.createNewPage()
+                          self.createNewParagraph(element)
+                          self.currentParagraph.appendChild(wordSpan)
                 
                 elif element.tagName.lower() == 'h1' and self.headingsCount > 0:
                     self.headingsCount += 1
