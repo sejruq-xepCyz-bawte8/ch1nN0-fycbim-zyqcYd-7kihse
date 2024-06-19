@@ -30,6 +30,7 @@ class ViewerW_Work(_FormTemplate):
     #READER CONTAINER 
     self.add_div(id="cheteme_reader")
     self.reader =  document.getElementById("cheteme_reader")
+    self.reader.setAttribute('onscroll', 'anvil.call($("#appGoesHere > div"), "scroll_reader", $(this))')
     self.targetHeigth = self.reader.offsetHeight
 
     #LABELS self.pagesLabel = self.add_label() #"#navl-ViewerW-ViewerW_Work"
