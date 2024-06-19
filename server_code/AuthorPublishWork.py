@@ -46,7 +46,7 @@ def publish_author_work_bg(html:str=None, data:dict=None, user=None, client=None
 
     author_id = author_record.get('author_id')
     
-    if data["work_uri"] in author_record['works'] : return fail('Ползвате линка в друга творба')
+    #if data["work_uri"] in author_record['works'] and data["wid"]: return fail('Ползвате линка в друга творба')
  
     work_record = WORKS.get(author_id=user["author_id"], work_id=data["work_id"])
 
