@@ -102,7 +102,8 @@ class ViewerW_Work(_FormTemplate):
         styleAttribute = sourceElement.getAttribute('style')
         if styleAttribute:
             self.currentParagraph.setAttribute('style', styleAttribute)
-        
+        css_classes = sourceElement.classList
+        self.currentParagraph.classList.add(*css_classes)
         self.currentPage.appendChild(self.currentParagraph)
 
 
