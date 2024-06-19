@@ -129,7 +129,7 @@ class ViewerW_Work(_FormTemplate):
             element.scrollIntoView({'behavior': 'smooth', 'block': 'start'})
             
   def scroll_reader(self, page, *event):
-        
+        self.parse_most_visible()
         self.mostVisible = page
         self.pagesLabel.textContent = f"{self.mostVisible}/{self.pageNumber}"
 
