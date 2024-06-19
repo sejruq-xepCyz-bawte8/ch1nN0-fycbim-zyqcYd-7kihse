@@ -74,12 +74,12 @@ class ViewerW_Work(_FormTemplate):
                     self.createNewParagraph(element)
                     for word in words:
                         if word.startswith('src="data:image'):
-                          image = document.createElement('img')
-                          wordSpan = document.createElement('span')
-                          image.src = word.split('"')[1]
+                          
+                          wordSpan = document.createElement('img')
+                          wordSpan.src = word.split('"')[1]
                           wordSpan.style.height = '200px'
                           wordSpan.style.width = '200px'
-                          wordSpan.appendChild(image)
+                         
                           
                         else:
                           wordSpan = document.createElement('span')
