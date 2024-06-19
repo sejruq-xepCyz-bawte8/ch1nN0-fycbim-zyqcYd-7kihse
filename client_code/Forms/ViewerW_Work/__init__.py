@@ -117,7 +117,11 @@ class ViewerW_Work(_FormTemplate):
         self.currentParagraph.classList.add(*css_classes)
         self.currentPage.appendChild(self.currentParagraph)
 
-
+  def parse_most_visible(self):
+      pages = document.querySelectorAll('.page')
+      for page in pages:
+          rect = page.getBoundingClientRect()
+          print(rect)
 
   def scrollTo(self, **event):
         element = document.getElementById(event['sender'].page)
@@ -125,6 +129,7 @@ class ViewerW_Work(_FormTemplate):
             element.scrollIntoView({'behavior': 'smooth', 'block': 'start'})
             
   def scroll_reader(self, page, *event):
+        
         self.mostVisible = page
         self.pagesLabel.textContent = f"{self.mostVisible}/{self.pageNumber}"
 
