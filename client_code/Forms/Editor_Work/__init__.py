@@ -26,7 +26,7 @@ class Editor_Work(_FormTemplate):
   
   def show_form(self, **event):
 
-    self.editor = Quill(toolbar=toolbarOptions, placeholder="Текст на творбата ...", sanitize=True)
+    self.editor = Quill(toolbar=toolbarOptions, sanitize=False)
     self.editor.add_event_handler('text_change', self.editor_change)
     self.add_component(self.editor)
 
@@ -38,7 +38,7 @@ class Editor_Work(_FormTemplate):
     self.deferred_change = None
     self.deferred_save = None
     
-    self.editor.set_html(EDITOR.html, sanitize=None)
+    self.editor.set_html(EDITOR.html)
     self.words_count.text = EDITOR.data['words']
 
 
@@ -47,7 +47,7 @@ class Editor_Work(_FormTemplate):
     non_blocking.cancel(self.deferred_change)
     non_blocking.cancel(self.deferred_save)
     self.deferred_change = non_blocking.defer(self.changes_calc, 1)
-    self.deferred_save = non_blocking.defer(self.save_buffer, 5)
+    self.deferred_save = non_blocking.defer(self.save_buffer, 3)
     
   def changes_calc(self):
     EDITOR.html = self.editor.get_html()

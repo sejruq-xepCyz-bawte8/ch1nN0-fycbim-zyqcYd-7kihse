@@ -26,7 +26,7 @@ class Author_NewWork(_FormTemplate):
 
     self.pyscript = non_blocking.repeat(self.check_pyscript, 1)
 
-    self.work_html = None
+    self.work_html = '<p>...</p>'
 
     self.init_components(**properties)
 
@@ -42,10 +42,8 @@ class Author_NewWork(_FormTemplate):
 
   def make_and_open(self, sender=None, html:str=None, **event):
     if sender is self.action_create:
-      html = self.preview.content
-    else:
-      html = None
-    
+      html = self.preview.content if self.preview.content else '<p>...</p>'
+   
     if self.title.text:
         title = self.title.text
     else:

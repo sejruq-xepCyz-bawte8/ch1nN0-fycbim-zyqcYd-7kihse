@@ -59,7 +59,7 @@ class Author_Profile(_FormTemplate):
 
     # ABOUT PANEL
     self.about_panel = self.add_colpanel()
-    self.editor = Quill(toolbar=toolbarOptions, sanitize=True)
+    self.editor = Quill(toolbar=toolbarOptions, sanitize=False)
     self.editor.add_event_handler('text_change', self.editor_change)
     self.editor.set_html(self.html_author)
     self.about_panel.add_component(self.editor)

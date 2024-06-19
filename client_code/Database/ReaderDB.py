@@ -21,7 +21,7 @@ class ReaderClass:
         
         self.today = self.store_registry.get('today')
         if self.today == None : self.today = []
-        self.today_update = non_blocking.defer(self.update_today, 0)
+        self.today_update = non_blocking.defer(self.update_today, 3)
         
         self.works_data = self.store_registry.get('works_data')
         if self.works_data == None : self.works_data = {}
@@ -37,16 +37,14 @@ class ReaderClass:
 
 
     def update_today(self):
-        print('updating today')
         today = api_today()
-        print('today',today)
         self.store_registry['today'] = today
         self.today = today
         icon_element = jQ('.fa-home')
         icon_element.toggleClass('fa-fade')
-        sleep(3)
+        sleep(5)
         icon_element.toggleClass('fa-fade')
-        self.today_update = non_blocking.repeat(self.update_today, 600)
+        self.today_update = non_blocking.repeat(self.update_today, 1800)
 
     def set_current_work(self, work_id:str):
         self.work_id = work_id

@@ -3,6 +3,7 @@ from .._FormTemplate import _FormTemplate
 from ...Index.App import READER
 from ..Editor_Cover.CoverElement import CoverClass
 from anvil.js.window import jQuery as jQ
+from time import sleep
 
 class Reader_Today(_FormTemplate):
   def __init__(self, **properties):
@@ -15,7 +16,23 @@ class Reader_Today(_FormTemplate):
     #self.add_label(text=self.form_name)
     self.add_div(text="Последно публикувани")
     self.cover_container = self.add_div(id='cover-container')
+    if READER.today:
+      self.show_works()
+    else:
+      self.first_time_info()
+      for t in range(30):
+        if READER.today:
+          self.show_works()
+          break
+        sleep(2)
+
+
+  def first_time_info(self):
+    n = Notification('<i class="fa-duotone fa-spinner fa-spin"></i>първо зареждане', style="info", timeout=1.5)
+    n.show()
+
     
+  def show_works(self):
     for w in READER.today:
       wid = next(iter(w))
       
@@ -26,9 +43,6 @@ class Reader_Today(_FormTemplate):
       #cover.attr('data-onclick', "open_work")
       cover.el.attr('onclick', f'anvil.call($("#appGoesHere > div"), "open_work", "{wid}")')
       self.append_jq_el(element=cover.el, parent=self.cover_container)
-    
-    
-
 
 
   def open_work(self, sender, *event):
