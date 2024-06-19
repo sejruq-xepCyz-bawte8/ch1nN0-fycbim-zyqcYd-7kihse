@@ -21,8 +21,6 @@ class _Welcome(_FormTemplate):
     if 'author' in self.uri:
       READER.set_current_author(self.uri['author'])
       self.navClick_by_id("#navl-Reader-ViewerA_Author")
-    
-      
     if 'work' in self.uri:
       READER.set_current_work(self.uri['work'])
       self.navClick_by_id("#navl-Reader-ViewerW_Work")

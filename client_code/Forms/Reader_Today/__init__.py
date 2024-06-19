@@ -10,10 +10,20 @@ class Reader_Today(_FormTemplate):
     super().__init__(**properties)
     
     self.init_components(**properties)
+    self.uri = get_url_hash()
+    window.history.replaceState({}, document.title, window.location.origin)
+
     
 
   def show_form(self, **event):
-    #self.add_label(text=self.form_name)
+    #open if something
+    if 'author' in self.uri:
+      READER.set_current_author(self.uri['author'])
+      self.navClick_by_id("#navl-Reader-ViewerA_Author")
+    if 'work' in self.uri:
+      READER.set_current_work(self.uri['work'])
+      self.navClick_by_id("#navl-Reader-ViewerW_Work")
+
     self.add_div(text="Последно публикувани")
     self.cover_container = self.add_div(id='cover-container')
     if READER.today:
