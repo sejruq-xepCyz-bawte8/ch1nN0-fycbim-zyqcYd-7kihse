@@ -74,7 +74,7 @@ class ViewerW_Work(_FormTemplate):
                     for word in words:
                         if word.startswith('src="data:image'):
                           wordSpan = document.createElement('img')
-                          wordSpan.src = word
+                          wordSpan.src = word.split('src="')[0]
                         else:
                           wordSpan = document.createElement('span')
                           wordSpan.innerHTML = word
