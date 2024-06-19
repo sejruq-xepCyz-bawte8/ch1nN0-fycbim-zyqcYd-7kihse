@@ -78,7 +78,7 @@ class ViewerW_Work(_FormTemplate):
                           wordSpan = document.createElement('img')
                           wordSpan.src = word.split('"')[1]
                           wordSpan.style.height = '200px'
-                          wordSpan.style.width = '200px'
+                          wordSpan.style.width = '100%'
                          
                           
                         else:
