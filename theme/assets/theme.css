@@ -209,11 +209,10 @@ align-items: center;
 }
 p.ql-align-right{
   justify-content: flex-end;
-  background-color: aqua;
+
 }
-.ql-align-center{
-  margin-left: auto;
-  margin-right: auto;
+p.ql-align-center{
+justify-content: center;
 }
 /*TODAY*/
 #form-Reader_Today #cover-container{
