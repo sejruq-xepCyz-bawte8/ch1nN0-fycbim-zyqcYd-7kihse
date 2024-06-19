@@ -72,8 +72,12 @@ class ViewerW_Work(_FormTemplate):
                     words = element.innerHTML.split(' ')
                     self.createNewParagraph(element)
                     for word in words:
-                        wordSpan = document.createElement('span')
-                        wordSpan.innerHTML = word
+                        if word.startswith('src="data:image'):
+                          wordSpan = document.createElement('img')
+                          wordSpan.src = word
+                        else:
+                          wordSpan = document.createElement('span')
+                          wordSpan.innerHTML = word
                         self.currentParagraph.appendChild(wordSpan)
                         if self.currentPage.offsetHeight > self.targetHeigth:
                             self.currentParagraph.removeChild(wordSpan)
