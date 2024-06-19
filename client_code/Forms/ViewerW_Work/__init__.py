@@ -75,6 +75,7 @@ class ViewerW_Work(_FormTemplate):
                         if word.startswith('src="data:image'):
                           wordSpan = document.createElement('img')
                           wordSpan.src = word.split('"')[1]
+                          wordSpan.style.height = '10rem'
                         else:
                           wordSpan = document.createElement('span')
                           wordSpan.innerHTML = word
