@@ -4,6 +4,7 @@ import anvil.js
 from anvil.js.window import document
 from time import time
 from ...Index.App import READER
+from anvil_extras import non_blocking
 
 class ViewerW_Work(_FormTemplate):
   def __init__(self, **properties):
@@ -11,7 +12,7 @@ class ViewerW_Work(_FormTemplate):
     
     self.init_components(**properties)
  
-
+    self.scroling_pages_info = None
     
     #SOURCE 
     self.source = document.createElement("div")
@@ -121,7 +122,13 @@ class ViewerW_Work(_FormTemplate):
       pages = document.querySelectorAll('.page')
       for page in pages:
           rect = page.getBoundingClientRect()
-          print(rect['y'])
+          id = page.id
+          y = rect['y']
+          if y < 30 and y > - 10:
+              self.mostVisible = id
+              break
+              
+      self.pagesLabel.textContent = f"{self.mostVisible}/{self.pageNumber}"
 
   def scrollTo(self, **event):
         element = document.getElementById(event['sender'].page)
@@ -129,9 +136,10 @@ class ViewerW_Work(_FormTemplate):
             element.scrollIntoView({'behavior': 'smooth', 'block': 'start'})
             
   def scroll_reader(self, page, *event):
-        self.parse_most_visible()
-        self.mostVisible = page
-        self.pagesLabel.textContent = f"{self.mostVisible}/{self.pageNumber}"
+        non_blocking.cancel(self.scroling_pages_info)
+        self.scroling_pages_info = non_blocking.defer(self.parse_most_visible, 0.3)
+        
+
 
   def click_cover(self):
     print('clic_cover')
