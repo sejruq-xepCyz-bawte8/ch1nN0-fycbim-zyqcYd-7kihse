@@ -21,10 +21,14 @@ class Reader_Today(_FormTemplate):
     if 'author' in self.uri:
       READER.set_current_author(self.uri['author'])
       self.navClick_by_id("#navl-Reader-ViewerA_Author")
-    if 'work' in self.uri:
+    elif 'work' in self.uri:
       READER.set_current_work(self.uri['work'])
       self.navClick_by_id("#navl-Reader-ViewerW_Work")
+    else:
+      self.build_today()
 
+
+  def build_today(self):
     self.add_div(text="Последно публикувани")
     self.cover_container = self.add_div(id='cover-container')
     if READER.today:
@@ -36,6 +40,7 @@ class Reader_Today(_FormTemplate):
           self.show_works()
           break
         sleep(2)
+
 
 
   def first_time_info(self):
