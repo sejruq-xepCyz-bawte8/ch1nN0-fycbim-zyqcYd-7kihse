@@ -2,7 +2,7 @@ from anvil import *
 from .._FormTemplate import _FormTemplate
 import anvil.js
 from anvil.js.window import document
-from time import time
+from time import time, sleep
 from ...Index.App import READER
 from anvil_extras import non_blocking
 
@@ -74,11 +74,13 @@ class ViewerW_Work(_FormTemplate):
                     self.createNewParagraph(element)
                     for word in words:
                         if word.startswith('src="data:image'):
-                          
-                          wordSpan = document.createElement('img')
+                          wordSpan = document.createElement('span')
                           wordSpan.src = word.split('"')[1]
                           wordSpan.style.height = '200px'
                           wordSpan.style.width = '100%'
+                          wordSpan.style.backgroundColor = 'gray'
+                          
+                          
            
                         else:
                           wordSpan = document.createElement('span')
