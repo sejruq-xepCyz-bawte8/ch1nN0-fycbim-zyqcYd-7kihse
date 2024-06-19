@@ -65,9 +65,9 @@ class ReaderClass:
         return True
 
 
-    def get_work_data(self, wid:str):
+    def get_work_data(self, wid:str, cached=True):
         data = self.works_data.get(wid)
-        if data:
+        if data and cached:
             return data
         else:
             data = api_work_data(wid)
@@ -75,9 +75,9 @@ class ReaderClass:
             self.store_registry['works_data'] = self.works_data
             return data
 
-    def get_work_html(self, wid:str):
+    def get_work_html(self, wid:str, cached=True):
         html = self.works_html.get(wid)
-        if html:
+        if html and cached:
             return html
         else:
             html = api_work_html(wid)
@@ -124,9 +124,9 @@ class ReaderClass:
             
             for key in newer_versions.keys():
                 print('updating data for new version of work')
-                self.get_work_data(wid=key)
+                self.get_work_data(wid=key, cached=False)
                 if key in self.works_html:
                     print('updating content for new version of work')
-                    self.get_work_html(wid=key)
+                    self.get_work_html(wid=key, cached=False)
 
 
