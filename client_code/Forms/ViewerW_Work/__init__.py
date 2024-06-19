@@ -74,14 +74,9 @@ class ViewerW_Work(_FormTemplate):
                     self.createNewParagraph(element)
                     for word in words:
                         if word.startswith('src="data:image'):
-                          wordSpan = document.createElement('span')
+                          wordSpan = document.createElement('img')
                           wordSpan.src = word.split('"')[1]
-                          wordSpan.style.height = '200px'
-                          wordSpan.style.width = '100%'
-                          wordSpan.style.backgroundColor = 'gray'
-                          
-                          
-           
+
                         else:
                           wordSpan = document.createElement('span')
                           wordSpan.innerHTML = word
