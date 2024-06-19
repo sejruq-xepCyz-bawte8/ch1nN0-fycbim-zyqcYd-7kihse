@@ -209,6 +209,7 @@ align-items: center;
 }
 .ql-align-right{
   margin-left: auto;
+  background-color: aqua;
 }
 .ql-align-center{
   margin-left: auto;
