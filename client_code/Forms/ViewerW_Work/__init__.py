@@ -102,7 +102,7 @@ class ViewerW_Work(_FormTemplate):
         styleAttribute = sourceElement.getAttribute('style')
         if styleAttribute:
             self.currentParagraph.setAttribute('style', styleAttribute)
-        document.copyClasses(sourceElement, self.currentParagraph)
+        
         self.currentPage.appendChild(self.currentParagraph)
 
 
