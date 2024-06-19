@@ -200,7 +200,10 @@ align-items: center;
   padding-top: 1rem;
   margin-bottom: 3rem;
 }
-
+.page{
+font-family: 'Adys';
+font-size: 1rem;
+}
 .page p {
   display: flex;
   flex-wrap: wrap;
