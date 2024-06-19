@@ -87,6 +87,7 @@ class ViewerW_Work(_FormTemplate):
                 
                 
                 else:
+                    if element.tagName.lower() == 'h1' : self.headingsCount += 1
                     clone = element.cloneNode('true')
                     self.currentPage.appendChild(clone)
                     if self.currentPage.offsetHeight > self.targetHeigth:
