@@ -44,6 +44,7 @@ class ViewerW_Work(_FormTemplate):
     self.currentPage = None
     self.currentParagraph = None
     self.pageNumber = 0
+    self.headingsCount = 0
 #self.add_event_handler('show', self.createNewPage) 
 #self.targetHeigth = self.reader.offsetHeight
         
@@ -78,7 +79,8 @@ class ViewerW_Work(_FormTemplate):
                             self.createNewParagraph(element)
                             self.currentParagraph.appendChild(wordSpan)
                 
-                elif element.tagName.lower() == 'h1' and self.pageNumber > 1:
+                elif element.tagName.lower() == 'h1' and self.pageNumber > 1 and self.headingsCount > 0:
+                    self.headingsCount += 1
                     self.createNewPage()
                     clone = element.cloneNode('true')
                     self.currentPage.appendChild(clone)
