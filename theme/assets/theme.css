@@ -203,6 +203,7 @@ align-items: center;
 .page *{
 font-family: 'Adys';
 font-size: 2rem;
+line-height: 1.5;
 }
 .page p {
   display: flex;
