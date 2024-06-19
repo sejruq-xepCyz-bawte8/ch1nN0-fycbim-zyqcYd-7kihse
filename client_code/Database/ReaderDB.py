@@ -123,8 +123,10 @@ class ReaderClass:
 
             
             for key in newer_versions.keys():
+                print('updating data for new version of work')
                 self.get_work_data(wid=key)
                 if key in self.works_html:
+                    print('updating content for new version of work')
                     self.get_work_html(wid=key)
 
 
