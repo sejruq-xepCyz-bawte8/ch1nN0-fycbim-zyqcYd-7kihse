@@ -38,7 +38,7 @@ class Editor_Work(_FormTemplate):
     self.deferred_change = None
     self.deferred_save = None
     
-    self.editor.set_html(EDITOR.html)
+    self.editor.set_html(EDITOR.html, sanitize=False)
     self.words_count.text = EDITOR.data['words']
 
 
