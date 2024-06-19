@@ -3,6 +3,7 @@ from .._FormTemplate import _FormTemplate
 from ...Index.App import READER
 from ..Editor_Cover.CoverElement import CoverClass
 from anvil.js.window import jQuery as jQ
+from anvil.js import window, document
 from time import sleep
 
 class Reader_Today(_FormTemplate):
