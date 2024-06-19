@@ -207,10 +207,13 @@ line-height: 1.5;
 }
 .page h1{
 font-size: 2.5rem;
+font-weight: bold;
 }
 .page h2{
   font-size: 2.25rem;
+  font-weight: bold;
   }
+  
 .page p {
   display: flex;
   flex-wrap: wrap;
