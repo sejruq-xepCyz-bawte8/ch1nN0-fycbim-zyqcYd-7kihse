@@ -124,4 +124,7 @@ class ReaderClass:
             
             for key in newer_versions.keys():
                 self.get_work_data(wid=key)
+                if key in self.works_html:
+                    self.get_work_html(wid=key)
+
 
