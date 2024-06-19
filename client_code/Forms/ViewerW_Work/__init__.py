@@ -137,7 +137,7 @@ class ViewerW_Work(_FormTemplate):
             
   def scroll_reader(self, page, *event):
         non_blocking.cancel(self.scroling_pages_info)
-        self.scroling_pages_info = non_blocking.defer(self.parse_most_visible, 0.3)
+        self.scroling_pages_info = non_blocking.defer(self.parse_most_visible, 0.2)
         
 
 
