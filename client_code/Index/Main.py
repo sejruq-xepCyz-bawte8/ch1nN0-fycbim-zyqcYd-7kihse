@@ -3,7 +3,7 @@ from .Device import has_device, init_device
 import App
 from anvil.js import window
 
-VER = '0.8.0'
+VER = '0.8.1'
 
 def version():
     n = Notification(f'<i class="fa-regular fa-flask"></i><span>Тестова версия - {VER}</span>', style="info", timeout=2)
