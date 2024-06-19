@@ -215,7 +215,14 @@ h2{
   }
 .ql-editor h1, .ql-editor h2{
   background-color: lightgrey;
-} 
+}
+h1.ql-align-right, h2.ql-align-right{
+  text-align: right;
+}
+h1.ql-align-center, h2.ql-align-center{
+  text-align: center;
+}
+
 p {
   display: flex;
   flex-wrap: wrap;
