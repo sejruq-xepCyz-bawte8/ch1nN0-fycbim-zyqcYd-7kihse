@@ -200,7 +200,7 @@ align-items: center;
   padding-top: 1rem;
   margin-bottom: 3rem;
 }
-.page{
+.page *{
 font-family: 'Adys';
 font-size: 1rem;
 }
