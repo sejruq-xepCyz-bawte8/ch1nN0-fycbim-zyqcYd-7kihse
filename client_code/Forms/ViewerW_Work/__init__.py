@@ -33,7 +33,7 @@ class ViewerW_Work(_FormTemplate):
     self.reader =  document.getElementById("cheteme_reader")
     self.reader.setAttribute('onscroll', 'anvil.call($("#appGoesHere > div"), "scroll_reader", $(this))')
     self.targetHeigth = self.reader.offsetHeight
-    self.imagesMaxHeigth:int = int(self.targetHeigth / 3)
+    self.imagesMaxHeigth:int = int(self.targetHeigth / 2)
 
     #LABELS self.pagesLabel = self.add_label() #"#navl-ViewerW-ViewerW_Work"
     self.work_link = document.getElementById('navl-ViewerW-ViewerW_Work')
