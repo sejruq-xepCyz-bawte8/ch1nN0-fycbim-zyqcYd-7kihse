@@ -207,8 +207,8 @@ align-items: center;
   gap: 5px;
   font-size: 2rem;
 }
-.ql-align-right{
-  margin-left: auto !important;
+p.ql-align-right{
+  justify-content: flex-end;
   background-color: aqua;
 }
 .ql-align-center{
