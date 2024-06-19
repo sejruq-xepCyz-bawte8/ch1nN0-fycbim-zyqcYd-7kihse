@@ -33,6 +33,7 @@ class Editor_Publish(_FormTemplate):
 
 
   def publish(self, sender, **event):
+    self.add_div('Започна публикуването, изчакайте за резултата ...')
     print('publush click')
 
     if USER_ID:
