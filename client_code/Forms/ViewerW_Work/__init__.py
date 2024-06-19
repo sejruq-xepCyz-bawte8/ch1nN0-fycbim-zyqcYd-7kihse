@@ -121,7 +121,7 @@ class ViewerW_Work(_FormTemplate):
       pages = document.querySelectorAll('.page')
       for page in pages:
           rect = page.getBoundingClientRect()
-          print(dict(rect))
+          print(rect['y'])
 
   def scrollTo(self, **event):
         element = document.getElementById(event['sender'].page)
