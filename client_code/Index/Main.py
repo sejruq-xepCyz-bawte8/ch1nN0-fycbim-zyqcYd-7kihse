@@ -3,6 +3,9 @@ from .Device import has_device, init_device
 import App
 from anvil.js import window
 
+
+
+
 VER = '0.8.1'
 
 def version():
@@ -17,6 +20,8 @@ def is_init()->bool:
         if init_device():
             return App.init_app()
         else:
+            n = Notification('грешно устройство :)', style="danger", timeout=1.5)
+            n.show()
             return False
 
 def main():

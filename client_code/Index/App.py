@@ -7,11 +7,11 @@ from ..Database.AwesomeDB import AwesomeClass
 from ..Database.GenresDB import GenresClass
 from ..Database.EditorDB import EditorClass
 from ..Database.ReaderDB import ReaderClass
+from ..Database.EngageDB import EngageClass
 
 from .DevMode import dev_mode_init
 
-DEVMODE = True if location.hostname is '192.168.0.101' else False
-PRODMODE = True if location.hostname is 'chete.me' else False
+from .Device import DEVMODE, PRODMODE
 
 ADULT = None
 USER = None
@@ -20,6 +20,7 @@ USER_EMAIL:str = None
 IS_USER:bool = None
 IS_DEVICE:bool = None
 DEVICE_ID:str = None
+SECRET:str = None
 AUTHOR_ID:str = None
 IS_AUTHOR:bool = None
 
@@ -30,6 +31,7 @@ GENRES:GenresClass = GenresClass()
 
 EDITOR:EditorClass = None
 READER:ReaderClass = None
+ENGAGE:EngageClass = None
 
 def init_app()->bool:
     load_js_script('/_/theme/javascript/init_viewport.js')
@@ -37,9 +39,11 @@ def init_app()->bool:
 
     global NAVIGATION
     global DEVICE_ID
+    global SECRET
     global IS_DEVICE
     global AW
     DEVICE_ID = device_store['device_id']
+    SECRET = device_store['secret']
     IS_DEVICE = bool(DEVICE_ID)
     
 
@@ -52,6 +56,7 @@ def init_app()->bool:
     global ADULT
     global EDITOR
     global READER
+    global ENGAGE
   
     USER = anvil.users.get_user()
     USER_ID = USER['user_id'] if USER else None
@@ -70,6 +75,7 @@ def init_app()->bool:
     
     NAVIGATION = NavigationClass()
     READER = ReaderClass()
+    ENGAGE = EngageClass()
     return True
 
 def load_js_script(src:str) -> None:

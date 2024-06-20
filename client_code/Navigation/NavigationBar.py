@@ -67,7 +67,7 @@ NAV_TREE = [
         {'text':'Творба', 'form':'ViewerW_Work'},
         {'text':'Корица', 'form':'ViewerW_Cover'},
         {'text':'Запази', 'form':'ViewerW_Work', 'onclick':'click_bookmark'},
-        {'text':'Харесай', 'form':'ViewerW_Work', 'onclick':'click_like'},
+        {'text':'Харесай', 'form':'ViewerW_Engage'},
         ],
     },
         {   
