@@ -24,4 +24,5 @@ def api_engagement(wid:str, engagement:list, comment:str=None):
     resp_bytes = response.get_bytes()
     resp_text = resp_bytes.decode('utf-8')
     resp_json = json.loads(resp_text)
+    print(resp_json)
     return resp_json
