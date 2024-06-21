@@ -1,6 +1,6 @@
 import anvil.http
 
-
+#NOT USED
 def api_image(id:str):
     data = {
         'target':'new_device',

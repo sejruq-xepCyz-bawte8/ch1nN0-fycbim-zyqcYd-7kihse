@@ -9,7 +9,7 @@ from datetime import datetime, time
 
 WORKS = app_tables.works
 CHETEME = anvil.secrets.get_secret("CHETEME")
-API_URL = "https://api.chete.me/"
+API_URL = "https://chete.me/?api=anvil"
 
 @anvil.server.background_task
 def today_new_works():

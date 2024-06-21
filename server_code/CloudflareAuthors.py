@@ -4,7 +4,7 @@ import json
 import anvil.server
 
 CHETEME = anvil.secrets.get_secret("CHETEME")
-API_URL = "https://api.chete.me/"
+API_URL = "https://chete.me/?api=anvil"
 
 def status(message):
    anvil.server.task_state['message'] = message
