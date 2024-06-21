@@ -22,6 +22,6 @@ class ViewerW_Engage(_FormTemplate):
     self.add_component(self.comment_button)
     self.like_button = Link(icon = 'fa:heart')
     self.add_component(self.like_button)
-    engagement:list = ['open']
+    engagement:list = ['like'] #wid	engage_id	-> open	read	like	comment	text	<- data
     comment:str=None
     ENGAGE.my_engage(wid=READER.work_id, engagement=engagement, comment=comment)

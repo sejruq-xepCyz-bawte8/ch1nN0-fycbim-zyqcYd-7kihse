@@ -75,7 +75,7 @@ def make_request(data):
     if not data:
         return None
     try:
-        response = anvil.http.request(url="https://pub.chete.me",
+        response = anvil.http.request(url="https://chete.me/?api=pub",
                         method="POST",
                         data=json.dumps(data),
                         )
