@@ -25,7 +25,7 @@ def is_init()->bool:
             return False
 
 def main():
-
+    
 # This code displays an Anvil alert, rather than
 # the default red box, when an error occurs.
     version()
@@ -38,7 +38,7 @@ def main():
 
 
     App.NAVIGATION.add_to_body()
-    #window.console.clear()
+    
     open_form('Forms.Reader_Today')
     
 
