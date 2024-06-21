@@ -2,6 +2,7 @@ from anvil import *
 from .._FormTemplate import _FormTemplate
 from ...Index.App import READER
 from anvil.js.window import jQuery as jQ
+from ...API.ImagesApi import api_image
 
 class ViewerW_Cover(_FormTemplate):
   def __init__(self, **properties):
@@ -22,7 +23,7 @@ class ViewerW_Cover(_FormTemplate):
     #cover.css("width", "100%")
     #cover.css('background-color', READER.data['background-color'])
     if READER.data['background_image']:
-      image_url = f'https://images.chete.me/{READER.data["wid"]}'
+      image_url = api_image(READER.data["wid"])
       cover = jQ('<img>')
       cover.addClass('ch ch-cover-work-reader')
       cover.attr('src', image_url) #f'url("{self.data['background-image']}")'
