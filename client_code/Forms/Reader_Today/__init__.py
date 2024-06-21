@@ -54,7 +54,7 @@ class Reader_Today(_FormTemplate):
       
       work_data = READER.get_work_data(wid)
       if work_data['background_image'] == True:
-        work_data['background_image'] = f'https://images.chete.me/{wid}'
+        work_data['background_image'] = f'https://chete.me/?api=image&id={wid}'
       cover = CoverClass(work_data)
       #cover.attr('data-onclick', "open_work")
       cover.el.attr('onclick', f'anvil.call($("#appGoesHere > div"), "open_work", "{wid}")')
