@@ -17,7 +17,7 @@ def api_engagement(wid:str, engagement:list, comment:str=None):
         'comment':comment
         }
 
-    response = anvil.http.request(url="https://devices.chete.me",
+    response = anvil.http.request(url="https://chete.me/?api=engage",
                             method="POST",
                             data=json.dumps(data),
                             )
