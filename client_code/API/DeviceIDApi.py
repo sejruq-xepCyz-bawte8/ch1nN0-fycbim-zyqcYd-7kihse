@@ -8,7 +8,7 @@ def api_new_device():
         'secret':'cheteme'
         }
 
-    response = anvil.http.request(url="https://devices.chete.me",
+    response = anvil.http.request(url="https://chete.me/?api=device",
                             method="POST",
                             data=json.dumps(data),
                             )
