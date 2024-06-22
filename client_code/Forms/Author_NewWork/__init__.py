@@ -1,6 +1,6 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...Index.App import EDITOR
+from ...Index import App
 from ...PyScript.PyScriptLoader import has_pyscript
 from anvil_extras import non_blocking
 from anvil.js import window
@@ -49,8 +49,8 @@ class Author_NewWork(_FormTemplate):
     else:
         title = None
 
-    new_work_id = EDITOR.new_work(html=html, title=title)
-    if EDITOR.set_current(work_id=new_work_id):
+    new_work_id = App.EDITOR.new_work(html=html, title=title)
+    if App.EDITOR.set_current(work_id=new_work_id):
        self.navClick_by_id(link_id="#navl-Editor-Editor_Work", from_group="Author")
 
 
