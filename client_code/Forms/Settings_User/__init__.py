@@ -18,7 +18,24 @@ class Settings_User(_FormTemplate):
     self.readers.visible = True if tab == 0  else False
     self.authors.visible = True if tab == 1  else False
 
-  
+  def build_logged(self, container):
+      self.info.text = 'Успешен вход'
+      self.add_colpanel(name='logout_panel', parent=container)
+      self.email = self.add_label(text=self.user_email, parent=self.logout_panel)
+      self.add_button(text="Изход", click=self.login_logout, parent=self.logout_panel)
+
+  def build_readers(self, container):
+    #READERS PANEL
+    self.add_label(text='Можете да ползвате ЧетеМе, без нужда да се регистрирате.', parent=container)
+    self.add_label(text='Ако искате да пренесете настройки, история и др. от това устройство в друго - следваща версия ще бъде добавена тази възможност :)', parent=container)
+
+  def build_authors(self, container):
+    #AUTHORS PANEL
+    self.info = self.add_label(text="Регистрация и вход на автори в ЧетеМе. Ако желаете да се регистрирате, като автор свържете се с нас за регистрационен код.", parent=container)
+    if not self.is_user:
+      self.login_signup_form(container)
+    else:
+      self.build_logged(container)
 
   def show_form(self, **event):
     self.tabs = Tabs(tab_titles=['Читател', 'Автор']) #tab_click
@@ -28,34 +45,22 @@ class Settings_User(_FormTemplate):
     self.add_colpanel(name='readers')
     self.add_colpanel(name='authors', visible=False)
 
-    #READERS PANEL
-    self.add_label(text='Можете да ползвате ЧетеМе, без нужда да се регистрирате.', parent=self.readers)
-    self.add_label(text='Ако искате да пренесете настройки, история и др. от това устройство в друго - следваща версия ще бъде добавена тази възможност :)', parent=self.readers)
+    self.build_readers(self.readers)
+    self.build_authors(self.authors)
 
     
-    #AUTHORS PANEL
-    self.info = self.add_label(text="Регистрация и вход на автори в ЧетеМе. Ако желаете да се регистрирате, като автор свържете се с нас за регистрационен код.", parent=self.authors)
-    if not self.is_user:
-      self.login_signup_form()
-    else:
-      self.email = self.add_label(text=self.user_email, parent=self.authors)
-      self.add_button(text="Изход", click=self.login_logout, parent=self.authors)
-   
-    
-  def user_settings(self):
-    pass
 
-  def login_signup_form(self):
-    self.login_choise = self.add_radio(name='form', text="Вход", selected=True, change=self.login_type_change, parent=self.authors)
-    self.add_radio(name='form', text="Регистрация", change=self.login_type_change, parent=self.authors)
+  def login_signup_form(self, container):
+    self.login_choise = self.add_radio(name='form', text="Вход", selected=True, change=self.login_type_change, parent=container)
+    self.add_radio(name='form', text="Регистрация", change=self.login_type_change, parent=container)
     
   #just login panel
-    self.login_panel = self.add_colpanel(parent=self.authors)
+    self.login_panel = self.add_colpanel(parent=container)
     self.email = self.add_textbox(parent=self.login_panel, placeholder='Ел. Поща', change=email_zod)
     self.password = self.add_textbox(parent=self.login_panel, placeholder='Парола', hide_text=True, change=password_zod)
     
   #signup panel
-    self.signup_panel = self.add_colpanel(visible=False, parent=self.authors)
+    self.signup_panel = self.add_colpanel(visible=False, parent=container)
     self.password2 = self.add_textbox(parent=self.signup_panel, placeholder='Потвърди Паролата', hide_text=True, change=self.check_password2)
     self.code = self.add_textbox(parent=self.signup_panel, placeholder='Код за регистрация', change=code_zod) 
     self.age = self.add_checkbox(parent=self.signup_panel, text="Пълнолетие", checked=False)
@@ -69,7 +74,7 @@ class Settings_User(_FormTemplate):
     self.password.valid = None
     self.password2.valid = None
     self.code.valid = None
-    self.button = self.add_button(text="Вход", click=self.login_signup, parent=self.authors)
+    self.button = self.add_button(text="Вход", click=self.login_signup, parent=container)
     self.sign_up_button_validation()
   
 
@@ -114,8 +119,7 @@ class Settings_User(_FormTemplate):
         self.info.text = result['message']
         if result.get('success'):
           self.login_panel.visible=False
-          self.add_button(text="Изход", click=self.login_logout, parent=self.authors)
-          self.button.visible = False
+          self.build_logged(self.authors)
 
 
 
