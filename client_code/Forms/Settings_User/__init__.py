@@ -31,7 +31,6 @@ class Settings_User(_FormTemplate):
     if self.is_user:
       self.build_logged()
     else:
-      self.tabs.add_event_handler('tab_click', self.tab_click)
       self.tabs = Tabs(tab_titles=['Читател', 'Автор']) #tab_click
       self.tabs.add_event_handler('tab_click', self.tab_click)
       self.add_component(self.tabs)
@@ -48,8 +47,6 @@ class Settings_User(_FormTemplate):
       self.email = self.add_label(text=self.user_email, parent=self.logout_panel)
       self.add_button(text="Изход", click=self.login_logout, parent=self.logout_panel)
   
-
-    
 
   def login_signup_form(self, container):
     self.login_choise = self.add_radio(name='form', text="Вход", selected=True, change=self.login_type_change, parent=container)
