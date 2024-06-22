@@ -51,8 +51,8 @@ class Settings_User(_FormTemplate):
   def login_signup_form(self, container):
     self.add_radio(name='choise', text="Вход", selected=True, change=self.login_type_change, parent=container)
     self.add_radio(name='choise', text="Регистрация", change=self.login_type_change, parent=container)
-    self.add_colpanel(name='login_form', container=container)
-    self.add_colpanel(name='signup_form', container=container, visible=False)
+    self.add_colpanel(name='login_form', parent=container)
+    self.add_colpanel(name='signup_form', parent=container, visible=False)
 
     self.l_email = self.add_textbox(parent=self.login_form, placeholder='Ел. Поща', change=email_zod)
     self.l_password = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=password_zod)
