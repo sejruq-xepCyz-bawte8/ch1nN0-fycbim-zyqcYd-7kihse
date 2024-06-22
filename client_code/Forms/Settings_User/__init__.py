@@ -38,8 +38,8 @@ class Settings_User(_FormTemplate):
       self.add_colpanel(name='readers')
       self.add_colpanel(name='authors', visible=False)
 
-      self.build_readers(self.readers)
-      self.login_signup_form(self.authors)
+      self.build_readers(container=self.readers)
+      self.login_signup_form(container=self.authors)
 
   def build_logged(self):
       self.clear()
