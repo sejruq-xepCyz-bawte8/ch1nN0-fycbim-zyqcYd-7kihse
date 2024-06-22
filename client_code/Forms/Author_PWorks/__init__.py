@@ -16,16 +16,15 @@ class Author_PWorks(_FormTemplate):
     super().__init__(**properties)
    
     self.init_components(**properties)
-    self.author_data, _ = api_author(App.AUTHOR_ID)
-    self.author_works = self.author_data.get('works')
+    #self.author_data, _ = api_author(App.AUTHOR_ID)
+    #self.author_works = self.author_data.get('works')
+    #self.author_works = App.AUTHOR_WORKS
     self.add_help_panel(text='Публикувани творби', help=HELP)
     self.works = self.add_colpanel()
 
   def draw_works(self, **event):
       self.works.clear()
-      for uri, work_id in self.author_works.items():
-     
-        
+      for uri, work_id in App.AUTHOR_WORKS:
         work_data, _= api_work(work_id)
         container = self.add_flowpanel(parent=self.works)
         if work_data:
@@ -37,11 +36,10 @@ class Author_PWorks(_FormTemplate):
           self.add_label(parent=container, text='липсваща онлайн')
 
   def show_form(self, **event):
-      self.draw_works()
+      if App.AUTHOR_WORKS:
+         self.draw_works()
 
-    
 
-    #self.draw_works()
 
   def open_work(self, sender, **event):
     result = App.EDITOR.set_current(work_id=sender.work_id)

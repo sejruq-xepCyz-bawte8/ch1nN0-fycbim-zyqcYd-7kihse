@@ -101,7 +101,7 @@ def init_author():
     AUTHOR_ID = AUTHOR_DATA.get('author_id')
     AUTHOR_URI = AUTHOR_DATA.get('author_uri')
     AUTHOR_WORKS = AUTHOR_DATA.get('works')
-
+    
     
     EDITOR = EditorClass()
 

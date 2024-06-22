@@ -14,4 +14,4 @@ def set_constants():
         App.IS_USER = True
         App.USER_EMAIL = 'dev@chete.me'
         App.EDITOR = EditorClass()
-   
+        App.NAVIGATION.reset()
