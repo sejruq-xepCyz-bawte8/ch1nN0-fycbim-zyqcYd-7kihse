@@ -44,8 +44,8 @@ class Settings_User(_FormTemplate):
   def build_logged(self):
       self.clear()
       self.add_colpanel(name='logout_panel')
-      self.email = self.add_label(text=self.user_email, parent=self.logout_panel)
-      self.add_button(text="Изход", click=self.login_logout, parent=self.logout_panel)
+      self.email = self.add_label(text=self.user_email)
+      self.add_button(text="Изход", click=self.login_logout)
   
 
   def login_signup_form(self, container):
