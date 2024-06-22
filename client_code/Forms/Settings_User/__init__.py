@@ -58,11 +58,11 @@ class Settings_User(_FormTemplate):
     self.l_password = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=password_zod)
     self.l_button = self.add_button(text="Вход", click=self.login_click, parent=self.login_form)
 
-    self.s_email = self.add_textbox(parent=self.login_form, placeholder='Ел. Поща', change=email_zod)
-    self.s_password = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=password_zod)
-    self.s_password2 = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=password_zod)
-    self.s_code = self.add_textbox(parent=self.login_form, placeholder='Код за регистрация', change=code_zod) 
-    self.s_button = self.add_button(text="Вход", click=self.signup_click, parent=self.login_form)
+    self.s_email = self.add_textbox(parent=self.signup_form, placeholder='Ел. Поща', change=email_zod)
+    self.s_password = self.add_textbox(parent=self.signup_form, placeholder='Парола', hide_text=True, change=password_zod)
+    self.s_password2 = self.add_textbox(parent=self.signup_form, placeholder='Парола', hide_text=True, change=password_zod)
+    self.s_code = self.add_textbox(parent=self.signup_form, placeholder='Код за регистрация', change=code_zod) 
+    self.s_button = self.add_button(text="Регистрация", click=self.signup_click, parent=self.signup_form)
 
 
   def login_click(self):
