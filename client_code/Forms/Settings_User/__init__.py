@@ -69,7 +69,7 @@ class Settings_User(_FormTemplate):
     self.l_button.enabled = False
     self.s_button.enabled = False
 
-    self.input_change()
+    self.input_change(sender=None)
 
   def input_change(self, sender, **event):
     email_zod(self.l_email)
