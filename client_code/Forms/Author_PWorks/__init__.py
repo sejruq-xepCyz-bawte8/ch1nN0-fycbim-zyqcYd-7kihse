@@ -24,7 +24,7 @@ class Author_PWorks(_FormTemplate):
 
   def draw_works(self, **event):
       self.works.clear()
-      for uri, work_id in App.AUTHOR_WORKS:
+      for uri, work_id in App.AUTHOR_WORKS.items():
         #work_data, _= api_work(work_id)
         container = self.add_flowpanel(parent=self.works)
         self.add_label(parent=container, text=uri)
