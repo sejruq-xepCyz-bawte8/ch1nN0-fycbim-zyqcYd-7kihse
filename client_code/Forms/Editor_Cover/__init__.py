@@ -7,7 +7,7 @@ from .Fonts import fonts
 from anvil.js.window import jQuery as jQ
 
 
-from URI_parser import encode_uri, uri_zod
+from URI_parser import uri_zod, title_zod
 from ...Index.App import EDITOR
 
 contrast = 11
@@ -38,7 +38,7 @@ class Editor_Cover(_FormTemplate):
     self.add_flowpanel(name='uri_panel')
     self.permalink = self.add_label(text='https://chete.me/', parent=self.uri_panel)
     self.uri = self.add_textbox(placeholder='URI', text=uri, parent=self.uri_panel, change=self.design_change)
-
+    
 
     self.cover_container = self.add_div(id='cover-container')
     self.cover = CoverClass(data=EDITOR.data)
@@ -48,6 +48,9 @@ class Editor_Cover(_FormTemplate):
     self.font = self.add_dropdown(items=fonts.keys(), change=self.design_change)
     self.font.selected_value = EDITOR.data['font']
 
+    spacer = Spacer()
+    self.add_component(spacer)
+
     self.colors_el = jQ(colors_html)
     jQ('#color').val(EDITOR.data['color'])
     jQ('#background-color').val(EDITOR.data['background_color'])
@@ -55,11 +58,21 @@ class Editor_Cover(_FormTemplate):
     jQ('#mask_color').val(EDITOR.data['mask_color'])
 
     self.append_jq_el(self.colors_el)
-    self.cover_upload = self.add_uploader(text='Ъплоад Корица', change=self.design_change)
-    self.cover_delete = self.add_button(text='Изчисти Корица', click=self.design_change)
+    
+    spacer2 = Spacer()
+    self.add_component(spacer2)
+
+    self.add_flowpanel(name='files_panel')
+
+    self.cover_upload = self.add_uploader(text='Ъплоад Корица', parent=self.files_panel, change=self.design_change)
+    self.cover_delete = self.add_button(text='Изчисти Корица', parent=self.files_panel, click=self.design_change)
+
+
+    self.design_change(sender=None)
 
   def design_change(self, sender, **event):
     uri_zod(self.uri)
+    title_zod(self.title)
 
     EDITOR.data['title'] = self.title.text
     EDITOR.data['work_uri'] = self.uri.text
