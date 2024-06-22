@@ -87,7 +87,8 @@ class Settings_User(_FormTemplate):
 
   def login_click(self, sender, **event):
     result = login_user(self.l_email.text, self.l_password.text)
-    self.notify(message = result['message'])
+    print(result['message'])
+    #self.notify(message = result['message'])
   def signup_click(self, sender, **event):
     result = sign_up_new_user(self.s_email.text, self.s_password.text, self.s_code.text, self.age.checked)
     self.notify(message = result['message'])
