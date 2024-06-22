@@ -86,6 +86,7 @@ def load_js_script(src:str) -> None:
     document.head.appendChild(script)
 
 def init_user()->bool:
+    
     global USER
     global USER_ID
     global USER_EMAIL
@@ -97,6 +98,7 @@ def init_user()->bool:
   
     USER = anvil.users.get_user()
     if USER:
+        print('init user')
         USER_ID = USER['user_id']
         USER_EMAIL = USER['email']
         IS_USER = bool(USER)
@@ -105,6 +107,7 @@ def init_user()->bool:
         
     
     if IS_AUTHOR:
+        print('init author')
         AUTHOR_ID = USER['author_id'] if USER['author_id'] else anvil.server.call('get_author_id')
         EDITOR = EditorClass()
     
