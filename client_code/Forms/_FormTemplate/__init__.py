@@ -185,5 +185,5 @@ class _FormTemplate(_FormTemplateTemplate):
 
 
   def notify(message:str, style='info', timeout=1.5):
-        n = Notification(message, style=style, timeout=timeout)
+        n = Notification(message=message, style=style, timeout=timeout)
         n.show()
