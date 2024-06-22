@@ -54,16 +54,36 @@ class Settings_User(_FormTemplate):
     self.add_colpanel(name='login_form', parent=container)
     self.add_colpanel(name='signup_form', parent=container, visible=False)
 
-    self.l_email = self.add_textbox(parent=self.login_form, placeholder='Ел. Поща', change=email_zod)
-    self.l_password = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=password_zod)
+    self.l_email = self.add_textbox(parent=self.login_form, placeholder='Ел. Поща', change=self.input_change)
+    self.l_password = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=self.input_change)
     self.l_button = self.add_button(text="Вход", click=self.login_click, parent=self.login_form)
 
-    self.s_email = self.add_textbox(parent=self.signup_form, placeholder='Ел. Поща', change=email_zod)
-    self.s_password = self.add_textbox(parent=self.signup_form, placeholder='Парола', hide_text=True, change=password_zod)
-    self.s_password2 = self.add_textbox(parent=self.signup_form, placeholder='Парола', hide_text=True, change=password_zod)
-    self.s_code = self.add_textbox(parent=self.signup_form, placeholder='Код за регистрация', change=code_zod) 
+    self.s_email = self.add_textbox(parent=self.signup_form, placeholder='Ел. Поща', change=self.input_change)
+    self.s_password = self.add_textbox(parent=self.signup_form, placeholder='Парола', hide_text=True, change=self.input_change)
+    self.s_password2 = self.add_textbox(parent=self.signup_form, placeholder='Парола', hide_text=True, change=self.input_change)
+    self.s_code = self.add_textbox(parent=self.signup_form, placeholder='Код за регистрация', change=self.input_change)
+    self.age = self.add_checkbox(parent=self.signup_form, text="Пълнолетие", checked=False, change=self.input_change)
+    self.terms = self.add_checkbox(parent=self.signup_form, text="Съгласен съм с условията", checked=False, change=self.input_change)
     self.s_button = self.add_button(text="Регистрация", click=self.signup_click, parent=self.signup_form)
 
+    self.l_button.enabled = False
+    self.s_button.enabled = False
+
+    self.input_change()
+
+  def input_change(self, sender, **event):
+    email_zod(self.l_email)
+    email_zod(self.s_email)
+    password_zod(self.l_password)
+    password_zod(self.s_password)
+    password_zod(self.s_password2)
+    code_zod(self.s_code)
+    if self.s_password.text != self.s_password2.text:
+      self.s_password2.valid = False
+      self.s_password2 = "LightSalmon"
+    
+    self.l_button.enabled = True if self.l_email.valid and self.l_password.valid else False
+    self.s_button.enabled = True if self.s_email.valid and self.s_password.valid and self.s_password2.valid and self.s_code.valid and self.age.checked and self.terms.checked else False
 
   def login_click(self, sender, **event):
     if self.l_email.valid and self.l_password.valid:
