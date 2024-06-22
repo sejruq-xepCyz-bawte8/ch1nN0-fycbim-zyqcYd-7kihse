@@ -25,15 +25,11 @@ class Author_PWorks(_FormTemplate):
   def draw_works(self, **event):
       self.works.clear()
       for uri, work_id in App.AUTHOR_WORKS:
-        work_data, _= api_work(work_id)
+        #work_data, _= api_work(work_id)
         container = self.add_flowpanel(parent=self.works)
-        if work_data:
-          self.add_label(parent=container, text=uri)
-          self.add_label(parent=container, text=work_data['title'])
-          self.add_label(parent=container, text=work_data['ptime'])
-        else:
-          self.add_label(parent=container, text=uri)
-          self.add_label(parent=container, text='липсваща онлайн')
+        self.add_label(parent=container, text=uri)
+
+
 
   def show_form(self, **event):
       if App.AUTHOR_WORKS:
