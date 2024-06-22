@@ -14,7 +14,7 @@ WORKS = app_tables.works
 @anvil.server.callable
 def get_author_id():
    user=anvil.users.get_user()
-   if user['is_author'] and user['user_id']:
+   if user and user['is_author'] and user['user_id']:
       user_id = user['user_id']
       author = AUTHORS.get(user_id=user_id)
       if author:
