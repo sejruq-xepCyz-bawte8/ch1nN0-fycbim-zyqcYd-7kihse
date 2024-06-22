@@ -119,7 +119,7 @@ class Settings_User(_FormTemplate):
         self.info.text = result['message']
         if result.get('success'):
           self.authors.clear()
-          self.build_logged(self.authors)
+          self.build_authors(self.authors)
 
 
 
