@@ -184,13 +184,12 @@ class _FormTemplate(_FormTemplateTemplate):
      self.help_info.visible = not self.help_info.visible
 
 
-  def notify(message:str, title:str=None, style='info', timeout=1.5, success=None):
+  def notify(title:str=None, message:str=None, style='info', timeout=1.5, success=None):
       if success == True : style = 'success'
       if success == False : style = 'danger'
+      if not message: message = ''
+      if not title: title = ''
       #Use "success" for green, "danger" for red, "warning" for yellow, or "info"
-      if title:
-            n = Notification(message, title=title, style=style, timeout=timeout)
-      else:
-           n = Notification(message, style=style, timeout=timeout)
-      
+      n = Notification(message, title=title, style=style, timeout=timeout)
+
       n.show()
