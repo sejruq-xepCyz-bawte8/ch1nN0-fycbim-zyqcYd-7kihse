@@ -1,5 +1,6 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
+from anvil_extras.Tabs import Tabs
 from .ZodParse import code_zod, email_zod, password_zod
 from .Login import login_user
 from .SignUp import sign_up_new_user
@@ -11,32 +12,50 @@ class Settings_User(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
     self.init_components(**properties)
-    
+
+  def tab_click(self, sender, **event):
+    tab = sender.active_tab_index
+    self.readers.visible = True if tab == 0  else False
+    self.authors.visible = True if tab == 1  else False
+
+  
+
   def show_form(self, **event):
-    self.info_container = self.add_colpanel()
-    self.info = self.add_label(text="Потребител", parent=self.info_container)
+    self.tabs = Tabs(tab_titles=['Читател', 'Автор']) #tab_click
+    self.tabs.add_event_handler('tab_click', self.tab_click)
+    self.add_component(self.tabs)
+
+    self.add_colpanel(name='readers')
+    self.add_colpanel(name='authors', visible=False)
+
+    #READERS PANEL
+    self.add_label(text='Можете да ползвате ЧетеМе, без нужда да се регистрирате.', parent=self.readers)
+    self.add_label(text='Ако искате да пренесете настройки, история и др. от това устройство в друго - следваща версия ще бъде добавена тази възможност :)', parent=self.readers)
+
+    
+    #AUTHORS PANEL
+    self.info = self.add_label(text="Регистрация и вход на автори в ЧетеМе. Ако желаете да се регистрирате, като автор свържете се с нас за регистрационен код.", parent=self.authors)
     if not self.is_user:
       self.login_signup_form()
     else:
-      self.email = self.add_label(text=self.user_email)
-      self.add_button(text="Изход", click=self.login_logout)
-      
+      self.email = self.add_label(text=self.user_email, parent=self.authors)
+      self.add_button(text="Изход", click=self.login_logout, parent=self.authors)
    
     
   def user_settings(self):
     pass
 
   def login_signup_form(self):
-    self.login_choise = self.add_radio(name='form', text="Вход", selected=True, change=self.login_type_change)
-    self.add_radio(name='form', text="Регистрация", change=self.login_type_change)
+    self.login_choise = self.add_radio(name='form', text="Вход", selected=True, change=self.login_type_change, parent=self.authors)
+    self.add_radio(name='form', text="Регистрация", change=self.login_type_change, parent=self.authors)
     
   #just login panel
-    self.login_panel = self.add_colpanel()
+    self.login_panel = self.add_colpanel(parent=self.authors)
     self.email = self.add_textbox(parent=self.login_panel, placeholder='Ел. Поща', change=email_zod)
     self.password = self.add_textbox(parent=self.login_panel, placeholder='Парола', hide_text=True, change=password_zod)
     
   #signup panel
-    self.signup_panel = self.add_colpanel(visible=False)
+    self.signup_panel = self.add_colpanel(visible=False, parent=self.authors)
     self.password2 = self.add_textbox(parent=self.signup_panel, placeholder='Потвърди Паролата', hide_text=True, change=self.check_password2)
     self.code = self.add_textbox(parent=self.signup_panel, placeholder='Код за регистрация', change=code_zod) 
     self.age = self.add_checkbox(parent=self.signup_panel, text="Пълнолетие", checked=False)
