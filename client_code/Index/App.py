@@ -106,7 +106,7 @@ def init_user()->bool:
         ADULT = USER['adult']
         
     
-    if IS_AUTHOR:
+    if IS_AUTHOR and USER:
         print('init author')
         AUTHOR_ID = USER['author_id'] if USER['author_id'] else anvil.server.call('get_author_id')
         EDITOR = EditorClass()
