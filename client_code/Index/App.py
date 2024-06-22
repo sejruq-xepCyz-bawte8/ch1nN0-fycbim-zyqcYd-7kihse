@@ -46,6 +46,8 @@ def init_app()->bool:
 
     DEVICE_ID = device_store.get('device_id')
     DEVICE_SECRET = device_store.get('device_id')
+
+    NAVIGATION = NavigationClass()
     
     if not DEVICE_ID or not DEVICE_SECRET:
         return False
@@ -56,7 +58,7 @@ def init_app()->bool:
 
     if DEVMODE: dev_mode_init()
 
-    NAVIGATION = NavigationClass()
+
     return True
  
 def load_js_script(src:str) -> None:
