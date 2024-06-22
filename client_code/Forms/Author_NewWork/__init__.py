@@ -1,6 +1,5 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...Index import App
 from ...PyScript.PyScriptLoader import has_pyscript
 from anvil_extras import non_blocking
 from anvil.js import window
