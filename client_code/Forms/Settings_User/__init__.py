@@ -39,7 +39,7 @@ class Settings_User(_FormTemplate):
 
   def show_form(self, **event):
 
-    if self.user:
+    if self.is_user:
       self.build_logged()
     else:
       self.tabs.add_event_handler('tab_click', self.tab_click)
