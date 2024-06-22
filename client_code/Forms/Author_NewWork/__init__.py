@@ -50,8 +50,8 @@ class Author_NewWork(_FormTemplate):
         title = None
 
     new_work_id = EDITOR.new_work(html=html, title=title)
-    if new_work_id : new_current = EDITOR.set_current(work_id=new_work_id)
-    if new_current : self.navClick_by_id(link_id="#navl-Editor-Editor_Work", from_group="Author")
+    if EDITOR.set_current(work_id=new_work_id):
+       self.navClick_by_id(link_id="#navl-Editor-Editor_Work", from_group="Author")
 
 
 
