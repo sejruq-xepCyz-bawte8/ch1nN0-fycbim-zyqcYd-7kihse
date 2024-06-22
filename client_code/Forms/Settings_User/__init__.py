@@ -116,14 +116,6 @@ class Settings_User(_FormTemplate):
           self.login_panel.visible=False
 
 
-        
-
-
-
-  def author_settings(self):
-    pass
-
-
 
 
 
