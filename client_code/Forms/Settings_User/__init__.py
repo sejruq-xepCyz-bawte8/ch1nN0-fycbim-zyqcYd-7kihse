@@ -86,13 +86,11 @@ class Settings_User(_FormTemplate):
     self.s_button.enabled = True if self.s_email.valid and self.s_password.valid and self.s_password2.valid and self.s_code.valid and self.age.checked and self.terms.checked else False
 
   def login_click(self, sender, **event):
-    if self.l_email.valid and self.l_password.valid:
-      self.notify('Валиддни')
-    else:
-      self.notify('Невалидни')
-  def signup_click(self):
-    pass
-
+    result = login_user(self.l_email.text, self.l_password.text)
+    self.notify(result['message'])
+  def signup_click(self, sender, **event):
+    result = sign_up_new_user(self.s_email.text, self.s_password.text, self.s_code.text, self.age.checked)
+    self.notify(result['message'])
 
   def login_type_change(self, sender, **event):
     self.login_form.visible = True if sender.text == 'Вход' else False
@@ -100,69 +98,15 @@ class Settings_User(_FormTemplate):
 
 
 
-  def signup_formd(self, container):
-  #just login panel
-    self.login_panel = self.add_colpanel(parent=container)
-    self.email = self.add_textbox(parent=self.login_panel, placeholder='Ел. Поща', change=email_zod)
-    self.password = self.add_textbox(parent=self.login_panel, placeholder='Парола', hide_text=True, change=password_zod)
-    
-  #signup panel
-    self.signup_panel = self.add_colpanel(visible=False, parent=container)
-    self.password2 = self.add_textbox(parent=self.signup_panel, placeholder='Потвърди Паролата', hide_text=True, change=self.check_password2)
-    self.code = self.add_textbox(parent=self.signup_panel, placeholder='Код за регистрация', change=code_zod) 
-    self.age = self.add_checkbox(parent=self.signup_panel, text="Пълнолетие", checked=False)
-    self.terms = self.add_checkbox(parent=self.signup_panel, text="Съгласен съм с условията", checked=False, change=self.terms_change)
-    self.terms_text = self.add_rich_markdown(parent=self.signup_panel, text=login_signup_welcome)
 
-
-    ###################################
-
-    self.email.valid = None
-    self.password.valid = None
-    self.password2.valid = None
-    self.code.valid = None
-    self.button = self.add_button(text="Вход", click=self.login_signup, parent=container)
-    self.sign_up_button_validation()
-  
-
-
-
-
-  def check_password2(self, sender, **event):
-        sender.valid = True if sender.text is self.password.text and password_zod(sender=sender) else False
-        sender.background = "LightGreen" if sender.valid else "LightSalmon"
-        self.sign_up_button_validation()
-
-  def terms_change(self, sender, **event):
-    self.sign_up_button_validation()
 
   def login_logout(self, sender, **event):
     result = logout_user()
     self.info.text = result['message']
 
-  def sign_up_button_validation(self):
-    if  self.login_choise.selected: self.button.enabled = True
-    elif self.password.valid and self.password2.valid and self.email.valid and self.code.valid and self.terms.checked:
-      self.button.enabled = True
-    else:
-      self.button.enabled = False
+
   
-  def login_signup(self, sender, **event):
-    valid = None
-    if not self.login_choise.selected:
-      #validation register
-      if self.password.valid and self.password2.valid and self.email.valid and self.code.valid and self.terms.checked:
-        result = sign_up_new_user(self.email.text, self.password.text, self.code.text, self.age.checked)
-        self.info.text = result['message']
-    else:
-      #login
-      if self.email.valid and self.password.valid:
-        valid = True
-        result = login_user(self.email.text, self.password.text)
-        self.info.text = result['message']
-        if result.get('success'):
-          self.authors.clear()
-          self.build_authors(self.authors)
+
 
 
 
