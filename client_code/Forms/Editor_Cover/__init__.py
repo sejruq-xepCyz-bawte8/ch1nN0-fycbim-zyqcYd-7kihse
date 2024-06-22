@@ -3,7 +3,7 @@ from .._FormTemplate import _FormTemplate
 from .CoverElement import CoverClass
 from .Contrast import adjust_color_for_contrast
 from .ImageCover import parse_cover_image
-from .Fonts import fonts
+from .Fonts import fonts_list
 from anvil.js.window import jQuery as jQ
 
 
@@ -45,8 +45,11 @@ class Editor_Cover(_FormTemplate):
 
     self.append_jq_el(element=self.cover.el, parent=self.cover_container)
     
-    self.font = self.add_dropdown(items=fonts.keys(), change=self.design_change)
+    self.font_pane = self.add_flowpanel()
+    self.font = self.add_dropdown(items=fonts_list, change=self.design_change, parent=self.font_pane)
     self.font.selected_value = App.EDITOR.data['font']
+    self.prev_font = self.add_button(text='<', parent=self.font_pane, click=self.font_button)
+    self.next_font = self.add_button(text='>', parent=self.font_pane, click=self.font_button)
 
     spacer = Spacer()
     self.add_component(spacer)
@@ -107,4 +110,13 @@ class Editor_Cover(_FormTemplate):
     App.EDITOR.update(full=False)
 
 
+  def font_button(self, sender, **event):
+    # Find the index of the selected element
+    index = fonts_list.index(self.font.selected_value)
+
+    if sender == self.next_font:
+      self.font.selected_value = fonts_list[index + 1] if index < len(fonts_list) - 1 else fonts_list[0]
+    elif sender == self.prev_font:
+      self.font.selected_value = fonts_list[index - 1] if index > 0 else fonts_list[-1]
  
+    self.design_change(sender=None)

@@ -50,15 +50,16 @@ class CoverClass:
         self.el_title.addClass('ch ch-cover-title')
         
 
-        font = fonts[self.data['font']]
-        if self.data['font'] in fonts:
-            font = fonts[self.data['font']]
-        else:
-            font = fonts['serif']
+        #font = fonts[self.data['font']]
+        #if self.data['font'] in fonts:
+        #    font = fonts[self.data['font']]
+        #else:
+        #    font = fonts['serif']
 
-        self.el_title.css('font-family', font['font-family'])
-        self.el_title.css('font-weight', font['font-weight'])
-        self.el_title.css('font-style', font['font-style'])
+        self.el_title.addClass(self.data['font'])
+        #self.el_title.css('font-family', font['font-family'])
+        #self.el_title.css('font-weight', font['font-weight'])
+        #self.el_title.css('font-style', font['font-style'])
 
 
         #ICONS
