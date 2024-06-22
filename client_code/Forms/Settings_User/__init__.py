@@ -90,11 +90,12 @@ class Settings_User(_FormTemplate):
     if result['success']:
       self.authors.clear()
       self.build_logged(container=self.authors)
-      
+
   def signup_click(self, sender, **event):
     result = sign_up_new_user(self.s_email.text, self.s_password.text, self.s_code.text, self.age.checked)
     Notification(result['message']).show()
     if result['success']:
+      self.authors.clear()
       self.build_logged()
       
   def login_type_change(self, sender, **event):
