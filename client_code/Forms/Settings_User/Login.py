@@ -3,7 +3,7 @@ import anvil.users
 
 def login_user(email, password):
       try:
-        user = anvil.users.login_with_email(email=email, password=password)
+        user = anvil.users.login_with_email(email=email, password=password, remember=True)
         if user:
             init = init_user()
         if init:

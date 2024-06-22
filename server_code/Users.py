@@ -25,15 +25,15 @@ def init_user(device_data=None):
 
     if not user_id_cookie and not user_id_session and request_data['type']=='browser':
         user_id = make_id(request_data)
-        #anvil.server.cookies.local.set(999, device_id=device_id)
-        #anvil.server.session["device_id"] = device_id
         return {'success':True, 'user_id':user_id}
     else:
-        user_id = suspicious()
+        user_id = suspicious(request_data)
+        return {'success':False, 'message':'Unknown :)'}
 
 
-def suspicious():
-    return {'success':False, 'message':'suspicious'}
+def suspicious(request_data):
+    print('suspicious sign up', request_data)
+
 
 def set_cookie():
     anvil.server.cookies.local.set(36500, device_id="Bob", age=42)
