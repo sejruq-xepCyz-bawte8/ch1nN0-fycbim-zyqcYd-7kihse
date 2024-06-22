@@ -33,6 +33,7 @@ class Author_PWorks(_FormTemplate):
 
   def show_form(self, **event):
       if App.AUTHOR_WORKS:
+         print(App.AUTHOR_WORKS)
          self.draw_works()
 
 
