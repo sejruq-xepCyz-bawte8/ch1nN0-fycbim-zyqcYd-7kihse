@@ -18,24 +18,13 @@ class Settings_User(_FormTemplate):
     self.readers.visible = True if tab == 0  else False
     self.authors.visible = True if tab == 1  else False
 
-  def build_logged(self, container):
-      self.info.text = 'Успешен вход'
-      self.add_colpanel(name='logout_panel', parent=container)
-      self.email = self.add_label(text=self.user_email, parent=self.logout_panel)
-      self.add_button(text="Изход", click=self.login_logout, parent=self.logout_panel)
+
 
   def build_readers(self, container):
     #READERS PANEL
     self.add_label(text='Можете да ползвате ЧетеМе, без нужда да се регистрирате.', parent=container)
     self.add_label(text='Ако искате да пренесете настройки, история и др. от това устройство в друго - следваща версия ще бъде добавена тази възможност :)', parent=container)
 
-  def build_authors(self, container):
-    #AUTHORS PANEL
-    self.info = self.add_label(text="Регистрация и вход на автори в ЧетеМе. Ако желаете да се регистрирате, като автор свържете се с нас за регистрационен код.", parent=container)
-    if not self.is_user:
-      self.login_signup_form(container)
-    else:
-      self.build_logged(container)
 
   def show_form(self, **event):
 
@@ -50,7 +39,14 @@ class Settings_User(_FormTemplate):
       self.add_colpanel(name='readers')
       self.add_colpanel(name='authors', visible=False)
 
-  
+      self.build_readers(self.readers)
+      self.login_signup_form(self.authors)
+
+  def build_logged(self):
+      self.clear()
+      self.add_colpanel(name='logout_panel')
+      self.email = self.add_label(text=self.user_email, parent=self.logout_panel)
+      self.add_button(text="Изход", click=self.login_logout, parent=self.logout_panel)
   
 
     
