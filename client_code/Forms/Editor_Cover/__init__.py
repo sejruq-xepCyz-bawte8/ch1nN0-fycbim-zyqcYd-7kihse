@@ -29,14 +29,16 @@ class Editor_Cover(_FormTemplate):
     self.init_components(**properties)
 
   def show_form(self, **event):
+    title = EDITOR.data.get('title') or ''
+    uri = EDITOR.data.get('work_uri') or ''
     
-    self.title = self.add_textbox(text=EDITOR.data.get('title'), placeholder='Заглавие', change=self.design_change)
+    self.title = self.add_textbox(text=title, placeholder='Заглавие', change=self.design_change)
     
-    self.uri = self.add_textbox(placeholder='URI', change=self.design_change)
-    self.uri.text = EDITOR.data.get('work_uri')
-    uri_zod(self.uri)
+    
+    self.add_flowpanel(name='uri_panel')
+    self.permalink = self.add_label(text='https://chete.me/', parent=self.uri_panel)
+    self.uri = self.add_textbox(placeholder='URI', text=uri, parent=self.uri_panel, change=self.design_change)
 
-    self.permalink = self.add_label(text='https://chete.me...')
 
     self.cover_container = self.add_div(id='cover-container')
     self.cover = CoverClass(data=EDITOR.data)
@@ -57,11 +59,12 @@ class Editor_Cover(_FormTemplate):
     self.cover_delete = self.add_button(text='Изчисти Корица', click=self.design_change)
 
   def design_change(self, sender, **event):
-    EDITOR.data['title'] = self.title.text
-    EDITOR.data['work_uri'] = self.uri.text
     uri_zod(self.uri)
 
+    EDITOR.data['title'] = self.title.text
+    EDITOR.data['work_uri'] = self.uri.text
     EDITOR.data['font'] = self.font.selected_value
+
     if sender is 'color':
       EDITOR.data['color'] = jQ('#color').val()
       EDITOR.data['background_color'] = adjust_color_for_contrast(EDITOR.data['color'], EDITOR.data['background_color'], 11)
