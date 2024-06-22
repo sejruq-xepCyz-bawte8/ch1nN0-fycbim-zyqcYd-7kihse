@@ -69,7 +69,7 @@ class Settings_User(_FormTemplate):
     self.password.valid = None
     self.password2.valid = None
     self.code.valid = None
-    self.button = self.add_button(text="Вход", click=self.login_signup)
+    self.button = self.add_button(text="Вход", click=self.login_signup, parent=self.authors)
     self.sign_up_button_validation()
   
 
