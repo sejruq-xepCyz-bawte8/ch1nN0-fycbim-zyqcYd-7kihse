@@ -38,15 +38,20 @@ class Settings_User(_FormTemplate):
       self.build_logged(container)
 
   def show_form(self, **event):
-    self.tabs = Tabs(tab_titles=['Читател', 'Автор']) #tab_click
-    self.tabs.add_event_handler('tab_click', self.tab_click)
-    self.add_component(self.tabs)
 
-    self.add_colpanel(name='readers')
-    self.add_colpanel(name='authors', visible=False)
+    if self.user:
+      self.build_logged()
+    else:
+      self.tabs.add_event_handler('tab_click', self.tab_click)
+      self.tabs = Tabs(tab_titles=['Читател', 'Автор']) #tab_click
+      self.tabs.add_event_handler('tab_click', self.tab_click)
+      self.add_component(self.tabs)
 
-    self.build_readers(self.readers)
-    self.build_authors(self.authors)
+      self.add_colpanel(name='readers')
+      self.add_colpanel(name='authors', visible=False)
+
+  
+  
 
     
 
