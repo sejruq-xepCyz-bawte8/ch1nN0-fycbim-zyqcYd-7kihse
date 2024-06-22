@@ -9,13 +9,13 @@ schema_code = z.coerce.string().min(8).email().endswith("CHE")
 
 def code_zod(sender, **event):
     sender.valid = schema_email.safe_parse(sender.text).success
-    sender.background = "LightBlue" if sender.valid else "LightSalmon"
+    sender.border = "LightBlue" if sender.valid else "LightSalmon"
 
 def email_zod(sender, **event):
     sender.valid = schema_email.safe_parse(sender.text).success
-    sender.background = "LightGreen" if sender.valid else "LightSalmon"
+    sender.border = "LightGreen" if sender.valid else "LightSalmon"
     
 def password_zod(sender, **event):
     sender.valid = schema_password.safe_parse(sender.text).success
-    sender.background = "LightGreen" if sender.valid else "LightSalmon"
+    sender.border = "LightGreen" if sender.valid else "LightSalmon"
     return sender.valid

@@ -80,7 +80,7 @@ class Settings_User(_FormTemplate):
     code_zod(self.s_code)
     if self.s_password.text != self.s_password2.text:
       self.s_password2.valid = False
-      self.s_password2 = "LightSalmon"
+      self.s_password2.border = "LightSalmon"
     
     self.l_button.enabled = True if self.l_email.valid and self.l_password.valid else False
     self.s_button.enabled = True if self.s_email.valid and self.s_password.valid and self.s_password2.valid and self.s_code.valid and self.age.checked and self.terms.checked else False
