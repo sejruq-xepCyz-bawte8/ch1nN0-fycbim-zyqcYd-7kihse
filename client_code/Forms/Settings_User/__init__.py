@@ -118,7 +118,7 @@ class Settings_User(_FormTemplate):
         result = login_user(self.email.text, self.password.text)
         self.info.text = result['message']
         if result.get('success'):
-          self.login_panel.visible=False
+          self.authors.clear()
           self.build_logged(self.authors)
 
 
