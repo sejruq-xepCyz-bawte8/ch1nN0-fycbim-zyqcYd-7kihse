@@ -4,8 +4,6 @@ import App
 from anvil.js import window
 
 
-
-
 VER = '0.8.1'
 
 def version():
@@ -13,41 +11,38 @@ def version():
     n.show()
 
 
-def is_init()->bool:
-    if has_device():
-        return App.init_app()
-    else:
-        if init_device():
-            return App.init_app()
-        else:
-            n = Notification('грешно устройство :)', style="danger", timeout=1.5)
-            n.show()
-            return False
-
 def main():
+    device = has_device()
+    if not device:
+        print('new device')
+        device = init_device()
     
-# This code displays an Anvil alert, rather than
-# the default red box, when an error occurs.
-    version()
-    def error_handler(err):
-        n = Notification('<i class="fa-regular fa-bug"></i> упс открихте бъг', style="danger", timeout=1.5)
-        n.show()
-        #alert(str(err), title="An error has occurred")
+    if device:
+        print('device ok')
+        app = App.init_app()
+    else:
+        print('no device')
+        app = None
+   
+    if app:
+        App.NAVIGATION.add_to_body()
+        version()
+        open_form('Forms.Reader_Today')
+    else:
+        print('no app')
 
-    set_default_error_handling(error_handler)
 
-
-    App.NAVIGATION.add_to_body()
-    
-    open_form('Forms.Reader_Today')
-    
-
-    
+def error_handler(err):
+    n = Notification('<i class="fa-regular fa-bug"></i> упс открихте бъг', style="danger", timeout=1.5)
+    n.show()  
     
 
 if __name__ == "__main__":
-    #window.console.clear()
     
-    if is_init(): main()
-    else:
-        print('NO INIT')
+    print(f'ЧетеМе - {VER}')
+    
+    set_default_error_handling(error_handler)
+    
+    main()
+    
+    

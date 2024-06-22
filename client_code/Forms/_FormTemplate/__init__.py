@@ -14,7 +14,6 @@ class _FormTemplate(_FormTemplateTemplate):
     self.el = None
     self.is_user = App.IS_USER
     self.is_author = App.IS_AUTHOR
-    self.is_device = App.IS_DEVICE
     self.user_id = App.USER_ID
     self.user_email = App.USER_EMAIL
     self.author_id = App.AUTHOR_ID

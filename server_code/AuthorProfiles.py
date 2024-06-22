@@ -11,6 +11,26 @@ AUTHORS_DATA = app_tables.authorsdata
 AUTHORS_HTML = app_tables.authorshtml
 WORKS = app_tables.works
 
+
+
+
+
+@anvil.server.callable
+def get_author_data():
+   user=anvil.users.get_user()
+   if user and user['is_author']:
+      user_id = user.get('user_id')
+      author = AUTHORS.get(user_id=user_id)
+      if author:
+         return {
+            'author_id': author['author_id'],
+            'author_uri': author['author_uri'],
+            'works':author['works']
+         }
+   return None
+
+
+
 @anvil.server.callable
 def get_author_id():
    user=anvil.users.get_user()

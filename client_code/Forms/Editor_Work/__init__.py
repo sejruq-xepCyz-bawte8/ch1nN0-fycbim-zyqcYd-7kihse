@@ -53,13 +53,14 @@ class Editor_Work(_FormTemplate):
     App.EDITOR.html = self.editor.get_html()
     text = self.editor.get_text()
     words = len(text.split())
-    size = len(text.encode('utf-8'))
+    size = len(App.EDITOR.html.encode('utf-8')) #bytes
     self.words_count.text = words
     App.EDITOR.data['words'] = words
     App.EDITOR.data['size'] = size
     self.words_count.foreground = "Blue"
     if size > 1_111_111:
       self.words_count.background = "Red"
+      Notification('Надвишихте 1Мб размер на творбата', style='danger').show()
     else:
       self.words_count.background = None
 

@@ -5,7 +5,6 @@ from anvil import *
 NAV_TREE = [
     {   
         'group': 'Reader',
-        'is_device':True,
         'is_user':False,
         'is_author':False,
         'onclick':'open_form',
@@ -24,7 +23,6 @@ NAV_TREE = [
     },
             {   
         'group': 'Settings',
-        'is_device':True,
         'is_user':False,
         'is_author':False,
         'onclick':'open_form',
@@ -40,7 +38,6 @@ NAV_TREE = [
     },
         {#VieverAuthor
         'group': 'ViewerA',
-        'is_device':True,
         'is_user':False,
         'is_author':False,
         'onclick':'open_form',
@@ -56,7 +53,6 @@ NAV_TREE = [
     },
         {#VieverWork
         'group': 'ViewerW',
-        'is_device':True,
         'is_user':False,
         'is_author':False,
         'onclick':'open_form',
@@ -72,9 +68,8 @@ NAV_TREE = [
     },
         {   
         'group': 'Author',
-        'is_device':True,
-        'is_user':False,
-        'is_author':False,
+        'is_user':True,
+        'is_author':True,
         'onclick':'open_form',
         'style':'duotone',
         'init_hidden':True,
@@ -89,9 +84,8 @@ NAV_TREE = [
     },
             {   
         'group': 'Editor',
-        'is_device':True,
-        'is_user':False,
-        'is_author':False,
+        'is_user':True,
+        'is_author':True,
         'onclick':'open_form',
         'style':'duotone',
         'init_hidden':True,
@@ -118,7 +112,6 @@ class NavigationClass:
     def build(self):
         
         for container in self.tree:
-            if not App.IS_DEVICE and container['is_device'] : continue
             if not App.IS_USER and container['is_user'] : continue
             if not App.IS_AUTHOR and container['is_author'] : continue
             group_name:str = container['group']
@@ -130,7 +123,6 @@ class NavigationClass:
 
             aw_style:str = container['style'] if 'style' in container else None
             for link in container['links']:
-                if not App.IS_DEVICE and 'is_device' in link and link['is_device'] : continue
                 if not App.IS_USER and 'is_user' in link and link['is_user'] : continue
                 if not App.IS_AUTHOR and 'is_author' in link and link['is_author'] : continue
                 if 'style' in link : aw_style = link['style'] 
