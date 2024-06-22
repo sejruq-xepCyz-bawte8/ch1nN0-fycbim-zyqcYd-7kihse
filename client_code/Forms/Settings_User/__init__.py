@@ -114,6 +114,8 @@ class Settings_User(_FormTemplate):
         self.info.text = result['message']
         if result.get('success'):
           self.login_panel.visible=False
+          self.add_button(text="Изход", click=self.login_logout, parent=self.authors)
+          self.button.visible = False
 
 
 
