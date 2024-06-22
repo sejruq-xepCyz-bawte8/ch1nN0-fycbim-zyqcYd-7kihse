@@ -37,7 +37,7 @@ class Editor_Cover(_FormTemplate):
     
     self.add_flowpanel(name='uri_panel')
     self.permalink = self.add_label(text='https://chete.me/', parent=self.uri_panel)
-    self.uri = self.add_textbox(placeholder='URI', text=uri, parent=self.uri_panel, change=self.design_change)
+    self.uri = self.add_textbox(placeholder='URI: лат., цифри и -_~', text=uri, parent=self.uri_panel, change=self.design_change)
     
 
     self.cover_container = self.add_div(id='cover-container')
