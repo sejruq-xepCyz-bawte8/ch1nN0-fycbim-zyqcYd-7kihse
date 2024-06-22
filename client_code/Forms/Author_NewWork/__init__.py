@@ -104,18 +104,3 @@ class Author_NewWork(_FormTemplate):
     dirty = self.preview.content
     clean = dirty.replace(double_empty, single_empty)
     self.preview.content = clean
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-

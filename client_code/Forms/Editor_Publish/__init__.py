@@ -1,9 +1,9 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...Index.App import EDITOR
-from ...Index.App import USER_ID
+from ...Index import App
 import anvil.server
 from time import sleep, time
+
 
 class Editor_Publish(_FormTemplate):
   def __init__(self, **properties):
@@ -18,11 +18,11 @@ class Editor_Publish(_FormTemplate):
   
 
 
-    self.add_div(text=EDITOR.data.get('title', None))
-    self.add_div(text=EDITOR.data.get('published', None))
-    self.add_div(text=EDITOR.data.get('genres', None))
-    self.add_div(text=EDITOR.data.get('ctime', None))
-    self.add_div(text=EDITOR.data.get('uri', None))
+    self.add_div(text=App.EDITOR.data.get('title', None))
+    self.add_div(text=App.EDITOR.data.get('published', None))
+    self.add_div(text=App.EDITOR.data.get('genres', None))
+    self.add_div(text=App.EDITOR.data.get('ctime', None))
+    self.add_div(text=App.EDITOR.data.get('uri', None))
     self.add_button(text="Публикувай", click=self.publish)
 # check all fields are ok
 # check not repeiting uris
@@ -36,10 +36,10 @@ class Editor_Publish(_FormTemplate):
     self.add_div('Започна публикуването, изчакайте за резултата ...')
     print('publush click')
 
-    if USER_ID:
+    if App.USER_ID:
       print('publush calling')
-      EDITOR.data['ptime'] = time()
-      task = anvil.server.call('publish_author_work', html=EDITOR.html, data=EDITOR.data)
+      App.EDITOR.data['ptime'] = time()
+      task = anvil.server.call('publish_author_work', html=App.EDITOR.html, data=App.EDITOR.data)
   
       for t in range(60):
         sleep(3)

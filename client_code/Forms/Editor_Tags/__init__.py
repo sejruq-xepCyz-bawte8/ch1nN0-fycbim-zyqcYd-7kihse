@@ -1,7 +1,5 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-
-from ...Index.App import GENRES, AW
 from anvil_extras.Autocomplete import Autocomplete
 
 from anvil_extras.Chip import Chip
@@ -9,7 +7,7 @@ from anvil_extras.Chip import Chip
 from .GuessGenres import guess_genres
 from time import time
 
-from ...Index.App import EDITOR
+from ...Index import App
 
 CHIP_BG = {
     0:['LightSalmon', 'LightGreen'],
@@ -25,11 +23,11 @@ class Editor_Tags(_FormTemplate):
     self.init_components(**properties)
     
     self.chip_panels = {}
-    self.title_info = self.add_label(text=EDITOR.data['title'])
+    self.title_info = self.add_label(text=App.EDITOR.data['title'])
     for p in range(5):
         self.chip_panels[p] = self.add_flowpanel()
 
-    self.keywords = Autocomplete(suggestions=AW.get_all_names(), placeholder="Ключови думи (клик/ентер)")
+    self.keywords = Autocomplete(suggestions=App.AW.get_all_names(), placeholder="Ключови думи (клик/ентер)")
     self.keywords.add_event_handler('pressed_enter', self.new_keyword)
     self.keywords.add_event_handler('suggestion_clicked', self.new_keyword)
     self.add_component(self.keywords)
@@ -44,20 +42,20 @@ class Editor_Tags(_FormTemplate):
 
   def level0(self):
       level = 0
-      genre = EDITOR.data['genres'][level]
-      parent_genre = EDITOR.data['genres'][level+1]
+      genre = App.EDITOR.data['genres'][level]
+      parent_genre = App.EDITOR.data['genres'][level+1]
       if parent_genre:
-        parents = GENRES.get_genre_parent_names(bg=parent_genre)
+        parents = App.GENRES.get_genre_parent_names(bg=parent_genre)
         genre = parents[0]
-        EDITOR.data['genres'][level] = genre
+        App.EDITOR.data['genres'][level] = genre
       else:
-        EDITOR.data['genres'][level] = None
-      EDITOR.update()
+        App.EDITOR.data['genres'][level] = None
+      App.EDITOR.update()
 
   def level1(self):
     level = 1
-    genre = EDITOR.data['genres'][level]
-    genres = guess_genres(words=EDITOR.data['words'])
+    genre = App.EDITOR.data['genres'][level]
+    genres = guess_genres(words=App.EDITOR.data['words'])
     if genre and genre not in genres:
       genres += [genre]
     for g in genres:
@@ -70,16 +68,16 @@ class Editor_Tags(_FormTemplate):
         else:
             chip.visible = True
         chip.background = CHIP_BG[level][1] if g is genre else CHIP_BG[level][0]
-    if not EDITOR.data['genres'][level]:
-       EDITOR.data['genres'][level] = genre
-       EDITOR.update()
+    if not App.EDITOR.data['genres'][level]:
+       App.EDITOR.data['genres'][level] = genre
+       App.EDITOR.update()
     
     self.level0()
    
   def level2(self):
     level = 2
-    genre = EDITOR.data['genres'][level]
-    genres = GENRES.get_genre_names_by_level(level=level)
+    genre = App.EDITOR.data['genres'][level]
+    genres = App.GENRES.get_genre_names_by_level(level=level)
     for g in genres:
         chip = self.add_chip(bg=g, level=level)
         chip.selected = True if genre and genre == g else False
@@ -94,9 +92,9 @@ class Editor_Tags(_FormTemplate):
 
   def level3(self):
     level = 3
-    genre = EDITOR.data['genres'][level]
-    parent_genre = EDITOR.data['genres'][level-1]
-    genres = GENRES.get_genre_children_names(genre_name=parent_genre)
+    genre = App.EDITOR.data['genres'][level]
+    parent_genre = App.EDITOR.data['genres'][level-1]
+    genres = App.GENRES.get_genre_children_names(genre_name=parent_genre)
     for g in genres:
         chip = self.add_chip(bg=g, level=level)
         chip.selected = True if genre and genre == g else False
@@ -105,15 +103,15 @@ class Editor_Tags(_FormTemplate):
 
   def level4(self):
     level = 4
-    keywords = EDITOR.data['keywords']
-    icons = EDITOR.data['icons']
+    keywords = App.EDITOR.data['keywords']
+    icons = App.EDITOR.data['icons']
     for k in keywords:
         chip = self.add_chip(bg=k, level=level)
         chip.selected = True if k in icons else False
         chip.background = CHIP_BG[level][1] if k in icons else CHIP_BG[level][0]
 
   def add_chip(self, bg:str, level:int, selected=False):
-      aw = f'fa:{AW.get_name(bg=bg)}'
+      aw = f'fa:{App.AW.get_name(bg=bg)}'
       chip = Chip(text=bg, icon=aw)
       chip.close_icon = False
       chip.selected = selected
@@ -135,17 +133,17 @@ class Editor_Tags(_FormTemplate):
     if len(neighbours) > 10: neighbours[-1].remove_from_parent()
     self.add_chip(bg=keyword, level=level)
     neighbours = parent.get_components()
-    EDITOR.data['keywords'] = [k.text for k in neighbours]
-    EDITOR.update()
+    App.EDITOR.data['keywords'] = [k.text for k in neighbours]
+    App.EDITOR.update()
 
   def delete_keyword(self, sender, **event):
     level = 4
     parent = self.chip_panels[level]
     sender.remove_from_parent()
     neighbours = parent.get_components()
-    EDITOR.data['keywords'] = [k.text for k in neighbours]
-    EDITOR.data['icons'] = [i.text for i in neighbours if i.selected]
-    EDITOR.update()
+    App.EDITOR.data['keywords'] = [k.text for k in neighbours]
+    App.EDITOR.data['icons'] = [i.text for i in neighbours if i.selected]
+    App.EDITOR.update()
 
 
   def chip_click(self, sender, **event):
@@ -158,9 +156,9 @@ class Editor_Tags(_FormTemplate):
     if level == 2 :
        sub_genres_parent = self.chip_panels[level+1]
        sub_genres_parent.clear()
-       EDITOR.data['genres'][level+1] = None
+       App.EDITOR.data['genres'][level+1] = None
        if not is_selected:
-          new_subgenres_names = GENRES.get_genre_children_names(genre_name=genre)
+          new_subgenres_names = App.GENRES.get_genre_children_names(genre_name=genre)
           for ns in new_subgenres_names:
               self.add_chip(bg=ns, level=level+1)
     
@@ -179,8 +177,8 @@ class Editor_Tags(_FormTemplate):
 
 
     
-    EDITOR.data['genres'][level] = sender.text if not is_selected else None
-    EDITOR.update()
+    App.EDITOR.data['genres'][level] = sender.text if not is_selected else None
+    App.EDITOR.update()
 
     if level == 1: self.level0()
 
@@ -197,5 +195,5 @@ class Editor_Tags(_FormTemplate):
     if len(icons) < 3 or is_selected:
       sender.selected = not is_selected
       sender.background = CHIP_BG[level][1] if sender.selected else CHIP_BG[level][0]
-      EDITOR.data['icons'] = [i.text for i in neighbours if i.selected]
-      EDITOR.update()
+      App.EDITOR.data['icons'] = [i.text for i in neighbours if i.selected]
+      App.EDITOR.update()
