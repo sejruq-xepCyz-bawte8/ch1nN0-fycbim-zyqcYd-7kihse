@@ -182,3 +182,8 @@ class _FormTemplate(_FormTemplateTemplate):
 
   def help_click(self, sender, **event):
      self.help_info.visible = not self.help_info.visible
+
+
+  def notify(message:str, style='info', timeout=1.5):
+        n = Notification(message, style=style, timeout=timeout)
+        n.show()

@@ -65,8 +65,11 @@ class Settings_User(_FormTemplate):
     self.s_button = self.add_button(text="Регистрация", click=self.signup_click, parent=self.signup_form)
 
 
-  def login_click(self):
-    pass
+  def login_click(self, sender, **event):
+    if self.l_email.valid and self.l_password.valid:
+      self.notify('Валиддни')
+    else:
+      self.notify('Невалидни')
   def signup_click(self):
     pass
 
@@ -75,10 +78,6 @@ class Settings_User(_FormTemplate):
     self.login_form.visible = True if sender.text == 'Вход' else False
     self.signup_form.visible = True if sender.text != 'Вход' else False
 
-    self.signup_panel.visible = not self.login_choise.selected
-    self.button.text = "Вход" if self.login_choise.selected else "Регистрация"
-    self.terms.checked = self.login_choise.selected
-    self.sign_up_button_validation()
 
 
   def signup_formd(self, container):
