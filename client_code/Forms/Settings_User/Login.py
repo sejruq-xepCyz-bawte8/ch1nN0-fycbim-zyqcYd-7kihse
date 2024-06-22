@@ -7,9 +7,9 @@ def login_user(email, password):
         if user:
             init = init_user()
         if init:
-            result = {'success':True, 'message':f'Успешен вход: {user["email"]}'}
+            result = {'success':True, 'message':'Успешен вход'} #: {user["email"]}
         else:
-            result = {'success':False}
+            result = {'success':False, 'message':'НЕУСПЕШЕН вход'}
       except anvil.users.TooManyPasswordFailures as e:
           # Do something in response to the exception
           result = {'success':False, 'message':'Твърде много опити'}
