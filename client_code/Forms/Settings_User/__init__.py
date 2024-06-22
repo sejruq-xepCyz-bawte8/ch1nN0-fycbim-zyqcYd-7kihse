@@ -27,30 +27,24 @@ class Settings_User(_FormTemplate):
 
 
   def show_form(self, **event):
+    self.tabs = Tabs(tab_titles=['Читател', 'Автор']) #tab_click
+    self.tabs.add_event_handler('tab_click', self.tab_click)
+    self.add_component(self.tabs)
+
+    self.add_colpanel(name='readers')
+    self.add_colpanel(name='authors', visible=False)
+
+    self.build_readers(container=self.readers)
 
     if self.is_user:
-      self.build_logged()
+      self.build_logged(container=self.authors)
     else:
-      self.built_not_logged()
-
-  def built_not_logged(self):
-      self.tabs = Tabs(tab_titles=['Читател', 'Автор']) #tab_click
-      self.tabs.add_event_handler('tab_click', self.tab_click)
-      self.add_component(self.tabs)
-
-      self.add_colpanel(name='readers')
-      self.add_colpanel(name='authors', visible=False)
-
-      self.build_readers(container=self.readers)
       self.login_signup_form(container=self.authors)
 
 
-
-  def build_logged(self):
-      self.clear()
-      self.add_colpanel(name='logout_panel')
-      self.email = self.add_label(text=self.user_email)
-      self.add_button(text="Изход", click=self.login_logout)
+  def build_logged(self, container):
+      self.email = self.add_label(text=self.user_email, parent=container)
+      self.add_button(text="Изход", click=self.login_logout, parent=container)
   
 
   def login_signup_form(self, container):
@@ -94,8 +88,9 @@ class Settings_User(_FormTemplate):
     result = login_user(self.l_email.text, self.l_password.text)
     Notification(result['message']).show()
     if result['success']:
-      self.build_logged()
-
+      self.authors.clear()
+      self.build_logged(container=self.authors)
+      
   def signup_click(self, sender, **event):
     result = sign_up_new_user(self.s_email.text, self.s_password.text, self.s_code.text, self.age.checked)
     Notification(result['message']).show()
@@ -113,8 +108,8 @@ class Settings_User(_FormTemplate):
   def login_logout(self, sender, **event):
     result = logout_user()
     Notification(result['message']).show()
-    self.clean()
-    self.built_not_logged()
+    self.authors.clear()
+    self.login_signup_form(container=self.authors)
     
 
 
