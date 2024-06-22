@@ -94,19 +94,19 @@ def init_user()->bool:
     global EDITOR
   
     USER = anvil.users.get_user()
-    USER_ID = USER['user_id'] if USER else None
-    USER_EMAIL = USER['email'] if USER else None
-    IS_USER = bool(USER)
-    IS_AUTHOR = USER['is_author'] if USER and 'is_author' in USER else None
-    if IS_AUTHOR and USER['author_id']:
-        AUTHOR_ID = USER['author_id']
-    else:
-        AUTHOR_ID = anvil.server.call('get_author_id')
+    if USER:
+        USER_ID = USER['user_id']
+        USER_EMAIL = USER['email']
+        IS_USER = bool(USER)
+        IS_AUTHOR = USER['is_author']
+        ADULT = USER['adult']
+        
     
-    ADULT = USER['adult'] if USER and 'adult' in USER else None
+    if IS_AUTHOR:
+        AUTHOR_ID = USER['author_id'] if USER['author_id'] else anvil.server.call('get_author_id')
+        EDITOR = EditorClass()
     
     
-    EDITOR = EditorClass() if IS_AUTHOR else None
     NAVIGATION.reset()
 
     return True
