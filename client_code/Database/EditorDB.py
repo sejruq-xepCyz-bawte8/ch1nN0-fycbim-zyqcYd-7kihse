@@ -27,6 +27,7 @@ WORK_TEMPLATE = {
 
 class EditorClass:
    def __init__(self) -> None:
+      print('EditorCl')
       #stores and templates
       self.template:dict = WORK_TEMPLATE
       self.store_data = indexed_db.create_store('editor_meta')
