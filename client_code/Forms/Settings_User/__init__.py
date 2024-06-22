@@ -49,9 +49,39 @@ class Settings_User(_FormTemplate):
   
 
   def login_signup_form(self, container):
-    self.login_choise = self.add_radio(name='form', text="Вход", selected=True, change=self.login_type_change, parent=container)
-    self.add_radio(name='form', text="Регистрация", change=self.login_type_change, parent=container)
-    
+    self.add_radio(name='choise', text="Вход", selected=True, change=self.login_type_change, parent=container)
+    self.add_radio(name='choise', text="Регистрация", change=self.login_type_change, parent=container)
+    self.add_colpanel(name='login_form', container=container)
+    self.add_colpanel(name='signup_form', container=container, visible=False)
+
+    self.l_email = self.add_textbox(parent=self.login_form, placeholder='Ел. Поща', change=email_zod)
+    self.l_password = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=password_zod)
+    self.l_button = self.add_button(text="Вход", click=self.login_click, parent=self.login_form)
+
+    self.s_email = self.add_textbox(parent=self.login_form, placeholder='Ел. Поща', change=email_zod)
+    self.s_password = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=password_zod)
+    self.s_password2 = self.add_textbox(parent=self.login_form, placeholder='Парола', hide_text=True, change=password_zod)
+    self.s_code = self.add_textbox(parent=self.login_form, placeholder='Код за регистрация', change=code_zod) 
+    self.s_button = self.add_button(text="Вход", click=self.signup_click, parent=self.login_form)
+
+
+  def login_click(self):
+    pass
+  def signup_click(self):
+    pass
+
+
+  def login_type_change(self, sender, **event):
+    self.login_form.visible = True if sender.text == 'Вход' else False
+    self.signup_form.visible = True if sender.text != 'Вход' else False
+
+    self.signup_panel.visible = not self.login_choise.selected
+    self.button.text = "Вход" if self.login_choise.selected else "Регистрация"
+    self.terms.checked = self.login_choise.selected
+    self.sign_up_button_validation()
+
+
+  def signup_formd(self, container):
   #just login panel
     self.login_panel = self.add_colpanel(parent=container)
     self.email = self.add_textbox(parent=self.login_panel, placeholder='Ел. Поща', change=email_zod)
@@ -76,11 +106,7 @@ class Settings_User(_FormTemplate):
     self.sign_up_button_validation()
   
 
-  def login_type_change(self, sender, **event):
-    self.signup_panel.visible = not self.login_choise.selected
-    self.button.text = "Вход" if self.login_choise.selected else "Регистрация"
-    self.terms.checked = self.login_choise.selected
-    self.sign_up_button_validation()
+
 
 
   def check_password2(self, sender, **event):
