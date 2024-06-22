@@ -3,14 +3,12 @@ from .._FormTemplate import _FormTemplate
 from ...PyScript.PyScriptLoader import has_pyscript
 from anvil_extras import non_blocking
 from anvil.js import window
-
-
-
+from ...Index import App
 
 class Author_NewWork(_FormTemplate):
   def __init__(self, **properties):
     super().__init__(**properties)
-  
+    
     self.action_bar = self.add_flowpanel()
     self.action_create = self.add_button(text="Създай", parent=self.action_bar, click=self.make_and_open)
     self.action_clean = self.add_button(text="Изчисти", parent=self.action_bar, click=self.clean_data)

@@ -8,7 +8,7 @@ from anvil.js.window import jQuery as jQ
 
 
 from URI_parser import uri_zod, title_zod
-from ...Index.App import EDITOR
+from ...Index import App
 
 contrast = 11
 
@@ -29,8 +29,8 @@ class Editor_Cover(_FormTemplate):
     self.init_components(**properties)
 
   def show_form(self, **event):
-    title = EDITOR.data.get('title') or ''
-    uri = EDITOR.data.get('work_uri') or ''
+    title = App.EDITOR.data.get('title') or ''
+    uri = App.EDITOR.data.get('work_uri') or ''
     
     self.title = self.add_textbox(text=title, placeholder='Заглавие', change=self.design_change)
     
@@ -41,21 +41,21 @@ class Editor_Cover(_FormTemplate):
     
 
     self.cover_container = self.add_div(id='cover-container')
-    self.cover = CoverClass(data=EDITOR.data)
+    self.cover = CoverClass(data=App.EDITOR.data)
 
     self.append_jq_el(element=self.cover.el, parent=self.cover_container)
     
     self.font = self.add_dropdown(items=fonts.keys(), change=self.design_change)
-    self.font.selected_value = EDITOR.data['font']
+    self.font.selected_value = App.EDITOR.data['font']
 
     spacer = Spacer()
     self.add_component(spacer)
 
     self.colors_el = jQ(colors_html)
-    jQ('#color').val(EDITOR.data['color'])
-    jQ('#background-color').val(EDITOR.data['background_color'])
-    jQ('#cover_mask').val(EDITOR.data['cover_mask'])
-    jQ('#mask_color').val(EDITOR.data['mask_color'])
+    jQ('#color').val(App.EDITOR.data['color'])
+    jQ('#background-color').val(App.EDITOR.data['background_color'])
+    jQ('#cover_mask').val(App.EDITOR.data['cover_mask'])
+    jQ('#mask_color').val(App.EDITOR.data['mask_color'])
 
     self.append_jq_el(self.colors_el)
     
@@ -74,37 +74,37 @@ class Editor_Cover(_FormTemplate):
     uri_zod(self.uri)
     title_zod(self.title)
 
-    EDITOR.data['title'] = self.title.text
-    EDITOR.data['work_uri'] = self.uri.text
-    EDITOR.data['font'] = self.font.selected_value
+    App.EDITOR.data['title'] = self.title.text
+    App.EDITOR.data['work_uri'] = self.uri.text
+    App.EDITOR.data['font'] = self.font.selected_value
 
     if sender is 'color':
-      EDITOR.data['color'] = jQ('#color').val()
-      EDITOR.data['background_color'] = adjust_color_for_contrast(EDITOR.data['color'], EDITOR.data['background_color'], 11)
-      jQ('#color').val(EDITOR.data['color'])
-      jQ('#background-color').val(EDITOR.data['background_color'])
+      App.EDITOR.data['color'] = jQ('#color').val()
+      App.EDITOR.data['background_color'] = adjust_color_for_contrast(App.EDITOR.data['color'], App.EDITOR.data['background_color'], 11)
+      jQ('#color').val(App.EDITOR.data['color'])
+      jQ('#background-color').val(App.EDITOR.data['background_color'])
     if sender is 'background-color':
-      EDITOR.data['background_color'] = jQ('#background-color').val()
-      EDITOR.data['color'] = adjust_color_for_contrast(EDITOR.data['background_color'], EDITOR.data['color'], 11)
-      jQ('#color').val(EDITOR.data['color'])
-      jQ('#background-color').val(EDITOR.data['background_color'])
+      App.EDITOR.data['background_color'] = jQ('#background-color').val()
+      App.EDITOR.data['color'] = adjust_color_for_contrast(App.EDITOR.data['background_color'], App.EDITOR.data['color'], 11)
+      jQ('#color').val(App.EDITOR.data['color'])
+      jQ('#background-color').val(App.EDITOR.data['background_color'])
       
-    EDITOR.data['cover_mask'] = jQ('#cover_mask').val()
+    App.EDITOR.data['cover_mask'] = jQ('#cover_mask').val()
     if sender is self.cover_upload:
-      EDITOR.data['background_image'] = parse_cover_image(sender.file)
+      App.EDITOR.data['background_image'] = parse_cover_image(sender.file)
       sender.file.text = sender.file.name
     if sender is self.cover_delete:
-      EDITOR.data['background_image'] = None
+      App.EDITOR.data['background_image'] = None
       self.cover_upload.text='Ъплоад Корица'
 
-    EDITOR.data['mask_color'] = adjust_color_for_contrast(EDITOR.data['color'], '000000', 100)
+    App.EDITOR.data['mask_color'] = adjust_color_for_contrast(App.EDITOR.data['color'], '000000', 100)
 
 
     self.cover_container.empty()
-    self.cover = CoverClass(data=EDITOR.data)
+    self.cover = CoverClass(data=App.EDITOR.data)
     self.append_jq_el(element=self.cover.el, parent=self.cover_container)
 
-    EDITOR.update(full=False)
+    App.EDITOR.update(full=False)
 
 
  
