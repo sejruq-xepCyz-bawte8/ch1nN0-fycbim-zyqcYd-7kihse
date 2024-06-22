@@ -87,11 +87,10 @@ class Settings_User(_FormTemplate):
 
   def login_click(self, sender, **event):
     result = login_user(self.l_email.text, self.l_password.text)
-    print(result['message'])
-    #self.notify(message = result['message'])
+    self.notify(message = result['message'], success=result['success'])
   def signup_click(self, sender, **event):
     result = sign_up_new_user(self.s_email.text, self.s_password.text, self.s_code.text, self.age.checked)
-    self.notify(message = result['message'])
+    self.notify(message = result['message'], success=result['success'])
 
   def login_type_change(self, sender, **event):
     self.login_form.visible = True if sender.text == 'Вход' else False
