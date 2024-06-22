@@ -31,6 +31,9 @@ class Settings_User(_FormTemplate):
     if self.is_user:
       self.build_logged()
     else:
+      self.built_not_logged()
+
+  def built_not_logged(self):
       self.tabs = Tabs(tab_titles=['Читател', 'Автор']) #tab_click
       self.tabs.add_event_handler('tab_click', self.tab_click)
       self.add_component(self.tabs)
@@ -40,6 +43,8 @@ class Settings_User(_FormTemplate):
 
       self.build_readers(container=self.readers)
       self.login_signup_form(container=self.authors)
+
+
 
   def build_logged(self):
       self.clear()
@@ -107,7 +112,10 @@ class Settings_User(_FormTemplate):
 
   def login_logout(self, sender, **event):
     result = logout_user()
-    self.info.text = result['message']
+    Notification(result['message']).show()
+    self.clean()
+    self.built_not_logged()
+    
 
 
   
