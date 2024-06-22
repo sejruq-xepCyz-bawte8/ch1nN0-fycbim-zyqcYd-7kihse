@@ -1,6 +1,6 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...Index.App import READER
+from ...Index import App
 
 
 class ViewerA_Works(_FormTemplate):
@@ -15,6 +15,6 @@ class ViewerA_Works(_FormTemplate):
     self.add_label(text=self.form_name)
     # Set Form properties and Data Bindings.
     #self.reader = self.dom_nodes['cheteme_reader']
-    works = READER.author_data.get('works')
+    works = App.READER.author_data.get('works')
     for key in works.keys():
       self.add_div(text=key)

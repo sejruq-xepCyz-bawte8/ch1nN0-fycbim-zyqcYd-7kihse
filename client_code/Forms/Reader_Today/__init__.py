@@ -1,6 +1,6 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...Index.App import READER
+from ...Index import App
 from ..Editor_Cover.CoverElement import CoverClass
 from anvil.js.window import jQuery as jQ
 from anvil.js import window, document
@@ -19,10 +19,10 @@ class Reader_Today(_FormTemplate):
   def show_form(self, **event):
     #open if something
     if 'author' in self.uri:
-      READER.set_current_author(self.uri['author'])
+      App.READER.set_current_author(self.uri['author'])
       self.navClick_by_id("#navl-Reader-ViewerA_Author")
     elif 'work' in self.uri:
-      READER.set_current_work(self.uri['work'])
+      App.READER.set_current_work(self.uri['work'])
       self.navClick_by_id("#navl-Reader-ViewerW_Work")
     else:
       self.build_today()
@@ -31,12 +31,12 @@ class Reader_Today(_FormTemplate):
   def build_today(self):
     self.add_div(text="Последно публикувани")
     self.cover_container = self.add_div(id='cover-container')
-    if READER.today:
+    if App.READER.today:
       self.show_works()
     else:
       self.first_time_info()
       for t in range(30):
-        if READER.today:
+        if App.READER.today:
           self.show_works()
           break
         sleep(2)
@@ -49,10 +49,10 @@ class Reader_Today(_FormTemplate):
 
     
   def show_works(self):
-    for w in READER.today:
+    for w in App.READER.today:
       wid = next(iter(w))
       
-      work_data = READER.get_work_data(wid)
+      work_data = App.READER.get_work_data(wid)
       if work_data['background_image'] == True:
         work_data['background_image'] = f'https://chete.me/?api=image&id={wid}'
       cover = CoverClass(work_data)
@@ -63,6 +63,6 @@ class Reader_Today(_FormTemplate):
 
   def open_work(self, sender, *event):
     wid = sender
-    READER.set_current_work(wid)
+    App.READER.set_current_work(wid)
     self.navClick_by_id("#navl-Reader-ViewerW_Work")
 

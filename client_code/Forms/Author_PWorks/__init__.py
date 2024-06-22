@@ -1,10 +1,8 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...Index.App import EDITOR
 from ...PyScript.PyScriptLoader import has_pyscript, load_pyscript
 from anvil_extras import non_blocking
-
-from ...Index.App import AUTHOR_ID
+from ...Index import App
 from ...API.ReaderApi import api_author, api_work
 import json
 
@@ -18,7 +16,7 @@ class Author_PWorks(_FormTemplate):
     super().__init__(**properties)
    
     self.init_components(**properties)
-    self.author_data, _ = api_author(AUTHOR_ID)
+    self.author_data, _ = api_author(App.AUTHOR_ID)
     self.author_works = self.author_data.get('works')
     self.add_help_panel(text='Публикувани творби', help=HELP)
     self.works = self.add_colpanel()
@@ -46,13 +44,13 @@ class Author_PWorks(_FormTemplate):
     #self.draw_works()
 
   def open_work(self, sender, **event):
-    result = EDITOR.set_current(work_id=sender.work_id)
+    result = App.EDITOR.set_current(work_id=sender.work_id)
     if result:
         self.navClick_by_id(link_id="#navl-Editor-Editor_Work", from_group="Author")
 
     
   def delete_work(self, sender, **event):
-    result = EDITOR.delete_by_id(work_id=sender.work_id)
+    result = App.EDITOR.delete_by_id(work_id=sender.work_id)
     if result:
        self.draw_works()
         

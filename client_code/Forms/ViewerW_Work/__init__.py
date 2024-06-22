@@ -3,7 +3,7 @@ from .._FormTemplate import _FormTemplate
 import anvil.js
 from anvil.js.window import document
 from time import time, sleep
-from ...Index.App import READER
+from ...Index import App
 from anvil_extras import non_blocking
 
 class ViewerW_Work(_FormTemplate):
@@ -16,7 +16,7 @@ class ViewerW_Work(_FormTemplate):
     
     #SOURCE 
     self.source = document.createElement("div")
-    self.source.innerHTML = READER.html
+    self.source.innerHTML = App.READER.html
    
     #self.goStart = self.add_button()
     #self.goStart.page = "1"
@@ -28,7 +28,7 @@ class ViewerW_Work(_FormTemplate):
     
 
   def show_form(self, **event):
-    #READER CONTAINER 
+    #App.READER CONTAINER 
     self.add_div(id="cheteme_reader")
     self.reader =  document.getElementById("cheteme_reader")
     self.reader.setAttribute('onscroll', 'anvil.call($("#appGoesHere > div"), "scroll_reader", $(this))')

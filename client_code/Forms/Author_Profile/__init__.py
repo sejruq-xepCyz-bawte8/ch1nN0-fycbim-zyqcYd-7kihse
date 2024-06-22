@@ -2,10 +2,9 @@ from anvil import *
 from .._FormTemplate import _FormTemplate
 from anvil_extras.Quill import Quill
 from anvil_extras.Tabs import Tabs
-from anvil.js.window import jQuery as jQ
 import anvil.image
 import base64
-from ...Index.App import USER_ID
+from ...Index import App
 import anvil.server
 from anvil_extras.storage import indexed_db
 from time import sleep
@@ -147,7 +146,7 @@ class Author_Profile(_FormTemplate):
   def publish(self, sender, **event):
     print('publush click')
 
-    if USER_ID:
+    if App.USER_ID:
       print('publush calling')
       task = anvil.server.call('update_author_profile', html=self.html_author, data=self.data)
      

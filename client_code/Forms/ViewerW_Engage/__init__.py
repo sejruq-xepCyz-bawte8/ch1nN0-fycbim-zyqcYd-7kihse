@@ -1,6 +1,6 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...Index.App import READER, ENGAGE, DEVICE_ID
+from ...Index import App
 from anvil.js.window import jQuery as jQ
 
 class ViewerW_Engage(_FormTemplate):
@@ -11,7 +11,7 @@ class ViewerW_Engage(_FormTemplate):
     
 
   def show_form(self, **event):
-    self.add_div(text=READER.data.get('title'))
+    self.add_div(text=App.READER.data.get('title'))
     
     self.add_div(text='Харесвания')
     self.add_div(text='Коментари')
@@ -24,4 +24,4 @@ class ViewerW_Engage(_FormTemplate):
     self.add_component(self.like_button)
     engagement:list = ['like'] #wid	engage_id	-> open	read	like	comment	text	<- data
     comment:str=None
-    ENGAGE.my_engage(wid=READER.work_id, engagement=engagement, comment=comment)
+    App.ENGAGE.my_engage(wid=App.READER.work_id, engagement=engagement, comment=comment)

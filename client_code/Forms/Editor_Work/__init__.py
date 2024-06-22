@@ -3,7 +3,7 @@ from .._FormTemplate import _FormTemplate
 from anvil_extras.Quill import Quill
 from anvil_extras import non_blocking
 
-from ...Index.App import EDITOR
+from ...Index import App
 
 toolbarOptions:list = [
   [{ 'header': 1 },
@@ -33,13 +33,13 @@ class Editor_Work(_FormTemplate):
     self.words_count = self.add_label(role="ch-top-right")
     self.words_count.bold = True
       
-    self.title_info = self.add_label(text=EDITOR.data['title'])
+    self.title_info = self.add_label(text=App.EDITOR.data['title'])
 
     self.deferred_change = None
     self.deferred_save = None
     
-    self.editor.set_html(EDITOR.html, sanitize=False)
-    self.words_count.text = EDITOR.data['words']
+    self.editor.set_html(App.EDITOR.html, sanitize=False)
+    self.words_count.text = App.EDITOR.data['words']
 
 
   def editor_change(self, sender, **event):
@@ -50,13 +50,13 @@ class Editor_Work(_FormTemplate):
     self.deferred_save = non_blocking.defer(self.save_buffer, 3)
     
   def changes_calc(self):
-    EDITOR.html = self.editor.get_html()
+    App.EDITOR.html = self.editor.get_html()
     text = self.editor.get_text()
     words = len(text.split())
     size = len(text.encode('utf-8'))
     self.words_count.text = words
-    EDITOR.data['words'] = words
-    EDITOR.data['size'] = size
+    App.EDITOR.data['words'] = words
+    App.EDITOR.data['size'] = size
     self.words_count.foreground = "Blue"
     if size > 1_111_111:
       self.words_count.background = "Red"
@@ -64,7 +64,7 @@ class Editor_Work(_FormTemplate):
       self.words_count.background = None
 
   def save_buffer(self):
-    updated = EDITOR.update()
+    updated = App.EDITOR.update()
     if updated:
       self.words_count.foreground = "Green"
     else:

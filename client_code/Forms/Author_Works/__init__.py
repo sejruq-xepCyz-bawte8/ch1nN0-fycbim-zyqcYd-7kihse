@@ -1,6 +1,6 @@
 from anvil import *
 from .._FormTemplate import _FormTemplate
-from ...Index.App import EDITOR
+from ...Index import App
 from ...PyScript.PyScriptLoader import has_pyscript, load_pyscript
 from anvil_extras import non_blocking
 
@@ -23,7 +23,7 @@ class Author_Works(_FormTemplate):
       self.works.clear()
       works = []
       try:
-        works = EDITOR.all_works_data()
+        works = App.EDITOR.all_works_data()
       except :
         works = []
         
@@ -47,13 +47,13 @@ class Author_Works(_FormTemplate):
     self.draw_works()
 
   def open_work(self, sender, **event):
-    result = EDITOR.set_current(work_id=sender.work_id)
+    result = App.EDITOR.set_current(work_id=sender.work_id)
     if result:
         self.navClick_by_id(link_id="#navl-Editor-Editor_Work", from_group="Author")
 
     
   def delete_work(self, sender, **event):
-    result = EDITOR.delete_by_id(work_id=sender.work_id)
+    result = App.EDITOR.delete_by_id(work_id=sender.work_id)
     if result:
        self.draw_works()
         
