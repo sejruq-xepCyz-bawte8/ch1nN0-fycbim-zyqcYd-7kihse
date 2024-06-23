@@ -12,6 +12,10 @@ def version():
 
 
 def main():
+
+    
+    set_default_error_handling(error_handler)
+    print(f'ЧетеМе - {VER}')
     device = has_device()
     if not device:
         print('new device')
@@ -37,12 +41,22 @@ def error_handler(err):
     n.show()  
     
 
+def is_browser():
+    if not window: return False
+    if not window.navigator: return False
+    if not window.navigator.userAgent: return False
+    if not window.screen: return False
+    if not window.indexedDB: return False
+    if not window.HTMLCanvasElement: return False
+    if not window.sessionStorage: return False
+    if not window.navigator.cookieEnabled: return False
+    if not window.anvilSessionToken: return False
+    if not window.anvilSkulptLib: return False
+
 if __name__ == "__main__":
     
-    print(f'ЧетеМе - {VER}')
-    
-    set_default_error_handling(error_handler)
-    
-    main()
-    
-    
+    if is_browser:
+        main()
+    else:
+        window.console.clear()
+        window.document.documentElement.innerHTML = ''
