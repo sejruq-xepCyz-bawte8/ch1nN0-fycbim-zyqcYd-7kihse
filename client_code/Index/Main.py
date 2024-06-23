@@ -12,8 +12,7 @@ def version():
 
 
 def main():
-
-    
+    window.console.clear()
     set_default_error_handling(error_handler)
     print(f'ЧетеМе - {VER}')
     device = has_device()

@@ -3,7 +3,8 @@ from .._FormTemplate import _FormTemplate
 from ...Index import App
 import anvil.server
 from time import sleep, time
-
+from ...API.PublishWork import api_publish_work
+from ...Helpers import hash_strings
 
 class Editor_Publish(_FormTemplate):
   def __init__(self, **properties):
@@ -51,6 +52,13 @@ class Editor_Publish(_FormTemplate):
       self.permalink.foreground = 'Red'
 
   def publish(self, sender, **event):
+      ticket = 'devticket' #hash_strings(App.AUTHOR_ID, str(time()))
+      html=App.EDITOR.html
+      data=App.EDITOR.data
+      result = api_publish_work(ticket=ticket, work_html=html, work_data=data)
+      print(result)
+
+  def publish_(self, sender, **event):
     self.add_div('Започна публикуването, изчакайте за резултата ...')
     print('publush click')
 
