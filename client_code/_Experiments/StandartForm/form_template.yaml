@@ -4,21 +4,23 @@ container:
   properties: {html: '@theme:standard-page.html'}
   event_bindings: {show: form_show}
 components:
-- name: rich_text_1
-  properties: {align: left}
-  type: RichText
+- name: linear_panel_1
+  properties: {spacing_above: none, spacing_below: large}
+  type: LinearPanel
   layout_properties: {slot: default}
-- name: check_box_1
-  properties: {text: Пълнолетие, align: center}
-  type: CheckBox
-  layout_properties: {slot: default}
-  event_bindings: {change: check_box_1_change}
-- name: check_box_2
-  properties: {text: Приемам Условията, align: center}
-  type: CheckBox
-  layout_properties: {slot: default}
-- name: button_1
-  properties: {text: ВЛЕЗ, enabled: false}
-  type: Button
-  layout_properties: {slot: default}
-  event_bindings: {click: button_1_click}
+  components:
+  - name: rich_text_1
+    properties: {align: left}
+    type: RichText
+  - name: switch_1
+    properties: {checked_color: '#77bb41', checked: true, text_post: '', align: center, text_pre: asd, font_size: 24, spacing_below: medium}
+    type: form:dep_e1dcqmnfcluccf:Switch
+    layout_properties: {}
+  - name: check_box_1
+    properties: {text: Пълнолетие, align: center}
+    type: CheckBox
+    event_bindings: {change: check_box_1_change}
+  - name: button_1
+    properties: {text: ВЛЕЗ, enabled: false}
+    type: Button
+    event_bindings: {click: button_1_click}
