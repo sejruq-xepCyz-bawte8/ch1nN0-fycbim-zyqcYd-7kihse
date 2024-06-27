@@ -5,18 +5,20 @@ container:
   event_bindings: {show: form_show}
 components:
 - name: rich_text_1
-  properties: {}
+  properties: {align: left}
   type: RichText
   layout_properties: {slot: default}
 - name: check_box_1
-  properties: {text: Пълнолетие}
+  properties: {text: Пълнолетие, align: center}
   type: CheckBox
   layout_properties: {slot: default}
+  event_bindings: {change: check_box_1_change}
 - name: check_box_2
-  properties: {text: Приемам Условията}
+  properties: {text: Приемам Условията, align: center}
   type: CheckBox
   layout_properties: {slot: default}
 - name: button_1
-  properties: {text: ВЛЕЗ}
+  properties: {text: ВЛЕЗ, enabled: false}
   type: Button
   layout_properties: {slot: default}
+  event_bindings: {click: button_1_click}

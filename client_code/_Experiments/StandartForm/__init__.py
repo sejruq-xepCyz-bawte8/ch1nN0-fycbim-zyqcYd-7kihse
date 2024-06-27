@@ -17,3 +17,12 @@ class StandartForm(StandartFormTemplate):
   def form_show(self, **event_args):
     """This method is called when the form is shown on the page"""
     pass
+
+  def check_box_1_change(self, **event_args):
+    self.button_1.enabled = self.check_box_1.checked
+    """This method is called when this checkbox is checked or unchecked"""
+    pass
+
+  def button_1_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass
