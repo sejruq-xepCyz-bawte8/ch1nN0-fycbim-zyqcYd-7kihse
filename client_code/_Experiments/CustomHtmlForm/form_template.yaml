@@ -1,10 +1,5 @@
 container:
   type: HtmlTemplate
-  properties:
-    html: |-
-      <center style="font-style:italic; color:#888; margin: 3em;">
-        (Insert your custom HTML here)
-      </center>
-      <div anvil-slot="default"></div>
+  properties: {html: '@theme:html/author_publish.html'}
 components: []
 is_package: true
