@@ -35,9 +35,9 @@ services:
 startup: {type: form, module: _Experiments.StandartForm}
 package_name: ChetemeApp
 allow_embedding: false
-name: ЧетеМе
+name: cheteme_old
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
-metadata: {title: ЧетеМе, description: ЧетеМе, logo_img: 'asset:chetemecover.webp'}
+metadata: {title: ЧетеМе2, description: ЧетеМе2, logo_img: 'asset:chetemecover.webp'}
 startup_form: null
 native_deps:
   head_html: |-
